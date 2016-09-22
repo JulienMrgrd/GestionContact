@@ -7,6 +7,14 @@
 <title>delete contact</title>
 </head>
 <body>
+	<form method=post action="DeleteContact">
+		emailC : <input type="text" name="email"><br>
 	
+		<br/>
+		
+		<input class="button" type="submit" value="submit">
+		<input class="button" type="reset" value="reset">
+	
+	</form>
 </body>
 </html>

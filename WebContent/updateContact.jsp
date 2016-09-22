@@ -7,6 +7,17 @@
 <title>update contact</title>
 </head>
 <body>
+	<form method=post action="UpdateContact">
+		First Name : <input type="text" name="firstname"><br>
+		Last Name : <input type="text" name="lastname"><br>
+		emailC : <input type="text" name="email"><br>
+	
+		<br/>
+		
+		<input class="button" type="submit" value="submit">
+		<input class="button" type="reset" value="reset">
+	
+	</form>
 	
 </body>
 </html>

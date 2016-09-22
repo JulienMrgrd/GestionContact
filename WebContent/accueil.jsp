@@ -9,7 +9,7 @@
 <body>
 	<ul>
 		<li><a href="addContact.jsp">Add contact</a></li>
-		<li><a href="removeContact.jsp">Remove contact</a></li>
+		<li><a href="deleteContact.jsp">Remove contact</a></li>
 		<li><a href="updateContact.jsp">Update contact</a></li>
 		<li><a href="searchContact.jsp">Search contact</a></li>
 	</ul>

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<form method=post action="LoginServlet">
+	<form method=post action="NewContact">
 		First Name : <input type="text" name="firstname"><br>
 		Last Name : <input type="text" name="lastname"><br>
 		emailC : <input type="text" name="email"><br>
