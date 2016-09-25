@@ -7,14 +7,28 @@
 <title>delete contact</title>
 </head>
 <body>
+
+	<%
+		String message = ((String)request.getAttribute("message"));
+		if(message != null){
+			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
+		}
+		
+	%>
+
 	<form method=post action="DeleteContact">
-		emailC : <input type="text" name="email"><br>
+		Id : <input type="text" name="idContact"><br>
 	
 		<br/>
 		
-		<input class="button" type="submit" value="submit">
-		<input class="button" type="reset" value="reset">
+		<input class="button" type="submit" value="Submit">
+		<input class="button" type="reset" value="Reset">
 	
 	</form>
+	
+	<br/>
+	<a href="accueil.jsp">
+		<button type="submit">Home</button>
+	</a>
 </body>
 </html>

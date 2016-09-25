@@ -7,17 +7,31 @@
 <title>update contact</title>
 </head>
 <body>
+
+	<%
+		String message = ((String)request.getAttribute("message"));
+		if(message != null){
+			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
+		}
+		
+	%>
+
 	<form method=post action="UpdateContact">
 		First Name : <input type="text" name="firstname"><br>
 		Last Name : <input type="text" name="lastname"><br>
-		emailC : <input type="text" name="email"><br>
+		Email : <input type="text" name="email"><br>
 	
 		<br/>
 		
-		<input class="button" type="submit" value="submit">
-		<input class="button" type="reset" value="reset">
+		<input class="button" type="submit" value="Submit">
+		<input class="button" type="reset" value="Reset">
 	
 	</form>
+	
+	<br/>
+	<a href="accueil.jsp">
+		<button type="submit">Home</button>
+	</a>
 	
 </body>
 </html>

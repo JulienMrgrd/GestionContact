@@ -30,7 +30,6 @@ public class UpdateContact extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
 		dispatcher.forward(request, response);
 		
-		System.out.println("on passe la "+request.getParameter("email"));
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

@@ -25,6 +25,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("LoginServlet doGet");
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -33,15 +34,19 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("LoginServlet doPost");
 		
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		
 		if(name.equals(password)){
+			request.setAttribute("message", "Hello Mr "+name+" !");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			response.sendRedirect("index.html");
+			request.setAttribute("message", "Bad password...");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 

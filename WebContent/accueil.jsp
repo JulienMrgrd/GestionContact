@@ -4,9 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+<title>Accueil</title>
 </head>
 <body>
+
+	<%
+		String message = ((String)request.getAttribute("message"));
+		if(message != null){
+			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
+		}
+		
+	%>
+
 	<ul>
 		<li><a href="addContact.jsp">Add contact</a></li>
 		<li><a href="deleteContact.jsp">Remove contact</a></li>
