@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+		
+<hibernate-configuration>
+    <session-factory>
+    	<!-- bloc de 5 propriétés pour décrire les info de connexion-->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/votreNomeDeBaseDonnees</property>
+        <property name="hibernate.connection.username">root</property>
+         <property name="hibernate.connection.password">votre Pass</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+         <!-- fait en sorte qu'Hibernate gere automatiquement la session -->
+         <!-- Celle-ci est liée au thread local. -->
+        <property name="current_session_context_class">thread</property>
+  		
+  		<!-- defini la taille du pool du JDBC connection -->
+        <property name="connection.pool_size">1</property>
+      
+        <!-- ici on configure le comportement lors du lancement d'hibernate -->
+        <!-- valeur = update i..e si les tables de la base n'existent pas 
+        elles sont crees, sinon elles sont MAJ, 
+        la valeur =create i.e. creation à chaque lancement  -->
+        <property name="hbm2ddl.auto">create</property>
+        <!-- Le SQL généré est affiché sur la console -->
+        <property name="hibernate.show_sql">true</property>
+        <!-- Pretty format le SQL généré -->
+        <property name="hibernate.format_sql">true</property>
+        
+        <!-- liens vers les fichiers de mapping, indiquez le chemin à partir de src -->
+         <mapping resource="domain/Contact.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
