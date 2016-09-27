@@ -3,7 +3,10 @@ package domain.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import domain.metier.Contact;
+import util.HibernateUtil;
 
 public class ContactDAO{
 	
@@ -12,6 +15,7 @@ public class ContactDAO{
 	}
 	
 	public boolean addContact(String firstname, String lastname, String emailC){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		System.out.println("addContact réussi");
 		return true;
 	}
