@@ -2,27 +2,27 @@ package domain.metier;
 
 public class PhoneNumber {
 	
-	private Integer id;
+	private long id_phone;
 	private String phoneKind;
 	private String phoneNumber;
 	private Contact contact;
 	
 	public PhoneNumber() { };
 	
-	public PhoneNumber(Integer id, String phoneKind, String phoneNumber, Contact contact) {
+	public PhoneNumber(long id_phone, String phoneKind, String phoneNumber, Contact contact) {
 		super();
-		this.id = id;
+		this.id_phone = id_phone;
 		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;
 		this.contact = contact;
 	}
 
-	public Integer getId() {
-		return id;
+	public long getId() {
+		return id_phone;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(long id_phone) {
+		this.id_phone = id_phone;
 	}
 
 	public String getPhoneKind() {

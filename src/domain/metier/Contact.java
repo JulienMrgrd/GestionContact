@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Contact {
 	
-	private long id;
+	private long id_contact;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -14,18 +14,18 @@ public class Contact {
 	
 	public Contact() { }
 	
-	public Contact(long id, String firstName, String lastName, String email) {
+	public Contact(long id_contact, String firstName, String lastName, String email) {
 		super();
-		this.id = id;
+		this.id_contact = id_contact;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 	}
 	
-	public Contact(long id, String firstName, String lastName, String email, Address add, List<ContactGroup> books,
+	public Contact(long id_contact, String firstName, String lastName, String email, Address add, List<ContactGroup> books,
 						List<PhoneNumber> phones){
 		super();
-		this.id = id;
+		this.id_contact = id_contact;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -40,11 +40,11 @@ public class Contact {
 	}
 
 	public long getId() {
-		return id;
+		return id_contact;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long id_contact) {
+		this.id_contact = id_contact;
 	}
 
 	public String getFirstName() {

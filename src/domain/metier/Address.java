@@ -2,7 +2,7 @@ package domain.metier;
 
 public class Address {
 	
-	private Integer id;
+	private long id_add;
 	private String street;
 	private String city;
 	private String zip;
@@ -10,21 +10,21 @@ public class Address {
 	
 	public Address() { }
 	
-	public Address(Integer id, String street, String city, String zip, String country) {
+	public Address(long id_add, String street, String city, String zip, String country) {
 		super();
-		this.id = id;
+		this.id_add = id_add;
 		this.street = street;
 		this.city = city;
 		this.zip = zip;
 		this.country = country;
 	}
 
-	public Integer getId() {
-		return id;
+	public long getId() {
+		return id_add;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(long id_add) {
+		this.id_add = id_add;
 	}
 
 	public String getStreet() {

@@ -4,25 +4,25 @@ import java.util.List;
 
 public class ContactGroup {
 	
-	private Integer groupId;
+	private long id_group;
 	private String groupName;
 	private List<Contact> contacts;
 	
 	public ContactGroup() { }
 	
-	public ContactGroup(Integer groupId, String groupName,List<Contact> contacts) {
+	public ContactGroup(long id_group, String groupName,List<Contact> contacts) {
 		super();
-		this.groupId = groupId;
+		this.id_group = id_group;
 		this.groupName = groupName;
 		this.setContacts(contacts);
 	}
 
-	public Integer getGroupId() {
-		return groupId;
+	public long getId() {
+		return id_group;
 	}
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
+	public void setId(long id_group) {
+		this.id_group = id_group;
 	}
 
 	public String getGroupName() {

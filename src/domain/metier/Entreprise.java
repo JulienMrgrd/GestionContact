@@ -2,13 +2,23 @@ package domain.metier;
 
 public class Entreprise extends Contact{
 	
+	private long id_entr;
 	private Integer numSiret;
 	
 	public Entreprise() { }
 	
-	public Entreprise(Integer numSiret){
+	public Entreprise(long id_entr, Integer numSiret){
 		super();
-		this.setNumSiret(numSiret);
+		this.id_entr = id_entr;
+		this.numSiret = numSiret;
+	}
+
+	public long getId() {
+		return id_entr;
+	}
+
+	public void setId(long id_entr) {
+		this.id_entr = id_entr;
 	}
 
 	public Integer getNumSiret() {
