@@ -1,6 +1,6 @@
 package domain.metier;
 
-import java.util.List;
+import java.util.Set;
 
 public class Contact {
 	
@@ -9,8 +9,8 @@ public class Contact {
 	private String lastName;
 	private String email;
 	private Address add;
-	private List<ContactGroup> books;
-	private List<PhoneNumber> phones;
+	private Set<ContactGroup> books;
+	private Set<PhoneNumber> phones;
 	
 	public Contact() { }
 	
@@ -22,8 +22,8 @@ public class Contact {
 		this.email = email;
 	}
 	
-	public Contact(long id_contact, String firstName, String lastName, String email, Address add, List<ContactGroup> books,
-						List<PhoneNumber> phones){
+	public Contact(long id_contact, String firstName, String lastName, String email, Address add, Set<ContactGroup> books,
+						Set<PhoneNumber> phones){
 		super();
 		this.id_contact = id_contact;
 		this.firstName = firstName;
@@ -79,19 +79,19 @@ public class Contact {
 		this.add = add;
 	}
 
-	public List<ContactGroup> getBooks() {
+	public Set<ContactGroup> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<ContactGroup> books) {
+	public void setBooks(Set<ContactGroup> books) {
 		this.books = books;
 	}
 
-	public List<PhoneNumber> getProfiles() {
+	public Set<PhoneNumber> getProfiles() {
 		return phones;
 	}
 
-	public void setPhones(List<PhoneNumber> phones) {
+	public void setPhones(Set<PhoneNumber> phones) {
 		this.phones = phones;
 	}
 	

@@ -1,16 +1,16 @@
 package domain.metier;
 
-import java.util.List;
+import java.util.Set;
 
 public class ContactGroup {
 	
 	private long id_group;
 	private String groupName;
-	private List<Contact> contacts;
+	private Set<Contact> contacts;
 	
 	public ContactGroup() { }
 	
-	public ContactGroup(long id_group, String groupName,List<Contact> contacts) {
+	public ContactGroup(long id_group, String groupName,Set<Contact> contacts) {
 		super();
 		this.id_group = id_group;
 		this.groupName = groupName;
@@ -33,11 +33,11 @@ public class ContactGroup {
 		this.groupName = groupName;
 	}
 
-	public List<Contact> getContacts() {
+	public Set<Contact> getContacts() {
 		return contacts;
 	}
 
-	public void setContacts(List<Contact> contacts) {
+	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
 	
