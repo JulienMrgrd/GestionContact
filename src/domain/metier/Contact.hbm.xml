@@ -19,6 +19,20 @@
   	 	<column name="EMAIL"/>
   	 </property>
 
-
+	<!-- <set name="books" table="GROUPE">
+		<key column="ID_CONTACT"/>
+		<many-to-many class="ContactGroup" column="ID_GROUP"/>
+	</set>
+	
+	 <set name="phones" table="PHON">
+		<key column="ID_CONTACT"/>
+		<many-to-many class="ContactGroup" column="ID_GROUP"/>
+	</set>
+	
+	<set name="employes" inverse=" true ">
+		<key column="ID_ENT" />
+		<one-to-many class="Employe"/>
+	</set> -->
+	
   </class>
 </hibernate-mapping>

@@ -20,5 +20,6 @@
         <property name="hibernate.format_sql">true</property>
         
         <mapping resource="domain/metier/Contact.hbm.xml"/>
+        <mapping resource="domain/metier/ContactGroup.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
