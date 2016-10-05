@@ -18,13 +18,15 @@
 	 <property name="email">
   	 	<column name="EMAIL"/>
   	 </property>
+  	 
+  	 <many-to-one class="Address" name="add" column="addressId" unique="true" />
 
-	<!-- <set name="books" table="GROUPE">
+	 <set name="books" table="GROUPE">
 		<key column="ID_CONTACT"/>
 		<many-to-many class="ContactGroup" column="ID_GROUP"/>
 	</set>
 	
-	 <set name="phones" table="PHON">
+	<!-- <set name="phones" table="PHON">
 		<key column="ID_CONTACT"/>
 		<many-to-many class="ContactGroup" column="ID_GROUP"/>
 	</set>
