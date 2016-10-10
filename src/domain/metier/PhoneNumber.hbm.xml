@@ -14,6 +14,8 @@
   	 <property name="phoneNumber">
   	 	<column name="PHONENUMBER"/>
   	 </property>
-
+  	 
+  	 <many-to-one name="contact" class="Contact"
+            column="ID_PHONES" not-null="true"/>
   </class>
 </hibernate-mapping>

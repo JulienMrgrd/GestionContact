@@ -36,7 +36,7 @@ public class Contact {
 	
 	public Contact(Contact copy){
 		this(copy.getId(), copy.getFirstName(), copy.getLastName(), copy.getEmail(), 
-				copy.getAdd(), copy.getBooks(), copy.getProfiles());
+				copy.getAdd(), copy.getBooks(), copy.getPhones());
 	}
 
 	public long getId() {
@@ -87,7 +87,7 @@ public class Contact {
 		this.books = books;
 	}
 
-	public Set<PhoneNumber> getProfiles() {
+	public Set<PhoneNumber> getPhones() {
 		return phones;
 	}
 

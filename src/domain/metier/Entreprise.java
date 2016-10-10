@@ -3,7 +3,7 @@ package domain.metier;
 public class Entreprise extends Contact{
 	
 	private long id_entr;
-	private Integer numSiret;
+	private long numSiret;
 	
 	public Entreprise() { }
 	
@@ -21,7 +21,7 @@ public class Entreprise extends Contact{
 		this.id_entr = id_entr;
 	}
 
-	public Integer getNumSiret() {
+	public long getNumSiret() {
 		return numSiret;
 	}
 

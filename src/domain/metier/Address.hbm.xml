@@ -6,6 +6,22 @@
   	 <id name="id" type="long" column="ID_ADDRESSE" >
    		<generator class="increment"/>
   	 </id>
+  	 
+	<property name="street">
+  	 	<column name="STREET"/>
+  	 </property>
+  	 
+  	 <property name="city">
+  	 	<column name="CITY"/>
+  	 </property>
 
+	 <property name="zip">
+  	 	<column name="ZIP"/>
+  	 </property>
+  	 
+  	 <property name="country">
+  	 	<column name="COUNTRY"/>
+  	 </property>
+  	 
   </class>
 </hibernate-mapping>

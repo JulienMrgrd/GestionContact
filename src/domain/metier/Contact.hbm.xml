@@ -6,7 +6,6 @@
   	 <id name="id" type="long" column="ID_CONTACT" >
    		<generator class="increment"/>
   	 </id>
-  	 
   	 <property name="firstName">
   	 	<column name="FIRSTNAME"/>
   	 </property>
@@ -26,15 +25,15 @@
 		<many-to-many class="ContactGroup" column="ID_GROUP"/>
 	</set>
 	
-	<!-- <set name="phones" table="PHON">
-		<key column="ID_CONTACT"/>
-		<many-to-many class="ContactGroup" column="ID_GROUP"/>
+	<set name="phones" inverse="true">
+		<key column="ID_PHONES"/>
+		<one-to-many class="PhoneNumber"/>
 	</set>
 	
-	<set name="employes" inverse=" true ">
-		<key column="ID_ENT" />
-		<one-to-many class="Employe"/>
-	</set> -->
+	<joined-subclass name="Entreprise" table="Entreprise">
+		<key column="ID_ENTREPRISE"/>
+		<property name="numSiret" column="numSiret"/>
+	</joined-subclass>
 	
-  </class>
+	</class>
 </hibernate-mapping>
