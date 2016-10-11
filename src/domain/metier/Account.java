@@ -1,15 +1,21 @@
 package domain.metier;
+//SOUTENANCE 22/11
+import java.util.Set;
 
 public class Account {
 	
 	private long id_account;
 	private String login;
 	private String pwd;
+	private Set<Contact> contacts;
 	
 	public Account() { }
 	
 	public Account(long id_account, String login, String pwd) {
 		super();
+		this.id_account=id_account;
+		this.login=login;
+		this.pwd=pwd;
 		
 	}
 	
@@ -39,5 +45,13 @@ public class Account {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public Set<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(Set<Contact> contacts) {
+		this.contacts = contacts;
 	}	
 }
