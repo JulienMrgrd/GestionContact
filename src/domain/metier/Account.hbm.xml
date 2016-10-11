@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="domain.metier">
+  <class name="Account" table="Account_Table">
+  	 <id name="id" type="long" column="ID_ACCOUNT" >
+   		<generator class="increment"/>
+  	 </id>
+  	 
+	<property name="login">
+  	 	<column name="LOGIN"/>
+  	 </property>
+  	 
+  	 <property name="pwd">
+  	 	<column name="PWD"/>
+  	 </property>
+
+  </class>
+</hibernate-mapping>
