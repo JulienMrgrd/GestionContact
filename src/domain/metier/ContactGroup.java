@@ -40,6 +40,22 @@ public class ContactGroup {
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
 	}
+
+	public void addContact(Contact contact) {
+		this.contacts.add(contact);
+		
+		if(!contact.getBooks().contains(this)){
+			contact.addContactGroup(this);
+		}
+	}
+
+	public void removeContact(Contact contact) {
+		this.contacts.remove(contact);
+		
+		if(contact.getBooks().contains(this)){
+			contact.removeContactGroup(this);
+		}
+	}
 	
 
 }

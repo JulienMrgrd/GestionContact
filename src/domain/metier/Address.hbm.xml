@@ -2,26 +2,26 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="domain.metier">
-  <class name="Address" table="Adress_Table">
-  	 <id name="id" type="long" column="ID_ADDRESSE" >
-   		<generator class="increment"/>
-  	 </id>
-  	 
-	<property name="street">
-  	 	<column name="STREET"/>
-  	 </property>
-  	 
-  	 <property name="city">
-  	 	<column name="CITY"/>
-  	 </property>
+	<class name="Address" table="Adress_Table">
+		<id name="id" type="long" column="ID_ADDRESS">
+			<generator class="increment" />
+		</id>
 
-	 <property name="zip">
-  	 	<column name="ZIP"/>
-  	 </property>
-  	 
-  	 <property name="country">
-  	 	<column name="COUNTRY"/>
-  	 </property>
-  	 
-  </class>
+		<property name="street">
+			<column name="STREET" />
+		</property>
+
+		<property name="city">
+			<column name="CITY" />
+		</property>
+
+		<property name="zip">
+			<column name="ZIP" />
+		</property>
+
+		<property name="country">
+			<column name="COUNTRY" />
+		</property>
+
+	</class>
 </hibernate-mapping>

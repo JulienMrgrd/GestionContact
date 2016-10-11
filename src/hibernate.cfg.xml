@@ -22,7 +22,6 @@
         <mapping resource="domain/metier/Address.hbm.xml"/>
         <mapping resource="domain/metier/Contact.hbm.xml"/>
         <mapping resource="domain/metier/ContactGroup.hbm.xml"/>
-        <!-- <mapping resource="domain/metier/Entreprise.hbm.xml"/> -->
         <mapping resource="domain/metier/PhoneNumber.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

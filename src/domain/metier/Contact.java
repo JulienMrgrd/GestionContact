@@ -82,9 +82,25 @@ public class Contact {
 	public Set<ContactGroup> getBooks() {
 		return books;
 	}
-
+	
 	public void setBooks(Set<ContactGroup> books) {
 		this.books = books;
+	}
+
+	public void addContactGroup(ContactGroup grp){
+		this.books.add(grp);
+		
+		if(!grp.getContacts().contains(this)){
+			grp.addContact(this);
+		}
+	}
+	
+	public void removeContactGroup(ContactGroup grp){
+		this.books.remove(grp);
+		
+		if(grp.getContacts().contains(this)){
+			grp.removeContact(this);
+		}
 	}
 
 	public Set<PhoneNumber> getPhones() {
@@ -93,6 +109,25 @@ public class Contact {
 
 	public void setPhones(Set<PhoneNumber> phones) {
 		this.phones = phones;
+	}
+
+	public void addPhoneNumber(PhoneNumber phoneNumber) {
+		this.phones.add(phoneNumber);
+		
+		if (phoneNumber !=null && 
+				(phoneNumber.getContact() == null||!phoneNumber.getContact().equals(this))){
+			phoneNumber.setContact(this);
+		}
+	}
+	
+	public void removePhoneNumber(PhoneNumber phoneNumber) {
+		this.phones.remove(phoneNumber);
+		
+		if (phoneNumber !=null && phoneNumber.getContact() != null 
+				&& phoneNumber.getContact().equals(this)){
+			phoneNumber.setContact(null);
+			//TODO: voir avec Reda
+		}
 	}
 	
 	

@@ -47,6 +47,10 @@ public class PhoneNumber {
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
+		
+		if (!contact.getPhones().contains(this)) {
+			contact.addPhoneNumber(this);
+		}
 	}
 	
 }

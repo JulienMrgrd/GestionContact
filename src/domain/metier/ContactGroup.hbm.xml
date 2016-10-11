@@ -2,7 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="domain.metier">
-  <class name="ContactGroup" table="ContactGroupe_Table">
+  <class name="ContactGroup" table="ContactGroup_Table">
+  
   	 <id name="id" type="long" column="ID_GROUP" >
    		<generator class="increment"/>
   	 </id>
@@ -10,7 +11,6 @@
 	 <property name="groupName">
   	 	<column name="GROUPNAME"/>
   	 </property>
-
 
 	<set name="contacts" table="GROUPE" inverse="true">
 		<key column="ID_GROUP"/>
