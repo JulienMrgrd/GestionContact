@@ -15,5 +15,10 @@
   	 	<column name="PWD"/>
   	 </property>
 
+<!--  	<set name="contacts" inverse="true">
+		<key column="ID_CONTAC" />
+		<one-to-many class="Contact" />
+	</set>
+	-->
   </class>
 </hibernate-mapping>

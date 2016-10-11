@@ -11,6 +11,7 @@ public class Contact {
 	private Address add;
 	private Set<ContactGroup> books;
 	private Set<PhoneNumber> phones;
+	private Account creator;
 	
 	public Contact() { }
 	
@@ -128,6 +129,14 @@ public class Contact {
 			phoneNumber.setContact(null);
 			//TODO: voir avec Reda
 		}
+	}
+
+	public Account getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Account creator) {
+		this.creator = creator;
 	}
 	
 	
