@@ -3,6 +3,8 @@ package domain.services;
 import java.util.List;
 
 import domain.dao.ContactDAO;
+import domain.metier.Account;
+import domain.metier.Address;
 import domain.metier.Contact;
 
 public class ContactService {
@@ -13,16 +15,16 @@ public class ContactService {
 		dao = new ContactDAO();
 	}
 	
-	public boolean addContact(String firstname, String lastname, String emailC){
-		return dao.addContact(firstname, lastname, emailC);
+	public Contact createContact(String firstname, String lastname, String emailC, Address add, Account creator){
+		return dao.createContact(firstname, lastname, emailC, add, creator);
 	}
 	
-	public boolean updateContact(long id, String firstname, String lastname, String emailC){
-		return dao.updateContact(id, firstname, lastname, emailC);
+	public boolean updateContact(long id, String firstname, String lastname, String emailC, Address add){
+		return dao.updateContact(id, firstname, lastname, emailC, add);
 	}
 	
-	public boolean deleteContact(long id){
-		return dao.deleteContact(id);
+	public void deleteContact(long id){
+		dao.deleteContact(id);
 	}
 	
 	public List<Contact> searchContact(String firstname, String lastname, String emailC){

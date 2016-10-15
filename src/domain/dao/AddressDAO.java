@@ -1,46 +1,53 @@
 package domain.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import domain.metier.Address;
-import domain.metier.Contact;
 import util.HibernateUtil;
 
 public class AddressDAO {
 
 	public AddressDAO(){
-		
+
 	}
-	
-	public boolean createAddress(String street, String city, String zip, String country){
+
+	public Address createAddress(String street, String city, String zip, String country){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		Address a = new Address();
-		a.setStreet(street);
-		a.setCity(city);
-		a.setZip(zip);
-		a.setCountry(country);
-		Transaction tx = session.beginTransaction();
 		
-		session.persist(a);
+		Address address = new Address();
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
+		address.setCountry(country);
+
+		Transaction tx = session.beginTransaction();
+		session.save(address);
 		tx.commit();
+		
 		System.out.println("createAddress réussi");
+		return address;
+	}
+
+	public boolean updateAddress(long id, String street, String city, String zip, String country) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		Address address = (Address) session.load(Address.class, id);
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
+		address.setCountry(country);
+		
+		System.out.println("updateAddress réussi");
 		return true;
 	}
-	
-	public boolean updateAddress(long id, String street, String city, String zip, String country) {
-		// TODO Auto-generated method stub
-		return false;
+
+	public void deleteAddress(long id) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		Address address = (Address) session.load(Address.class, id);
+		session.delete(address);
+		
+		System.out.println("deleteAddress réussi");
 	}
-
-	public boolean deleteAccount(long id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	
 }

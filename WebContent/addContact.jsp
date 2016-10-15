@@ -19,12 +19,20 @@
 		String lastname = request.getParameter("lastname")==null ? "" : request.getParameter("lastname");
 		String email = request.getParameter("email")==null ? "" : request.getParameter("email");
 		
+		String street = request.getParameter("street")==null ? "" : request.getParameter("street");
+		String city = request.getParameter("city")==null ? "" : request.getParameter("city");
+		String zip = request.getParameter("zip")==null ? "" : request.getParameter("zip");
+		String country = request.getParameter("country")==null ? "" : request.getParameter("country");
 	%>
 
 	<form method=post action="NewContact">
 		First Name : <input type="text" name="firstname" value="<%=firstname %>"><br>
 		Last Name : <input type="text" name="lastname" value="<%=lastname %>"><br> 
 		Email : <input type="text" name="email" value="<%=email %>"><br> 
+		Street : <input type="text" name="street" value="<%=street %>"><br>
+		City : <input type="text" name="city" value="<%=city %>"><br> 
+		Zip : <input type="text" name="zip" value="<%=zip %>"><br> 
+		Country : <input type="text" name="country" value="<%=country %>"><br> 
 		
 		<br/> 
 		<input class="button" type="submit" value="Submit"> 

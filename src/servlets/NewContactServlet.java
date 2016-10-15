@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.metier.Account;
+import domain.metier.Address;
+import domain.services.AddressService;
 import domain.services.ContactService;
 
 /**
@@ -43,13 +46,21 @@ public class NewContactServlet extends HttpServlet {
 		String lastName = request.getParameter("lastname");
 		String email = request.getParameter("email");
 		
+		String street = request.getParameter("street");
+		String city = request.getParameter("city");
+		String zip = request.getParameter("zip");
+		String country = request.getParameter("country");
+		
+		Address add= (Address) new AddressService().createAddress(street, city, zip, country);
+		Account acc= new Account();//TODO a remplacer par la recuperation du compte connecter
+		
 		/*TODO: vérification confirmité des champs*/
 		boolean okFirstName = firstName!=null && firstName.length()>0; //&& not exists in DB
 		boolean okLastName = lastName!=null && lastName.length()>0; //&& not exists in DB
 		boolean okEmail = email!=null && email.length()>0; //&& not exists in DB
 		
 		if(okFirstName && okLastName && okEmail){
-			new ContactService().addContact(firstName, lastName, email);
+			new ContactService().createContact(firstName, lastName, email,add,acc);
 			request.setAttribute("message", firstName+" "+lastName+" has been added correctly !");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
 			dispatcher.forward(request, response);

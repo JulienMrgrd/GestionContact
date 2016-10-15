@@ -1,6 +1,8 @@
 package domain.services;
 
 import domain.dao.PhoneNumberDAO;
+import domain.metier.Contact;
+import domain.metier.PhoneNumber;
 
 public class PhoneNumberService {
 	
@@ -10,12 +12,12 @@ private PhoneNumberDAO dao;
 		dao = new PhoneNumberDAO();
 	}
 	
-	public boolean createPhoneNumber(String phoneKind, String phoneNumber, long id_cont){
-		return dao.createPhoneNumber(phoneKind, phoneNumber, id_cont);
+	public PhoneNumber createPhoneNumber(String phoneKind, String phoneNumber, Contact contact){
+		return dao.createPhoneNumber(phoneKind, phoneNumber, contact);
 	}
 	
-	public boolean updatePhoneNumber(long id, String phoneKind, String phoneNumber, String id_cont){
-		return dao.updatePhoneNumber(id, phoneKind, phoneNumber, id_cont);
+	public boolean updatePhoneNumber(long id, String phoneKind, String phoneNumber){
+		return dao.updatePhoneNumber(id, phoneKind, phoneNumber);
 	}
 	
 	public boolean deletePhoneNumber(long id){
