@@ -15,13 +15,13 @@ import domain.services.ContactService;
 /**
  * Servlet implementation class NewContact
  */
-public class SearchContact extends HttpServlet {
+public class SearchContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchContact() {
+    public SearchContactServlet() {
         super();
     }
 

@@ -8,7 +8,7 @@
 <title>Login</title>
 </head>
 <body>
-	<form method=post action="LoginServlet">
+	<form method=post action="WelcomeServlet">
 		<%
 			String message = ((String)request.getAttribute("message"));
 			
@@ -18,13 +18,8 @@
 		
 		%>
 		
-		Name : <input type="text" name="name"><br>
-		Password : <input type="password" name="password">
-	
-		<br/><br/>
-		
-		<input class="button" type="submit" value="submit">
-		<input class="button" type="reset" value="reset">
+		<input type="button" name="Connexion"><br>
+		<input type="button" name="Inscription">
 	
 	</form>
 </body>

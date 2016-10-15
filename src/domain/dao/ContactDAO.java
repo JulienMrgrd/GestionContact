@@ -21,15 +21,23 @@ public class ContactDAO{
 		c.setEmail(emailC);
 		c.setFirstName(firstname);
 		c.setLastName(lastname);
-		Transaction tx = session.beginTransaction();
 		
+		Transaction tx = session.beginTransaction();
 		session.persist(c);
 		tx.commit();
+		
 		System.out.println("addContact réussi");
 		return true;
 	}
 	
 	public boolean updateContact(long id, String firstname, String lastname, String emailC){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		Transaction tx = session.beginTransaction();
+		Contact c = (Contact) session.load(Contact.class, id);
+		c.setEmail("toto");
+		tx.commit();
+		
 		System.out.println("updateContact réussi");
 		return true;
 	}

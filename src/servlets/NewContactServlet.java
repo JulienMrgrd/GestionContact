@@ -13,13 +13,13 @@ import domain.services.ContactService;
 /**
  * Servlet implementation class NewContact
  */
-public class NewContact extends HttpServlet {
+public class NewContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NewContact() {
+    public NewContactServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

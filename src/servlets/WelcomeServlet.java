@@ -9,23 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ContactServlet
+ * Servlet implementation class WelcomeServlet
  */
-public class LoginServlet extends HttpServlet {
+public class WelcomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
-        // TODO Auto-generated constructor stub
+    public WelcomeServlet() {
+        super();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("LoginServlet doGet");
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -36,18 +35,21 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("LoginServlet doPost");
 		
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
+		String signInButton = request.getParameter("SignIn");
+		String signUpButton = request.getParameter("SignUp");
 		
-		if(name.equals(password)){
-			request.setAttribute("message", "Hello Mr "+name+" !");
+		if(signInButton!=null && signUpButton==null){
+			request.setAttribute("SignInOrUp", "in");
+		} else if (signInButton==null && signUpButton!=null){
+			request.setAttribute("SignInOrUp", "up");
+		} else {
+			request.setAttribute("message", "Aucun bouton n'a été cliqué...");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
 			dispatcher.forward(request, response);
-		} else {
-			request.setAttribute("message", "Bad password...");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-			dispatcher.forward(request, response);
+			return;
 		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("sign.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }
