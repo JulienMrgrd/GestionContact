@@ -64,7 +64,7 @@
 		String country = request.getParameter("country")==null ? "" : request.getParameter("country");
 	%>
 
-	<form method=post action="NewContact">
+	<form method=post action="NewContactServlet">
 		First Name : <input type="text" name="firstname" value="<%=firstname %>"><br>
 		Last Name : <input type="text" name="lastname" value="<%=lastname %>"><br> 
 		Email : <input type="text" name="email" value="<%=email %>"><br> 

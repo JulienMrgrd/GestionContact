@@ -52,7 +52,7 @@ public class DeleteContactServlet extends HttpServlet {
 		if(okId){
 			new ContactService().deleteContact(idLong);
 			request.setAttribute("message", "Contact with id n°"+id+" has been correctly delete !");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
 			dispatcher.forward(request, response);
 		} else {
 			request.setAttribute("message", "Error with the field...");

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.metier.Account;
 import domain.services.AccountService;
 import util.GestionContactUtils;
 
@@ -41,13 +42,13 @@ public class SignServlet extends HttpServlet {
 					request.setAttribute("message", "Login already exists...");
 				} else {
 					
-					long id = service.createAccount(login, password);
-					if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Sorry. An error occured during the account creation...");
-					else {
+					Account id = service.createAccount(login, password);
+					/*if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Sorry. An error occured during the account creation...");
+					else {*/
 						request.getSession().setAttribute("id", id);
 						request.setAttribute("message", "Welcome "+login+" !");
 						okForTask = true;
-					}
+					//}
 				}
 				
 			} else {

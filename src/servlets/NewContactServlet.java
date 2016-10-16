@@ -50,19 +50,19 @@ public class NewContactServlet extends HttpServlet {
 		String city = request.getParameter("city");
 		String zip = request.getParameter("zip");
 		String country = request.getParameter("country");
+		Account acc = (Account) request.getSession().getAttribute("id");
 		
-		Address add= (Address) new AddressService().createAddress(street, city, zip, country);
-		Account acc= new Account();//TODO a remplacer par la recuperation du compte connecter
+		Address add= new AddressService().createAddress(street, city, zip, country);
 		
 		/*TODO: vérification confirmité des champs*/
 		boolean okFirstName = firstName!=null && firstName.length()>0; //&& not exists in DB
 		boolean okLastName = lastName!=null && lastName.length()>0; //&& not exists in DB
 		boolean okEmail = email!=null && email.length()>0; //&& not exists in DB
-		
+		System.out.println("ici");
 		if(okFirstName && okLastName && okEmail){
 			new ContactService().createContact(firstName, lastName, email,add,acc);
 			request.setAttribute("message", firstName+" "+lastName+" has been added correctly !");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
 			dispatcher.forward(request, response);
 		} else {
 			request.setAttribute("message", "Error with one field...");

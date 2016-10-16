@@ -10,17 +10,17 @@ import util.HibernateUtil;
 
 public class AccountDAO {
 
-	public long createAccount(String login, String password) {
+	public Account createAccount(String login, String password) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Account acc = new Account();
 		acc.setLogin(login);
 		acc.setPwd(password);
 		
 		Transaction tx = session.beginTransaction();
-		long id = (long) session.save(acc);
+		session.save(acc);
 		tx.commit();
 		System.out.println("createAccount réussi");
-		return id;
+		return acc;
 	}
 	
 	public void deleteAccount(long id) {

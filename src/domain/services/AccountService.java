@@ -1,6 +1,7 @@
 package domain.services;
 
 import domain.dao.AccountDAO;
+import domain.metier.Account;
 
 public class AccountService {
 	
@@ -10,7 +11,7 @@ public class AccountService {
 		dao = new AccountDAO();
 	}
 	
-	public long createAccount(String login, String pwd){
+	public Account createAccount(String login, String pwd){
 		return dao.createAccount(login, pwd);
 	}
 	

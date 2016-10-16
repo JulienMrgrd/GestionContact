@@ -69,7 +69,7 @@
 			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
 		}
 		
-		Long id = (Long) request.getSession().getAttribute("id");
+		//Long id = (Long) request.getSession().getAttribute("id");
 	%>
 
 <!-- Bootstrap core JavaScript
