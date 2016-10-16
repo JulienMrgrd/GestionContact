@@ -23,18 +23,15 @@ public class ContactGroupDAO {
 		
 	}
 
-	public boolean setContactGroupe(long id,String groupName) {
+	public void updateContactGroupe(long id,String groupName) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.beginTransaction();
-		
 		ContactGroup cG = (ContactGroup) session.load(ContactGroup.class, id);
 		cG.setGroupName(groupName);
-		
 		tx.commit();
 		
-		System.out.println("updateContact réussi");
-		return true;
+		System.out.println("updateContactGroupe réussi");
 	}
 
 }

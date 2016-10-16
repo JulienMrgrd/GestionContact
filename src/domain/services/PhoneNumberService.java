@@ -16,12 +16,12 @@ private PhoneNumberDAO dao;
 		return dao.createPhoneNumber(phoneKind, phoneNumber, contact);
 	}
 	
-	public boolean updatePhoneNumber(long id, String phoneKind, String phoneNumber){
-		return dao.updatePhoneNumber(id, phoneKind, phoneNumber);
+	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber){
+		dao.updatePhoneNumber(id, phoneKind, phoneNumber);
 	}
 	
-	public boolean deletePhoneNumber(long id){
-		return dao.deletePhoneNumber(id);
+	public void deletePhoneNumber(long id){
+		dao.deletePhoneNumber(id);
 	}
 
 }

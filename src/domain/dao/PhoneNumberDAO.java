@@ -21,18 +21,31 @@ public class PhoneNumberDAO {
 		session.save(phoneNum);
 		tx.commit();
 		
-		System.out.println("createAddress réussi");
+		System.out.println("createPhoneNumber réussi");
 		return phoneNum;
 	}
 
-	public boolean updatePhoneNumber(long id, String phoneKind, String phoneNumber) {
-		// TODO Auto-generated method stub
-		return false;
+	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		PhoneNumber phoneNum = (PhoneNumber) session.load(PhoneNumber.class, id);
+		phoneNum.setPhoneKind(phoneKind);
+		phoneNum.setPhoneNumber(phoneNumber);
+		
+		Transaction tx = session.beginTransaction();
+		session.save(phoneNum);
+		tx.commit();
+		
+		System.out.println("updatePhoneNumber réussi");
 	}
 
-	public boolean deletePhoneNumber(long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public void deletePhoneNumber(long id) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		PhoneNumber phoneNum = (PhoneNumber) session.load(PhoneNumber.class, id);
+		Transaction tx = session.beginTransaction();
+		session.delete(phoneNum);
+		tx.commit();
+		System.out.println("deletePhoneNumber réussi");
 	}
 
 }

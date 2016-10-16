@@ -32,9 +32,13 @@ public class AccountDAO {
 		System.out.println("deleteAccount réussi");
 	}
 
-	public boolean updateContact(long id, String pwd) {
-		// TODO Auto-generated method stub
-		return false;
+	public void updateContact(long id, String pwd) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		Account acc = (Account) session.load(Account.class, id);
+		acc.setPwd(pwd);
+		tx.commit();
+		System.out.println("updateAccount réussi");
 	}
 
 	public boolean containsLogin(String login) {

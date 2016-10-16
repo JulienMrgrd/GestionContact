@@ -14,8 +14,8 @@ public class AccountService {
 		return dao.createAccount(login, pwd);
 	}
 	
-	public boolean updateAccount(long id, String pwd){
-		return dao.updateContact(id, pwd);
+	public void updateAccount(long id, String pwd){
+		dao.updateContact(id, pwd);
 	}
 	
 	public void deleteAccount(long id){

@@ -15,7 +15,7 @@ public class ContactGroupService {
 		return dao.createContactGroupe(nameGroupe);
 	}
 	
-	public boolean setContactGroupe(long id, String nameGroupe){
-		return dao.setContactGroupe(id, nameGroupe);
+	public void updateContactGroupe(long id, String nameGroupe){
+		dao.updateContactGroupe(id, nameGroupe);
 	}
 }
