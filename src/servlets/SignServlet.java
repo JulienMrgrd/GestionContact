@@ -44,6 +44,7 @@ public class SignServlet extends HttpServlet {
 					long id = service.createAccount(login, password);
 					if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Sorry. An error occured during the account creation...");
 					else {
+						request.getSession().setAttribute("id", id);
 						request.setAttribute("message", "Welcome "+login+" !");
 						okForTask = true;
 					}
@@ -65,8 +66,8 @@ public class SignServlet extends HttpServlet {
 					long id = service.checkConnection(login, password);
 					if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Bad password...");
 					else {
+						request.getSession().setAttribute("id", id);
 						request.setAttribute("message", "Welcome "+login+" !");
-						request.setAttribute("id", id);
 						okForTask = true;
 					}
 				}
