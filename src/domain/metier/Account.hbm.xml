@@ -16,7 +16,7 @@
   	 </property>
 
 <!--  	<set name="contacts" inverse="true">
-		<key column="ID_CONTAC" />
+		<key column="ID_CONTACT" />
 		<one-to-many class="Contact" />
 	</set>
 	-->

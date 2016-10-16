@@ -8,36 +8,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class WelcomeServlet
- */
 public class WelcomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public WelcomeServlet() {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("LoginServlet doPost");
+		System.out.println("WelcomeServlet doPost");
 		
-		String signInButton = request.getParameter("SignIn");
-		String signUpButton = request.getParameter("SignUp");
-		
+		String signInButton = request.getParameter("signIn");
+		String signUpButton = request.getParameter("signUp");
 		if(signInButton!=null && signUpButton==null){
 			request.setAttribute("SignInOrUp", "in");
 		} else if (signInButton==null && signUpButton!=null){

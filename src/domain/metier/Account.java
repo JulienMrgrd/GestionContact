@@ -1,5 +1,4 @@
 package domain.metier;
-//SOUTENANCE 22/11
 import java.util.Set;
 
 public class Account {
@@ -53,5 +52,13 @@ public class Account {
 
 	public void setContacts(Set<Contact> contacts) {
 		this.contacts = contacts;
-	}	
+	}
+	
+	public void addContact(Contact contact){
+		if(contact!=null){
+			contacts.add(contact);
+			contact.setCreator(this);
+		}
+		
+	}
 }

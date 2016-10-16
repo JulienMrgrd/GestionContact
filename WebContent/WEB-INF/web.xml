@@ -4,56 +4,7 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>LoginServlet</display-name>
-    <servlet-name>LoginServlet</servlet-name>
-    <servlet-class>servlets.LoginServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LoginServlet</servlet-name>
-    <url-pattern>/LoginServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>NewContact</display-name>
-    <servlet-name>NewContact</servlet-name>
-    <servlet-class>servlets.NewContact</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>NewContact</servlet-name>
-    <url-pattern>/NewContact</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>SearchContact</display-name>
-    <servlet-name>SearchContact</servlet-name>
-    <servlet-class>servlets.SearchContact</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SearchContact</servlet-name>
-    <url-pattern>/SearchContact</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>DeleteContact</display-name>
-    <servlet-name>DeleteContact</servlet-name>
-    <servlet-class>servlets.DeleteContact</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DeleteContact</servlet-name>
-    <url-pattern>/DeleteContact</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>UpdateContact</display-name>
-    <servlet-name>UpdateContact</servlet-name>
-    <servlet-class>servlets.UpdateContact</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateContact</servlet-name>
-    <url-pattern>/UpdateContact</url-pattern>
-  </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>WelcomeServlet</display-name>
@@ -64,4 +15,57 @@
     <servlet-name>WelcomeServlet</servlet-name>
     <url-pattern>/WelcomeServlet</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>SignServlet</display-name>
+    <servlet-name>SignServlet</servlet-name>
+    <servlet-class>servlets.SignServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignServlet</servlet-name>
+    <url-pattern>/SignServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>NewContactServlet</display-name>
+    <servlet-name>NewContactServlet</servlet-name>
+    <servlet-class>servlets.NewContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewContactServlet</servlet-name>
+    <url-pattern>/NewContactServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchContactServlet</display-name>
+    <servlet-name>SearchContactServlet</servlet-name>
+    <servlet-class>servlets.SearchContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchContactServlet</servlet-name>
+    <url-pattern>/SearchContactServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteContactServlet</display-name>
+    <servlet-name>DeleteContactServlet</servlet-name>
+    <servlet-class>servlets.DeleteContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteContactServlet</servlet-name>
+    <url-pattern>/DeleteContactServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateContactServlet</display-name>
+    <servlet-name>UpdateContactServlet</servlet-name>
+    <servlet-class>servlets.UpdateContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateContactServlet</servlet-name>
+    <url-pattern>/UpdateContactServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

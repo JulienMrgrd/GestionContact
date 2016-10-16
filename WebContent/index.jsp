@@ -18,8 +18,8 @@
 		
 		%>
 		
-		<input type="button" name="Connexion"><br>
-		<input type="button" name="Inscription">
+		<input class="button" type="submit" name="signIn" value="Sign in"><br>
+		<input class="button" type="submit" name="signUp" value="Sign up">
 	
 	</form>
 </body>

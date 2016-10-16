@@ -19,14 +19,14 @@
 		String password = request.getParameter("password")==null ? "" : request.getParameter("password");
 		
 		// SignIn ou SignUp
-		String sign = request.getParameter("signInOrUp");
+		String sign = (String) request.getAttribute("SignInOrUp");
 		if(sign==null){
 			out.print("<b><font color=\"red\">Ni connexion, ni inscription...</font></b><br><br>");
 
-		} else if(request.getParameter("signInOrUp").equals("up")){
+		} else if(sign.equals("up")){
 	%>
 			<h1>Inscription</h1>
-			<input type="hidden" name="signInOrUp" value="up" />
+			<input type="hidden" name="SignInOrUp" value="up" />
 			Login : <input type="text" name="login" value="<%=login %>"><br>
 			Password : <input type="text" name="password" value="<%=password %>"><br> 
 			Repeated password : <input type="text" name="secondPassword"><br> 
@@ -36,10 +36,10 @@
 			<input class="button" type="reset" value="Reset">
 			
 	<%		
-		} else if (request.getParameter("signInOrUp").equals("in")){
+		} else if (sign.equals("in")){
 	%>
 			<h1>Connexion</h1>
-			<input type="hidden" name="signInOrUp" value="in" />
+			<input type="hidden" name="SignInOrUp" value="in" />
 			Login : <input type="text" name="login" value="<%=login %>"><br>
 			Password : <input type="text" name="password" value="<%=password %>"><br> 
 			

@@ -10,7 +10,7 @@ public class AccountService {
 		dao = new AccountDAO();
 	}
 	
-	public int createAccount(String login, String pwd){
+	public long createAccount(String login, String pwd){
 		return dao.createAccount(login, pwd);
 	}
 	
@@ -18,19 +18,19 @@ public class AccountService {
 		return dao.updateContact(id, pwd);
 	}
 	
-	public boolean deleteAccount(long id){
-		return dao.deleteAccount(id);
+	public void deleteAccount(long id){
+		dao.deleteAccount(id);
 	}
 
 	public boolean containsLogin(String login) {
 		return dao.containsLogin(login);
 	}
 
-	public int checkConnection(String login, String password) {
+	public long checkConnection(String login, String password) {
 		return dao.checkConnection(login, password);
 	}
 
-	public int getAccountId(String login) {
+	public long getAccountId(String login) {
 		return dao.findAccountIdByLogin(login);
 	}
 	

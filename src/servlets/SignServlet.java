@@ -11,51 +11,38 @@ import javax.servlet.http.HttpServletResponse;
 import domain.services.AccountService;
 import util.GestionContactUtils;
 
-/**
- * Servlet implementation class ContactServlet
- */
 public class SignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor. 
-     */
     public SignServlet() { }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("LoginServlet doGet");
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("LoginServlet doPost");
+		System.out.println("SignServlet doPost");
 		AccountService service = new AccountService();
 		boolean okForTask = false;
 		
-		String signInOrUp = request.getParameter("signInOrUp");
+		String signInOrUp = request.getParameter("SignInOrUp");
+		request.setAttribute("SignInOrUp", signInOrUp); // en cas de rechargement de page
 		
-		if(signInOrUp!=null && signInOrUp.equals("in")){ // Inscription
+		if(signInOrUp!=null && signInOrUp.equals("up")){ // Inscription
 			String login = request.getParameter("login");
 			String password = request.getParameter("password");
 			String secondPassword = request.getParameter("secondPassword");
 			
 			if(login!=null && !login.isEmpty() && password!=null && !password.isEmpty() 
 					&& secondPassword!=null && !secondPassword.isEmpty()){ // Champs correctement remplis
-				if(service.containsLogin(login)){
-					request.setAttribute("message", "Login already exists...");
-				} else if(!password.equals(secondPassword)){
+				if(!password.equals(secondPassword)){
 					request.setAttribute("message", "Not the same passwords...");
+				} else if(service.containsLogin(login)){
+					request.setAttribute("message", "Login already exists...");
 				} else {
 					
-					int id = service.createAccount(login, password);
-					if(id==-1) request.setAttribute("message", "Sorry. An error occured during the account creation...");
+					long id = service.createAccount(login, password);
+					if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Sorry. An error occured during the account creation...");
 					else {
 						request.setAttribute("message", "Welcome "+login+" !");
 						okForTask = true;
@@ -66,7 +53,7 @@ public class SignServlet extends HttpServlet {
 				request.setAttribute("message", "One field is empty...");
 			}
 			
-		} else if(signInOrUp!=null && signInOrUp.equals("up")){ // Connexion
+		} else if(signInOrUp!=null && signInOrUp.equals("in")){ // Connexion
 			String login = request.getParameter("login");
 			String password = request.getParameter("password");
 			
@@ -75,7 +62,7 @@ public class SignServlet extends HttpServlet {
 					request.setAttribute("message", "Unknown login...");
 				} else {
 					
-					int id = service.checkConnection(login, password);
+					long id = service.checkConnection(login, password);
 					if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Bad password...");
 					else {
 						request.setAttribute("message", "Welcome "+login+" !");
