@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.metier.Account;
 import domain.services.AccountService;
-import util.GestionContactUtils;
 
 public class SignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,13 +41,13 @@ public class SignServlet extends HttpServlet {
 					request.setAttribute("message", "Login already exists...");
 				} else {
 					
-					Account id = service.createAccount(login, password);
-					/*if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Sorry. An error occured during the account creation...");
-					else {*/
-						request.getSession().setAttribute("id", id);
+					Account acc = service.createAccount(login, password);
+					if(acc==null) request.setAttribute("message", "Sorry. An error occured during the account creation...");
+					else {
+						request.getSession().setAttribute("acc", acc);
 						request.setAttribute("message", "Welcome "+login+" !");
 						okForTask = true;
-					//}
+					}
 				}
 				
 			} else {
@@ -64,10 +63,10 @@ public class SignServlet extends HttpServlet {
 					request.setAttribute("message", "Unknown login...");
 				} else {
 					
-					long id = service.checkConnection(login, password);
-					if(id==GestionContactUtils.BAD_ID) request.setAttribute("message", "Bad password...");
+					Account acc = service.checkConnection(login, password);
+					if(acc==null) request.setAttribute("message", "Bad password...");
 					else {
-						request.getSession().setAttribute("id", id);
+						request.getSession().setAttribute("acc", acc);
 						request.setAttribute("message", "Welcome "+login+" !");
 						okForTask = true;
 					}

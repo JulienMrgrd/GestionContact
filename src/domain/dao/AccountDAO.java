@@ -55,9 +55,9 @@ public class AccountDAO {
 	 * Verifie que les identifiants sont OK
 	 * @param login
 	 * @param password
-	 * @return
+	 * @return account, or null if there is no account for this login/password
 	 */
-	public long checkConnection(String login, String password) {
+	public Account checkConnection(String login, String password) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		Account acc = (Account) session.createCriteria(Account.class)
@@ -65,7 +65,7 @@ public class AccountDAO {
 				.add(Restrictions.eq("pwd", password) ).uniqueResult();
 		tx.commit();
 		System.out.println("checkConnection réussi");
-		return acc==null ? GestionContactUtils.BAD_ID : acc.getId();
+		return acc;
 	}
 
 	public long findAccountIdByLogin(String login) {

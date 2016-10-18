@@ -27,7 +27,7 @@ public class AccountService {
 		return dao.containsLogin(login);
 	}
 
-	public long checkConnection(String login, String password) {
+	public Account checkConnection(String login, String password) {
 		return dao.checkConnection(login, password);
 	}
 
