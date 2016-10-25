@@ -7,6 +7,7 @@ public class Account {
 	private String login;
 	private String pwd;
 	private Set<Contact> contacts;
+	private int version;
 	
 	public Account() { }
 	

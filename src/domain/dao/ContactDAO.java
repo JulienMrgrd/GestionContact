@@ -3,6 +3,7 @@ package domain.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -58,7 +59,10 @@ public class ContactDAO{
 	public void deleteContact(long id){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
+		Transaction tx = session.beginTransaction();
+		
 		Contact contact = (Contact) session.load(Contact.class, id);
+
 		session.delete(contact);
 		
 		System.out.println("deleteContact réussi");
@@ -84,13 +88,16 @@ public class ContactDAO{
 		Address add1 = new Address();
 		
 		Address add2 = new Address();
-
-		c.createContact("Dupont", "ducon", "llll", add, acc);
-		c.createContact("D", "ducon", "llll", add1, acc);
-		c.createContact("Dup", "ducon", "llll", add2, acc);
-
-		c.updateContact(1, "ddd", "d", "dodeoe",add);
 		
+		add.setStreet("street");
+		add.setCity("city");
+		add.setCountry("country");
+		add.setZip("zip");
+		
+		c.createContact("Dupont", "duton", "llll", (Address) add, acc);
+		c.createContact("D", "duron", "llll", add1, acc);
+		c.createContact("Dup", "dumon", "llll", add2, acc);
+
 		c.deleteContact(2);
 		
 	}

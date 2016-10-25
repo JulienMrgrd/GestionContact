@@ -7,6 +7,7 @@ public class ContactGroup {
 	private long id_group;
 	private String groupName;
 	private Set<Contact> contacts;
+	private int version;
 	
 	public ContactGroup() { }
 	

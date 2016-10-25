@@ -12,6 +12,7 @@ public class Contact {
 	private Set<ContactGroup> books;
 	private Set<PhoneNumber> phones;
 	private Account creator;
+	private int version;
 	
 	public Contact() { }
 	

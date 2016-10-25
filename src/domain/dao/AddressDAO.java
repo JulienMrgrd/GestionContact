@@ -6,7 +6,7 @@ import org.hibernate.Transaction;
 import domain.metier.Address;
 import util.HibernateUtil;
 
-public class AddressDAO {
+public class AddressDAO{
 
 	public AddressDAO(){
 
@@ -32,11 +32,15 @@ public class AddressDAO {
 	public boolean updateAddress(long id, String street, String city, String zip, String country) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
+		Transaction tx = session.beginTransaction();
+		
 		Address address = (Address) session.load(Address.class, id);
 		address.setStreet(street);
 		address.setCity(city);
 		address.setZip(zip);
 		address.setCountry(country);
+		
+		tx.commit();
 		
 		System.out.println("updateAddress réussi");
 		return true;

@@ -6,7 +6,7 @@
   	 <id name="id" type="long" column="ID_ACCOUNT" >
    		<generator class="increment"/>
   	 </id>
-  	 
+  	 <version name="version" access="field" column="version"/>
 	<property name="login">
   	 	<column name="LOGIN"/>
   	 </property>

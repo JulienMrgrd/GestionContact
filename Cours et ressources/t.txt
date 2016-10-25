@@ -1,0 +1,29 @@
+applicationContext.xml toutes la config spring
+
+utiliser api javaSpring -> application context
+
+1/Injection Dependance
+2/Programation par aspect
+3/Couplage hibernante
+
+Conteneur leger : Spring Leger EJB Lourd
+Spring leger car pas bessoin de serveur d'application pour utiliser
+EJB obliger d'avoir un serveur d'application
+
+Spring utilise simple pojo
+Connection framework avec heritage
+
+singleton parr defaut true
+
+Utiliser constructeur setter c'est la merde
+
+Modifier applicationContext.xml dynamiquement ? OUIIIII !!!!!
+
+advice = aspect Nvvx comportement target
+
+target : ???
+
+JoinPoint : point precis dans le code
+
+Pointcut : verifie le joinpoint pour effectuer un comportement
+

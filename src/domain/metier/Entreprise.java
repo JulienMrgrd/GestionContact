@@ -4,6 +4,7 @@ public class Entreprise extends Contact{
 	
 	private long id_entr;
 	private long numSiret;
+	private int version;
 	
 	public Entreprise() { }
 	
