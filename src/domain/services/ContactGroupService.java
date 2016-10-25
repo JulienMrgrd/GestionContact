@@ -1,21 +1,24 @@
 package domain.services;
 
-import domain.dao.ContactGroupDAO;
+import domain.dao.interfaces.IContactGroupDAO;
 import domain.metier.ContactGroup;
+import domain.services.interfaces.IContactGroupService;
 
-public class ContactGroupService {
+public class ContactGroupService implements IContactGroupService {
 
-	private ContactGroupDAO dao;
+	private IContactGroupDAO dao;
 	
-	public ContactGroupService(){
-		dao = new ContactGroupDAO();
+	public ContactGroupService(IContactGroupDAO dao){
+		this.dao = dao;
 	}
 	
-	public ContactGroup createContactGroupe(String nameGroupe){
-		return dao.createContactGroupe(nameGroupe);
+	@Override
+	public ContactGroup createContactGroup(String nameGroupe){
+		return dao.createContactGroup(nameGroupe);
 	}
 	
-	public void updateContactGroupe(long id, String nameGroupe){
-		dao.updateContactGroupe(id, nameGroupe);
+	@Override
+	public void updateContactGroup(long id, String nameGroupe){
+		dao.updateContactGroup(id, nameGroupe);
 	}
 }

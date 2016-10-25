@@ -7,11 +7,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
 	<link rel="icon" href="../../favicon.ico">
 	<link href="bootstrap/bootstrap.min.css" rel="stylesheet">
-	
+
 	<%
 	String sign = (String) request.getParameter("SignInOrUp");
 	if(sign!=null && sign.equals("up")){
@@ -26,18 +24,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="">GestionContact</a>
-    </div>
-  </div>
-</nav>
+	<div id="header"></div>
 	<form method=post action="SignServlet">
 	<%
 		String message = ((String)request.getAttribute("message"));
@@ -78,12 +65,13 @@
 	<% } %>
 	</form>
 	
-<!-- Bootstrap core JavaScript
-    ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="bootstrap/bootstrap.min.js"></script>
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
+
+<script src="bootstrap/jquery.min.js"></script>
+<% if(request.getSession().getAttribute("acc")==null){ %>
+<script> (function() { $("#header").load("header/headerNotConnected.html"); })(); </script>
+<% } else { %>
+<script> (function() { $("#header").load("header/headerConnected.html"); })(); </script>
+<% } %>
+
 </html>

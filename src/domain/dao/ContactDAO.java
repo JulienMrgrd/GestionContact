@@ -3,21 +3,22 @@ package domain.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import domain.dao.interfaces.IContactDAO;
 import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Contact;
 import util.HibernateUtil;
 
-public class ContactDAO{
+public class ContactDAO implements IContactDAO{
 	
 	public ContactDAO(){
 		
 	}
 	
+	@Override
 	public Contact createContact(String firstname, String lastname, String emailC, Address add, Account creator){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
@@ -38,6 +39,7 @@ public class ContactDAO{
 		return contact;
 	}
 	
+	@Override
 	public boolean updateContact(long id, String firstName, String lastName, String emailC, Address add){
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -56,18 +58,19 @@ public class ContactDAO{
 		return true;
 	}
 	
+	@Override
 	public void deleteContact(long id){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.beginTransaction();
-		
 		Contact contact = (Contact) session.load(Contact.class, id);
-
 		session.delete(contact);
+		tx.commit();
 		
 		System.out.println("deleteContact réussi");
 	}
 	
+	@Override
 	public List<Contact> searchContact(String firstname, String lastname, String emailC) {
 		// Recherche avec tous les paramètres renseignés
 		System.out.println("searchContact réussi");
@@ -81,7 +84,7 @@ public class ContactDAO{
 	
 
 	public static void main(String[] args){
-		ContactDAO c = new ContactDAO();
+		IContactDAO c = new ContactDAO();
 		Account acc = new Account();
 		Address add = new Address();
 
@@ -94,7 +97,7 @@ public class ContactDAO{
 		add.setCountry("country");
 		add.setZip("zip");
 		
-		c.createContact("Dupont", "duton", "llll", (Address) add, acc);
+		c.createContact("Dupont", "duton", "llll", add, acc);
 		c.createContact("D", "duron", "llll", add1, acc);
 		c.createContact("Dup", "dumon", "llll", add2, acc);
 

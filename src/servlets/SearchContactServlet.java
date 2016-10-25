@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.metier.Contact;
-import domain.services.ContactService;
+import domain.services.interfaces.IContactService;
 
 /**
  * Servlet implementation class NewContact
@@ -44,8 +47,10 @@ public class SearchContactServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
 			dispatcher.forward(request, response);
 		} else {
-		
-			List<Contact> contacts = new ContactService().searchContact(firstName, lastName, email);
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactService contactService = (IContactService) context.getBean("contactService");
+			
+			List<Contact> contacts = contactService.searchContact(firstName, lastName, email);
 			if(contacts==null || contacts.isEmpty()){
 				request.setAttribute("message", "No contacts found...");
 			} else {

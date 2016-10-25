@@ -3,12 +3,14 @@ package domain.dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import domain.dao.interfaces.IContactGroupDAO;
 import domain.metier.ContactGroup;
 import util.HibernateUtil;
 
-public class ContactGroupDAO {
+public class ContactGroupDAO implements IContactGroupDAO {
 
-	public ContactGroup createContactGroupe(String groupName) {
+	@Override
+	public ContactGroup createContactGroup(String groupName) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
 		ContactGroup cG = new ContactGroup();
@@ -18,12 +20,13 @@ public class ContactGroupDAO {
 		session.persist(cG);
 		tx.commit();
 		
-		System.out.println("createContactGroupe réussi");
+		System.out.println("createContactGroup réussi");
 		return cG;
 		
 	}
 
-	public void updateContactGroupe(long id,String groupName) {
+	@Override
+	public void updateContactGroup(long id,String groupName) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.beginTransaction();
@@ -31,7 +34,7 @@ public class ContactGroupDAO {
 		cG.setGroupName(groupName);
 		tx.commit();
 		
-		System.out.println("updateContactGroupe réussi");
+		System.out.println("updateContactGroup réussi");
 	}
 
 }

@@ -3,15 +3,17 @@ package domain.dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import domain.dao.interfaces.IAddressDAO;
 import domain.metier.Address;
 import util.HibernateUtil;
 
-public class AddressDAO{
+public class AddressDAO implements IAddressDAO{
 
 	public AddressDAO(){
 
 	}
 
+	@Override
 	public Address createAddress(String street, String city, String zip, String country){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
@@ -29,6 +31,7 @@ public class AddressDAO{
 		return address;
 	}
 
+	@Override
 	public boolean updateAddress(long id, String street, String city, String zip, String country) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
@@ -46,6 +49,7 @@ public class AddressDAO{
 		return true;
 	}
 
+	@Override
 	public void deleteAddress(long id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 

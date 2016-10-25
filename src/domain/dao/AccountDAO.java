@@ -4,12 +4,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import domain.dao.interfaces.IAccountDAO;
 import domain.metier.Account;
 import util.GestionContactUtils;
 import util.HibernateUtil;
 
-public class AccountDAO {
+public class AccountDAO implements IAccountDAO {
 
+	@Override
 	public Account createAccount(String login, String password) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Account acc = new Account();
@@ -23,6 +25,7 @@ public class AccountDAO {
 		return acc;
 	}
 	
+	@Override
 	public void deleteAccount(long id) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Account acc = (Account) session.load(Account.class, id);
@@ -32,6 +35,7 @@ public class AccountDAO {
 		System.out.println("deleteAccount réussi");
 	}
 
+	@Override
 	public void updateContact(long id, String pwd) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -41,6 +45,7 @@ public class AccountDAO {
 		System.out.println("updateAccount réussi");
 	}
 
+	@Override
 	public boolean containsLogin(String login) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -51,12 +56,7 @@ public class AccountDAO {
 		return acc!=null;
 	}
 
-	/**
-	 * Verifie que les identifiants sont OK
-	 * @param login
-	 * @param password
-	 * @return account, or null if there is no account for this login/password
-	 */
+	@Override
 	public Account checkConnection(String login, String password) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
@@ -68,6 +68,7 @@ public class AccountDAO {
 		return acc;
 	}
 
+	@Override
 	public long findAccountIdByLogin(String login) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();

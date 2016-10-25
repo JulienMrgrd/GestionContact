@@ -1,21 +1,15 @@
 <%@page import="java.util.Enumeration"%>
-<%@page import="domain.metier.Account"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<style>
-.demo-long {
-	margin-top: 100px;
-	margin-bottom: 200px;
-}
-</style>
 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../../favicon.ico">
 <link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+<title>Démo</title>
 </head>
 
 <body>
@@ -29,17 +23,10 @@
 		}
 	%>
 
-	<div class="container">
-		<h1>Auto-Hiding Bootstrap Navbar Demo</h1>
-
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-	</div>
-
+	<ul>
+		<li><a href="<%=request.getContextPath()%>/PeuplerDatabaseServlet">Peupler la base avec des contacts</a></li>
+	</ul>
+	
 </body>
 
 <script src="bootstrap/jquery.min.js"></script>

@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.metier.Account;
 import domain.metier.Address;
-import domain.services.AddressService;
-import domain.services.ContactService;
+import domain.services.interfaces.IAddressService;
+import domain.services.interfaces.IContactService;
 
 /**
  * Servlet implementation class NewContact
@@ -32,8 +35,7 @@ public class NewContactServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("NewContact doGet");
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -52,15 +54,18 @@ public class NewContactServlet extends HttpServlet {
 		String country = request.getParameter("country");
 		Account acc = (Account) request.getSession().getAttribute("id");
 		
-		Address add= new AddressService().createAddress(street, city, zip, country);
+		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		IAddressService addressService = (IAddressService) context.getBean("addressService");
+		Address add= addressService.createAddress(street, city, zip, country);
 		
 		/*TODO: vérification confirmité des champs*/
 		boolean okFirstName = firstName!=null && firstName.length()>0; //&& not exists in DB
 		boolean okLastName = lastName!=null && lastName.length()>0; //&& not exists in DB
 		boolean okEmail = email!=null && email.length()>0; //&& not exists in DB
-		System.out.println("ici");
+
 		if(okFirstName && okLastName && okEmail){
-			new ContactService().createContact(firstName, lastName, email,add,acc);
+			IContactService contactService = (IContactService) context.getBean("contactService");
+			contactService.createContact(firstName, lastName, email,add,acc);
 			request.setAttribute("message", firstName+" "+lastName+" has been added correctly !");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
 			dispatcher.forward(request, response);

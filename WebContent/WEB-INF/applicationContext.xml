@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
-	   					   
-	<bean id="beanFoo1" class="some.package.IBarImpl1"/>
-	<bean id="beanFoo2" class="some.package.IBarImpl2"/>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="accountService" class="domain.services.AccountService" scope="singleton">
+		<constructor-arg><ref bean="accountDAO"/></constructor-arg>
+	</bean>
+	<bean id="addressService" class="domain.services.AddressService" scope="singleton">
+		<constructor-arg><ref bean="addressDAO"/></constructor-arg>
+	</bean>
+	<bean id="contactService" class="domain.services.ContactService" scope="singleton">
+		<constructor-arg><ref bean="contactDAO"/></constructor-arg>
+	</bean>
+	<bean id="contactGroupService" class="domain.services.ContactGroupService" scope="singleton">
+		<constructor-arg><ref bean="contactGroupDAO"/></constructor-arg>
+	</bean>
+	<bean id="EntrepriseService" class="domain.services.EntrepriseService" scope="singleton">
+		<constructor-arg><ref bean="entrepriseDAO"/></constructor-arg>
+	</bean>
+	<bean id="phoneNumberService" class="domain.services.PhoneNumberService" scope="singleton">
+		<constructor-arg><ref bean="phoneNumberDAO"/></constructor-arg>
+	</bean>
+
+	<bean id="accountDAO" class="domain.dao.AccountDAO" scope="singleton"/>
+	<bean id="addressDAO" class="domain.dao.AddressDAO" scope="singleton"/>
+	<bean id="contactDAO" class="domain.dao.ContactDAO" scope="singleton"/>
+	<bean id="contactGroupDAO" class="domain.dao.ContactGroupDAO" scope="singleton"/>
+	<bean id="entrepriseDAO" class="domain.dao.EntrepriseDAO" scope="singleton"/>
+	<bean id="phoneNumberDAO" class="domain.dao.PhoneNumberDAO" scope="singleton"/>
+	
+	<bean id="fakeContact1" class="domain.metier.Contact" scope="prototype">
+		<property name="firstName"><value>Thomas</value></property>
+		<property name="lastName"><value>Dudoux</value></property>
+		<property name="email"><value>t.dudoux@gmail.com</value></property>
+		<property name="add"><ref bean="fakeAddress1"/></property>
+	</bean>
+	
+	<bean id="fakeContact2" class="domain.metier.Contact" scope="prototype">
+		<property name="firstName"><value>Hélène</value></property>
+		<property name="lastName"><value>Dudoux</value></property>
+		<property name="email"><value>helene.dudoux@gmail.com</value></property>
+		<property name="add"><ref bean="fakeAddress1"/></property>
+	</bean>
+	
+	<bean id="fakeContact3" class="domain.metier.Contact" scope="prototype">
+		<property name="firstName"><value>Jean</value></property>
+		<property name="lastName"><value>Duterrain</value></property>
+		<property name="email"><value>jeandudu@yopmail.com</value></property>
+		<property name="add"><ref bean="fakeAddress2"/></property>
+	</bean>
+	
+	<bean id="fakeAddress1" class="domain.metier.Address" scope="prototype">
+		<property name="street"><value>2 rue du Palais</value></property>
+		<property name="city"><value>Paris</value></property>
+		<property name="zip"><value>75004</value></property>
+		<property name="country"><value>France</value></property>
+	</bean>
+	
+	<bean id="fakeAddress2" class="domain.metier.Address" scope="prototype">
+		<property name="street"><value>546 Obama Street</value></property>
+		<property name="city"><value>Austin</value></property>
+		<property name="zip"><value>78710</value></property>
+		<property name="country"><value>United States of America</value></property>
+	</bean>
+	
 </beans>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>GestionLogin</display-name>
+  <display-name>GestionContact</display-name>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  
   <listener>
 	<listener-class>
 		org.springframework.web.context.ContextLoaderListener
@@ -14,9 +15,10 @@
 		org.springframework.web.context.request.RequestContextListener
 	</listener-class>
   </listener>
+  
   <session-config>
-		<session-timeout>10</session-timeout>
-	</session-config>
+    <session-timeout>50</session-timeout>
+  </session-config>
   
   <servlet>
     <description></description>
@@ -61,6 +63,7 @@
     <servlet-name>NewContactServlet</servlet-name>
     <url-pattern>/NewContactServlet</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>SearchContactServlet</display-name>
@@ -71,6 +74,7 @@
     <servlet-name>SearchContactServlet</servlet-name>
     <url-pattern>/SearchContactServlet</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>DeleteContactServlet</display-name>
@@ -81,6 +85,7 @@
     <servlet-name>DeleteContactServlet</servlet-name>
     <url-pattern>/DeleteContactServlet</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>UpdateContactServlet</display-name>
@@ -90,6 +95,17 @@
   <servlet-mapping>
     <servlet-name>UpdateContactServlet</servlet-name>
     <url-pattern>/UpdateContactServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>PeuplerDatabaseServlet</display-name>
+    <servlet-name>PeuplerDatabaseServlet</servlet-name>
+    <servlet-class>servlets.PeuplerDatabaseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PeuplerDatabaseServlet</servlet-name>
+    <url-pattern>/PeuplerDatabaseServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>

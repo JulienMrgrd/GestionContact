@@ -2,14 +2,16 @@ package servlets;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.metier.Account;
-import domain.services.AccountService;
+import domain.services.interfaces.IAccountService;
 
 public class SignServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +24,8 @@ public class SignServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("SignServlet doPost");
-		AccountService service = new AccountService();
+		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		IAccountService accountService = (IAccountService) context.getBean("accountService");
 		boolean okForTask = false;
 		
 		String signInOrUp = request.getParameter("SignInOrUp");
@@ -37,11 +40,11 @@ public class SignServlet extends HttpServlet {
 					&& secondPassword!=null && !secondPassword.isEmpty()){ // Champs correctement remplis
 				if(!password.equals(secondPassword)){
 					request.setAttribute("message", "Not the same passwords...");
-				} else if(service.containsLogin(login)){
+				} else if(accountService.containsLogin(login)){
 					request.setAttribute("message", "Login already exists...");
 				} else {
 					
-					Account acc = service.createAccount(login, password);
+					Account acc = accountService.createAccount(login, password);
 					if(acc==null) request.setAttribute("message", "Sorry. An error occured during the account creation...");
 					else {
 						request.getSession().setAttribute("acc", acc);
@@ -59,11 +62,11 @@ public class SignServlet extends HttpServlet {
 			String password = request.getParameter("password");
 			
 			if(login!=null && !login.isEmpty() && password!=null && !password.isEmpty()){ // Champs correctement remplis
-				if(!service.containsLogin(login)){
+				if(!accountService.containsLogin(login)){
 					request.setAttribute("message", "Unknown login...");
 				} else {
 					
-					Account acc = service.checkConnection(login, password);
+					Account acc = accountService.checkConnection(login, password);
 					if(acc==null) request.setAttribute("message", "Bad password...");
 					else {
 						request.getSession().setAttribute("acc", acc);
@@ -80,10 +83,8 @@ public class SignServlet extends HttpServlet {
 			request.setAttribute("message", "Neither a subscription nor connection. Strange...");
 		}
 		
-		RequestDispatcher dispatcher;
-		if(okForTask) dispatcher = request.getRequestDispatcher("task.jsp");
-		else dispatcher = request.getRequestDispatcher("sign.jsp");
-		dispatcher.forward(request, response);
+		if(okForTask) response.sendRedirect("task.jsp");
+		else request.getRequestDispatcher("sign.jsp").forward(request, response);
 		
 	}
 

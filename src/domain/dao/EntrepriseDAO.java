@@ -1,5 +1,7 @@
 package domain.dao;
 
-public class EntrepriseDAO {
+import domain.dao.interfaces.IEntrepriseDAO;
+
+public class EntrepriseDAO implements IEntrepriseDAO {
 
 }

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import domain.services.ContactService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import domain.services.interfaces.IContactService;
 
 /**
  * Servlet implementation class NewContact
@@ -50,7 +53,9 @@ public class DeleteContactServlet extends HttpServlet {
 		}
 		
 		if(okId){
-			new ContactService().deleteContact(idLong);
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactService contactService = (IContactService) context.getBean("contactService");
+			contactService.deleteContact(idLong);
 			request.setAttribute("message", "Contact with id n°"+id+" has been correctly delete !");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
 			dispatcher.forward(request, response);
