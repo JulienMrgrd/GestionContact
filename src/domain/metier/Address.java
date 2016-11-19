@@ -1,5 +1,7 @@
 package domain.metier;
 
+import javax.persistence.Version;
+
 public class Address {
 	
 	private long id_add;
@@ -60,6 +62,8 @@ public class Address {
 		this.country = country;
 	}
 	
-	
-
+	@Version
+	public long getVersion() {
+	    return version;
+	} 
 }

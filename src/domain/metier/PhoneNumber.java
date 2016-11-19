@@ -1,5 +1,7 @@
 package domain.metier;
 
+import javax.persistence.Version;
+
 public class PhoneNumber {
 	
 	private long id_phone;
@@ -54,4 +56,8 @@ public class PhoneNumber {
 		}
 	}
 	
+	@Version
+	public long getVersion() {
+	    return version;
+	} 
 }

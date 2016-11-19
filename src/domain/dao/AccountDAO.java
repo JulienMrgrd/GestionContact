@@ -7,21 +7,25 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IAccountDAO;
+import domain.dao.interfaces.IContactDAO;
 import domain.metier.Account;
+import domain.metier.Address;
 import util.GestionContactUtils;
+import util.HibernateUtil;
 
 public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
-	
+
 	@Override
 	public Account createAccount(String login, String password) {
-		SessionFactory fact = getSessionFactory();
-		fact = getHibernateTemplate().getSessionFactory();
-		Session session = getSessionFactory().getCurrentSession();
+		/*SessionFactory fact = getSessionFactory();
+		fact = getHibernateTemplate().getSessionFactory();*/
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		Account acc = new Account();
 		acc.setLogin(login);
 		acc.setPwd(password);
 		
-		Transaction tx = session.beginTransaction();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		session.save(acc);
 		tx.commit();
 		System.out.println("createAccount réussi");
@@ -31,9 +35,18 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	
 	@Override
 	public void deleteAccount(long id) {
-		Session session = getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+
 		Account acc = (Account) session.load(Account.class, id);
-		Transaction tx = session.beginTransaction();
+		IContactDAO contactDAO = new ContactDAO();
+		contactDAO.deleteContactByCreator(acc);
+		
+		//On relance la session car deleteContactByCreator l'a fermé 
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		session.delete(acc);
 		tx.commit();
 		System.out.println("deleteAccount réussi");
@@ -41,8 +54,9 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public void updateContact(long id, String pwd) {
-		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		Account acc = (Account) session.load(Account.class, id);
 		acc.setPwd(pwd);
 		tx.commit();
@@ -51,8 +65,9 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public boolean containsLogin(String login) {
-		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		Account acc = (Account) session.createCriteria(Account.class)
 				.add(Restrictions.eq("login", login) ).uniqueResult();
 		tx.commit();
@@ -62,26 +77,41 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public Account checkConnection(String login, String password) {
-		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		Account acc = (Account) session.createCriteria(Account.class)
-				.add(Restrictions.eq("login", login) )
-				.add(Restrictions.eq("pwd", password) ).uniqueResult();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		
+		String query = "from Account as account where account.login = :login and account.pwd = :password";
+		Account acc = (Account) session.createQuery(query).setString("login", login).setString("password", password).uniqueResult();
 		tx.commit();
 		System.out.println("checkConnection réussi");
+		//retourne null si pas de compte trouvé avec le login et le password
 		return acc;
 	}
 
 	@Override
 	public long findAccountIdByLogin(String login) {
-		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		session.beginTransaction();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		
 		Account acc = (Account) session.createCriteria(Account.class)
 				.add(Restrictions.eq("login", login) ).uniqueResult();
 		tx.commit();
 		System.out.println("findAccountIdByLogin réussi");
 		return acc==null ? GestionContactUtils.BAD_ID : acc.getId();
+	}
+	
+	public static void main(String[] args){
+		IAccountDAO iaccount = new AccountDAO();
+		
+		Account acc = iaccount.createAccount("login", "password");
+		IContactDAO c = new ContactDAO();
+		c.createContact("firstname", "lastname", "emailC", new Address(), acc);
+		c.createContact("firstname2", "lastname1", "emailC2", new Address(), acc);
+		iaccount.deleteAccount(acc.getId());
+		//System.out.println(iaccount.checkConnection("login", "pasord"));
 	}
 
 }

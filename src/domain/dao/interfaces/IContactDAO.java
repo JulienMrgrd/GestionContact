@@ -16,4 +16,10 @@ public interface IContactDAO {
 
 	List<Contact> searchContact(String firstname, String lastname, String emailC);
 
+	Contact getContactById(long id);
+
+	List<Contact> getContactByCreator(Account acc);
+
+	void deleteContactByCreator(Account acc);
+
 }

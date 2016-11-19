@@ -1,6 +1,8 @@
 package domain.metier;
 import java.util.Set;
 
+import javax.persistence.Version;
+
 public class Account {
 	
 	private long id_account;
@@ -60,6 +62,10 @@ public class Account {
 			contacts.add(contact);
 			contact.setCreator(this);
 		}
-		
 	}
+	
+	@Version
+	public long getVersion() {
+	    return version;
+	} 
 }

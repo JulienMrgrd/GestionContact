@@ -2,6 +2,8 @@ package domain.metier;
 
 import java.util.Set;
 
+import javax.persistence.Version;
+
 public class ContactGroup {
 	
 	private long id_group;
@@ -58,5 +60,8 @@ public class ContactGroup {
 		}
 	}
 	
-
+	@Version
+	public long getVersion() {
+	    return version;
+	} 
 }

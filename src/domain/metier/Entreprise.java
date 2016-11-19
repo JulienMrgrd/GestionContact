@@ -1,25 +1,17 @@
 package domain.metier;
 
+import javax.persistence.Version;
+
 public class Entreprise extends Contact{
 	
-	private long id_entr;
 	private long numSiret;
 	private int version;
 	
 	public Entreprise() { }
 	
-	public Entreprise(long id_entr, Integer numSiret){
+	public Entreprise( Integer numSiret){
 		super();
-		this.id_entr = id_entr;
 		this.numSiret = numSiret;
-	}
-
-	public long getId() {
-		return id_entr;
-	}
-
-	public void setId(long id_entr) {
-		this.id_entr = id_entr;
 	}
 
 	public long getNumSiret() {
@@ -30,4 +22,8 @@ public class Entreprise extends Contact{
 		this.numSiret = numSiret;
 	}
 
+	@Version
+	public long getVersion() {
+	    return version;
+	} 
 }

@@ -2,6 +2,8 @@ package domain.metier;
 
 import java.util.Set;
 
+import javax.persistence.Version;
+
 public class Contact {
 	
 	private long id_contact;
@@ -140,5 +142,8 @@ public class Contact {
 		this.creator = creator;
 	}
 	
-	
+	@Version
+	public long getVersion() {
+	    return version;
+	} 
 }
