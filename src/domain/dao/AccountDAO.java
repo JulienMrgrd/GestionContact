@@ -1,6 +1,7 @@
 package domain.dao;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
@@ -10,9 +11,11 @@ import domain.metier.Account;
 import util.GestionContactUtils;
 
 public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
-
+	
 	@Override
 	public Account createAccount(String login, String password) {
+		SessionFactory fact = getSessionFactory();
+		fact = getHibernateTemplate().getSessionFactory();
 		Session session = getSessionFactory().getCurrentSession();
 		Account acc = new Account();
 		acc.setLogin(login);
