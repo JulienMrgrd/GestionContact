@@ -3,17 +3,17 @@ package domain.dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IAccountDAO;
 import domain.metier.Account;
 import util.GestionContactUtils;
-import util.HibernateUtil;
 
-public class AccountDAO implements IAccountDAO {
+public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public Account createAccount(String login, String password) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Account acc = new Account();
 		acc.setLogin(login);
 		acc.setPwd(password);
@@ -23,11 +23,12 @@ public class AccountDAO implements IAccountDAO {
 		tx.commit();
 		System.out.println("createAccount réussi");
 		return acc;
+		
 	}
 	
 	@Override
 	public void deleteAccount(long id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Account acc = (Account) session.load(Account.class, id);
 		Transaction tx = session.beginTransaction();
 		session.delete(acc);
@@ -37,7 +38,7 @@ public class AccountDAO implements IAccountDAO {
 
 	@Override
 	public void updateContact(long id, String pwd) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		Account acc = (Account) session.load(Account.class, id);
 		acc.setPwd(pwd);
@@ -47,7 +48,7 @@ public class AccountDAO implements IAccountDAO {
 
 	@Override
 	public boolean containsLogin(String login) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		Account acc = (Account) session.createCriteria(Account.class)
 				.add(Restrictions.eq("login", login) ).uniqueResult();
@@ -58,7 +59,7 @@ public class AccountDAO implements IAccountDAO {
 
 	@Override
 	public Account checkConnection(String login, String password) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		Account acc = (Account) session.createCriteria(Account.class)
 				.add(Restrictions.eq("login", login) )
@@ -70,7 +71,7 @@ public class AccountDAO implements IAccountDAO {
 
 	@Override
 	public long findAccountIdByLogin(String login) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		session.beginTransaction();
 		Account acc = (Account) session.createCriteria(Account.class)

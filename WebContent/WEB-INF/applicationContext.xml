@@ -4,6 +4,44 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+
+	<!-- ==== INTEGRATION D'HIBERNATE ==== -->
+
+	<bean id="myDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost/ContactDatabase"/>
+		<property name="username" value="root"/>
+		<property name="password" value=""/>
+	</bean>
+	
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			    <prop key="connection.pool_size">1</prop>
+		        <prop key="hbm2ddl.auto">create</prop>
+		        <prop key="hibernate.show_sql">true</prop>
+		        <prop key="hibernate.format_sql">true</prop>
+	        </props>
+		</property>
+	</bean>
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+<!--         <property name="checkWriteOperations" value="false"/> -->
+    </bean>
+	
+	<bean id="TransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
+	
+	
+	<!-- ===== DAO & Services & Demo ===== -->
+
 	<bean id="accountService" class="domain.services.AccountService" scope="singleton">
 		<constructor-arg><ref bean="accountDAO"/></constructor-arg>
 	</bean>
@@ -23,12 +61,25 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<constructor-arg><ref bean="phoneNumberDAO"/></constructor-arg>
 	</bean>
 
-	<bean id="accountDAO" class="domain.dao.AccountDAO" scope="singleton"/>
-	<bean id="addressDAO" class="domain.dao.AddressDAO" scope="singleton"/>
-	<bean id="contactDAO" class="domain.dao.ContactDAO" scope="singleton"/>
-	<bean id="contactGroupDAO" class="domain.dao.ContactGroupDAO" scope="singleton"/>
-	<bean id="entrepriseDAO" class="domain.dao.EntrepriseDAO" scope="singleton"/>
-	<bean id="phoneNumberDAO" class="domain.dao.PhoneNumberDAO" scope="singleton"/>
+	<bean id="accountDAO" class="domain.dao.AccountDAO" scope="singleton">
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
+	<bean id="addressDAO" class="domain.dao.AddressDAO" scope="singleton">
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
+	<bean id="contactDAO" class="domain.dao.ContactDAO" scope="singleton">
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
+	<bean id="contactGroupDAO" class="domain.dao.ContactGroupDAO" scope="singleton">
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
+	<bean id="entrepriseDAO" class="domain.dao.EntrepriseDAO" scope="singleton">
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
+	<bean id="phoneNumberDAO" class="domain.dao.PhoneNumberDAO" scope="singleton">
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
+	
 	
 	<bean id="fakeContact1" class="domain.metier.Contact" scope="prototype">
 		<property name="firstName"><value>Thomas</value></property>

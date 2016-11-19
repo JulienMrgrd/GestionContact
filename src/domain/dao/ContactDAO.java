@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IContactDAO;
 import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Contact;
-import util.HibernateUtil;
 
-public class ContactDAO implements IContactDAO{
+public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
 	public ContactDAO(){
 		
@@ -20,7 +20,7 @@ public class ContactDAO implements IContactDAO{
 	
 	@Override
 	public Contact createContact(String firstname, String lastname, String emailC, Address add, Account creator){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		
 		Contact contact = new Contact();
 		contact.setEmail(emailC);
@@ -42,7 +42,7 @@ public class ContactDAO implements IContactDAO{
 	@Override
 	public boolean updateContact(long id, String firstName, String lastName, String emailC, Address add){
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.beginTransaction();
 		
@@ -60,7 +60,7 @@ public class ContactDAO implements IContactDAO{
 	
 	@Override
 	public void deleteContact(long id){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.beginTransaction();
 		Contact contact = (Contact) session.load(Contact.class, id);
@@ -75,7 +75,7 @@ public class ContactDAO implements IContactDAO{
 		// Recherche avec tous les paramètres renseignés
 		System.out.println("searchContact réussi");
 		
-		List<Contact> fakeList = new ArrayList<>();
+		List<Contact> fakeList = new ArrayList<Contact>();
 		fakeList.add(new Contact(5, "julien", "m", "yopmail.com"));
 		fakeList.add(new Contact(6, "felix", "l", "yopmail2.com"));
 		return fakeList;

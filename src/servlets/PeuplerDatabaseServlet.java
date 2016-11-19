@@ -20,16 +20,6 @@ import domain.services.interfaces.IContactService;
 public class PeuplerDatabaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PeuplerDatabaseServlet() {
-        super();
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Account acc = (Account) request.getSession().getAttribute("acc");
 		
