@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IAddressDAO;
 import domain.metier.Address;
+import util.HibernateUtil;
 
 public class AddressDAO extends HibernateDaoSupport implements IAddressDAO{
 
@@ -15,7 +16,7 @@ public class AddressDAO extends HibernateDaoSupport implements IAddressDAO{
 
 	@Override
 	public Address createAddress(String street, String city, String zip, String country){
-		Session session = getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		
 		Address address = new Address();
 		address.setStreet(street);
@@ -51,11 +52,17 @@ public class AddressDAO extends HibernateDaoSupport implements IAddressDAO{
 
 	@Override
 	public void deleteAddress(long id) {
-		Session session = getSessionFactory().getCurrentSession();
-
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		Address address = (Address) session.load(Address.class, id);
-		session.delete(address);
 		
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		System.out.println("AVANT CE DELETE");
+		session.delete(address);
+		tx.commit();		
 		System.out.println("deleteAddress réussi");
 	}
 }

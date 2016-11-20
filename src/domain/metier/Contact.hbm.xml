@@ -5,6 +5,7 @@
 
 	<class name="Contact" table="Contact_Table">
 	
+ 	 <cache usage="read-write"/>
 		<id name="id" type="long" column="ID_CONTACT">
 			<generator class="increment" />
 		</id>
@@ -21,7 +22,7 @@
 			<column name="EMAIL" />
 		</property>
 
-		<many-to-one class="Address" name="add" column="ID_ADDRESS"
+		<many-to-one class="Address" name="add" column="ID_ADDRESS" 
 			unique="true" />
 
 		<set name="books" table="GROUPE">

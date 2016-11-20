@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IContactGroupDAO;
 import domain.metier.ContactGroup;
+import util.HibernateUtil;
 
 public class ContactGroupDAO extends HibernateDaoSupport implements IContactGroupDAO {
 
@@ -37,4 +38,40 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 		System.out.println("updateContactGroup réussi");
 	}
 
+	@Override
+	public ContactGroup getContactGroupById(long id){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		ContactGroup contact = (ContactGroup) session.load(ContactGroup.class, id);
+		return contact;
+	}
+
+	@Override
+	public void deleteContactGroup(long id) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+
+		ContactGroup contactGroup = (ContactGroup) session.load(ContactGroup.class, id);
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		session.delete(contactGroup);
+		tx.commit();
+		System.out.println("deletePhoneNumber réussi");
+	}
+
+	@Override
+	public void deleteContactInGroup(long idGroup, long idContact) {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+
+		ContactGroup contactGroup = (ContactGroup) session.load(ContactGroup.class, idGroup);
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		session.delete(contactGroup);
+		tx.commit();
+		System.out.println("deletePhoneNumber réussi");
+	}
 }

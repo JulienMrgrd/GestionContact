@@ -11,4 +11,6 @@ public interface IPhoneNumberDAO {
 
 	void deletePhoneNumber(long id);
 
+	PhoneNumber getPhoneNumberById(long id);
+
 }

@@ -5,6 +5,7 @@
 
   <class name="PhoneNumber" table="PhoneNumber_Table">
   
+ 	 <cache usage="read-write"/>
   	 <id name="id" type="long" column="ID_PHONENUMBER" >
    		<generator class="increment"/>
   	 </id>

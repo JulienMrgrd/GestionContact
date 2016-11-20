@@ -36,4 +36,19 @@ public class ContactService implements IContactService {
 		return dao.searchContact(firstname, lastname, emailC);
 	}
 
+	@Override
+	public Contact getContactById(long id) {
+		return dao.getContactById(id);
+	}
+
+	@Override
+	public List<Contact> getContactByCreator(Account acc) {
+		return dao.getContactByCreator(acc);
+	}
+
+	@Override
+	public void deleteContactByCreator(Account acc) {
+		dao.deleteContactByCreator(acc);
+	}
+
 }

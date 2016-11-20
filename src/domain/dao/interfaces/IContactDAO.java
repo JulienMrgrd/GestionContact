@@ -5,6 +5,7 @@ import java.util.List;
 import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Contact;
+import domain.metier.PhoneNumber;
 
 public interface IContactDAO {
 
@@ -21,5 +22,7 @@ public interface IContactDAO {
 	List<Contact> getContactByCreator(Account acc);
 
 	void deleteContactByCreator(Account acc);
+
+	void addPhonesInContact(long idContact, PhoneNumber pn);
 
 }

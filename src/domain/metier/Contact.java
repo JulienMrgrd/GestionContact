@@ -1,5 +1,6 @@
 package domain.metier;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Version;
@@ -16,7 +17,19 @@ public class Contact {
 	private Account creator;
 	private int version;
 	
-	public Contact() { }
+	public Contact() { 
+		this.books = new HashSet<>();
+		this.phones = new HashSet<>();
+	}
+	
+	public Contact(String firstName, String lastName, String email) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.books = new HashSet<>();
+		this.phones = new HashSet<>();
+	}
 	
 	public Contact(long id_contact, String firstName, String lastName, String email) {
 		super();
@@ -24,6 +37,8 @@ public class Contact {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.books = new HashSet<>();
+		this.phones = new HashSet<>();
 	}
 	
 	public Contact(long id_contact, String firstName, String lastName, String email, Address add, Set<ContactGroup> books,
@@ -132,6 +147,10 @@ public class Contact {
 			phoneNumber.setContact(null);
 			//TODO: voir avec Reda
 		}
+	}
+	
+	public void removeAllPhoneNumber() {
+		phones.clear();
 	}
 
 	public Account getCreator() {

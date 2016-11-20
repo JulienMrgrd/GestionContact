@@ -3,10 +3,11 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="domain.metier">
 	<class name="Address" table="Address_Table">
+ 	 <cache usage="read-write"/>
 		<id name="id" type="long" column="ID_ADDRESS">
 			<generator class="increment" />
 		</id>
-<version name="version" access="field" column="version"/>
+		<version name="version" access="field" column="version"/>
 		<property name="street">
 			<column name="STREET" />
 		</property>

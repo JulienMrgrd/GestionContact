@@ -8,4 +8,10 @@ public interface IContactGroupDAO {
 
 	void updateContactGroup(long id, String groupName);
 
+	ContactGroup getContactGroupById(long id);
+
+	void deleteContactGroup(long id);
+
+	void deleteContactInGroup(long idGroup, long idContact);
+
 }

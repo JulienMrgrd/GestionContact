@@ -7,23 +7,35 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import domain.dao.interfaces.IPhoneNumberDAO;
 import domain.metier.Contact;
 import domain.metier.PhoneNumber;
+import util.HibernateUtil;
 
 public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberDAO {
 
 	@Override
 	public PhoneNumber createPhoneNumber(String phoneKind, String phoneNumber, Contact contact) {
-		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		PhoneNumber phoneNum = new PhoneNumber();
 		phoneNum.setPhoneKind(phoneKind);
 		phoneNum.setPhoneNumber(phoneNumber);
 		phoneNum.setContact(contact);
 		
-		this.getHibernateTemplate().save(phoneNum);
-		
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		session.save(phoneNum);
+		tx.commit();
 		System.out.println("createPhoneNumber réussi");
 		return phoneNum;
 	}
 
+	@Override
+	public PhoneNumber getPhoneNumberById(long id){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		PhoneNumber phoneNumber = (PhoneNumber) session.load(PhoneNumber.class, id);
+		return phoneNumber;
+	}
+	
 	@Override
 	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber) {
 		PhoneNumber phoneNum = this.getHibernateTemplate().load(PhoneNumber.class, id);
@@ -37,9 +49,13 @@ public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberD
 
 	@Override
 	public void deletePhoneNumber(long id) {
-		Session session = getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+
 		PhoneNumber phoneNum = (PhoneNumber) session.load(PhoneNumber.class, id);
-		Transaction tx = session.beginTransaction();
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		session.delete(phoneNum);
 		tx.commit();
 		System.out.println("deletePhoneNumber réussi");

@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.test.context.ContextConfiguration;
 
 import domain.dao.interfaces.IAccountDAO;
 import domain.dao.interfaces.IContactDAO;
@@ -15,6 +16,8 @@ import util.HibernateUtil;
 
 public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
+	public AccountDAO(){}
+	
 	@Override
 	public Account createAccount(String login, String password) {
 		/*SessionFactory fact = getSessionFactory();
