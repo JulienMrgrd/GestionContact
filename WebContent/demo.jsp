@@ -7,8 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="../../favicon.ico">
-<link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="utils/bootstrap.min.css" rel="stylesheet">
 <title>Démo</title>
 </head>
 
@@ -29,7 +28,7 @@
 	
 </body>
 
-<script src="bootstrap/jquery.min.js"></script>
+<script src="utils/jquery.min.js"></script>
 <% if(request.getSession().getAttribute("acc")==null){ %>
 <script> (function() { $("#header").load("header/headerNotConnected.html"); })(); </script>
 <% } else { %>

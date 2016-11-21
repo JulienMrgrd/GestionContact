@@ -13,37 +13,19 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="../../favicon.ico">
-<link href="bootstrap/bootstrap.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="utils/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 	<div id="header"></div>
 	
-	<%
-		String message = ((String)request.getAttribute("message"));
-		
-		if(message != null){
-			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
-		}
-	%>
-
 	<div class="container">
-		
-		<h1>Auto-Hiding Bootstrap Navbar Demo</h1>
-
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
-		<p class="demo-long">Long content...</p>
 	</div>
 
 </body>
 
-<script src="bootstrap/jquery.min.js"></script>
+<script src="utils/jquery.min.js"></script>
 <% if(request.getSession().getAttribute("acc")==null){ %>
 <script> (function() { $("#header").load("header/headerNotConnected.html"); })(); </script>
 <% } else { %>

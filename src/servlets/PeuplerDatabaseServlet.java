@@ -25,7 +25,6 @@ public class PeuplerDatabaseServlet extends HttpServlet {
 		
 		if(acc == null){
 			request.setAttribute("message", "Veuillez d'abord vous connecter ou vous inscrire...");
-			request.getRequestDispatcher("demo.jsp").forward(request, response);
 		} else {
 		
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
@@ -46,13 +45,9 @@ public class PeuplerDatabaseServlet extends HttpServlet {
 					c3.getEmail(), c3.getAdd(), acc);
 			System.out.println("c3 inséré");
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		request.setAttribute("message", "Insertion de 3 contacts effectué");
+		request.getRequestDispatcher("demo.jsp").forward(request, response);
 	}
 
 }

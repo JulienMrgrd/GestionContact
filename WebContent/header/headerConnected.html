@@ -10,20 +10,13 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#">Mes contacts<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Gérer mes groupes</a></li>
-						<li><a href="MyContactServlet">Gérer mes contacts</a></li>
-						<li><a href="#">Autres</a></li>
-					</ul></li>
-				<li><a href="#">Chercher des contacts</a></li>
+				<li><a href="MyContactServlet">Mes contacts</a>
 				<li><a href="demo.jsp">Démo</a></li>
 			</ul>
 			<form id="searchForm" role="search" method="get" action="SearchContactServlet" class="navbar-form navbar-left">
 				<div class="form-group">
 					<input id="search" name="search" type="text"  
-						class="form-control" autocomplete="off" placeholder="recherche contact" />
+						class="form-control" autocomplete="off" placeholder="Search a contact" />
 				</div>
 			</form>
 			<ul class="nav navbar-nav navbar-right">
@@ -39,7 +32,5 @@
 </nav>
 <br/><br/><br/>
 
-<script src="bootstrap/jquery.min.js"></script>
-<script src="bootstrap/bootstrap.min.js"></script>
-<script src="bootstrap/jquery.bootstrap-autohidingnavbar.js"></script>
-<script> (function() { $("nav.navbar-fixed-top").autoHidingNavbar(); })();</script>
+<script src="utils/jquery.min.js"></script>
+<script src="utils/bootstrap.min.js"></script>

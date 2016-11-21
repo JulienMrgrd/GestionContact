@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,8 +16,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import domain.metier.Account;
 import domain.metier.Address;
+import domain.metier.Contact;
+import domain.metier.PhoneNumber;
 import domain.services.interfaces.IAddressService;
 import domain.services.interfaces.IContactService;
+import domain.services.interfaces.IPhoneNumberService;
 
 /**
  * Servlet implementation class NewContact
@@ -26,9 +32,6 @@ public class NewContactServlet extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("NewContact doPost");
 	
@@ -40,24 +43,49 @@ public class NewContactServlet extends HttpServlet {
 		String city = request.getParameter("city");
 		String zip = request.getParameter("zip");
 		String country = request.getParameter("country");
-		Account acc = (Account) request.getSession().getAttribute("id");
 		
-		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		IAddressService addressService = (IAddressService) context.getBean("addressService");
-		Address add= addressService.createAddress(street, city, zip, country);
-		System.out.println(add.getCity());
+		List<String> selectedGrp = new ArrayList<>();
+		List<String> phones = new ArrayList<>();
+		Set<String> names = request.getParameterMap().keySet();
+		for(String name : names){
+			if(name.startsWith("tel")) phones.add(request.getParameter(name));
+			else if(name.startsWith("grp")) selectedGrp.add(request.getParameter(name));
+		}
+		
+		Account acc = (Account) request.getSession().getAttribute("acc");
+		
 		/*TODO: vérification confirmité des champs*/
-		boolean okFirstName = firstName!=null && firstName.length()>0; //&& not exists in DB
-		boolean okLastName = lastName!=null && lastName.length()>0; //&& not exists in DB
-		boolean okEmail = email!=null && email.length()>0; //&& not exists in DB
+		boolean okFirstName = firstName!=null && firstName.length()>0;
+		boolean okLastName = lastName!=null && lastName.length()>0;
+		boolean okEmail = email!=null && email.length()>0;
+		
+		boolean okStreet = street!=null && street.length()>0;
+		boolean okZip = zip!=null && zip.length()>0;
+		boolean okCity = city!=null && city.length()>0;
+		boolean okCountry = country!=null && country.length()>0;
 
-		if(okFirstName && okLastName && okEmail){
+		if(okFirstName && okLastName && okEmail && okStreet && okZip && okCity && okCountry){
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			
+			IAddressService addressService = (IAddressService) context.getBean("addressService");
+			Address add = addressService.createAddress(street, city, zip, country);
+			
 			IContactService contactService = (IContactService) context.getBean("contactService");
-			contactService.createContact(firstName, lastName, email,add,acc);
-			request.setAttribute("message", firstName+" "+lastName+" has been added correctly !");
+			Contact c = contactService.createContact(firstName, lastName, email, add, acc);
+			
+			IPhoneNumberService phoneService = (IPhoneNumberService) context.getBean("phoneNumberService");
+			List<PhoneNumber> phonesNumber = new ArrayList<>(phones.size());
+			for(String val : phones){
+				PhoneNumber p = phoneService.createPhoneNumber("mobile", val, c);
+				if(p!=null) phonesNumber.add(p);
+			}
+			
+			request.setAttribute("success", true);
+			request.setAttribute("message", "Contact crée !");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
 			dispatcher.forward(request, response);
 		} else {
+			request.setAttribute("success", false);
 			request.setAttribute("message", "Error with one field...");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("addContact.jsp");
 			dispatcher.forward(request, response);
