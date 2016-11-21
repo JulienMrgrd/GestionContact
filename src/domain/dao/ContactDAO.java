@@ -1,5 +1,6 @@
 package domain.dao;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import domain.metier.Address;
 import domain.metier.Contact;
 import domain.metier.ContactGroup;
 import domain.metier.PhoneNumber;
+import util.HibernateUtil;
 
 public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
@@ -90,7 +92,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Contact> searchContact(String search) {
+	public List<Contact> searchContact(String search, Account acc) {
 		// Recherche avec tous les paramètres renseignés
 		System.out.println("searchContact réussi");
 		Session session = getSessionFactory().getCurrentSession();
@@ -99,8 +101,6 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		if(!tx.isActive()) tx = session.beginTransaction();
 		System.out.println(search);
 		
-		
-		
 		List<Contact> listContact = session.createCriteria(Contact.class).add(Restrictions.like("firstName", "%"+search+"%")).list();
 		listContact.addAll(session.createCriteria(Contact.class).add(Restrictions.like("lastName", "%"+search+"%")).list());
 		listContact.addAll(session.createCriteria(Contact.class).add(Restrictions.like("email", "%"+search+"%")).list());
@@ -108,8 +108,12 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		setContact.addAll(listContact);
 		listContact.clear();
 		listContact.addAll(setContact);
+		List<Contact> newListContact = new ArrayList<Contact>();
+		for(Contact c: listContact){
+			if(c.getCreator().getId()==acc.getId()) newListContact.add(c);
+		}
 		session.getTransaction().commit();
-		return listContact;
+		return newListContact;
 	}
 	
 	@Override
@@ -117,7 +121,6 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
-		System.out.println(id);
 		Contact contact = (Contact) session.load(Contact.class, id);
 		return contact;
 	}

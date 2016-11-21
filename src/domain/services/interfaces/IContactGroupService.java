@@ -2,14 +2,15 @@ package domain.services.interfaces;
 
 import java.util.List;
 
+import domain.metier.Account;
 import domain.metier.ContactGroup;
 
 public interface IContactGroupService {
 
-	ContactGroup createContactGroup(String nameGroupe);
+	ContactGroup createContactGroup(String nameGroupe, Account a);
 
 	void updateContactGroup(long id, String nameGroupe);
 
-	List<ContactGroup> findAll(long id);
+	List<ContactGroup> findAll(Account a);
 
 }

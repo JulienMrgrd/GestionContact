@@ -3,6 +3,7 @@ package domain.services;
 import java.util.List;
 
 import domain.dao.interfaces.IContactGroupDAO;
+import domain.metier.Account;
 import domain.metier.ContactGroup;
 import domain.services.interfaces.IContactGroupService;
 
@@ -15,8 +16,8 @@ public class ContactGroupService implements IContactGroupService {
 	}
 	
 	@Override
-	public ContactGroup createContactGroup(String nameGroupe){
-		return dao.createContactGroup(nameGroupe);
+	public ContactGroup createContactGroup(String nameGroupe, Account a){
+		return dao.createContactGroup(nameGroupe, a);
 	}
 	
 	@Override
@@ -25,7 +26,7 @@ public class ContactGroupService implements IContactGroupService {
 	}
 	
 	@Override
-	public List<ContactGroup> findAll(long id){
-		return dao.findAll(id);
+	public List<ContactGroup> findAll(Account a){
+		return dao.findAll(a);
 	}
 }

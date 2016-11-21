@@ -18,11 +18,12 @@ import domain.metier.ContactGroup;
 public class ContactGroupDAO extends HibernateDaoSupport implements IContactGroupDAO {
 
 	@Override
-	public ContactGroup createContactGroup(String groupName) {
+	public ContactGroup createContactGroup(String groupName, Account acc) {
 		Session session = getSessionFactory().getCurrentSession();
 		
 		ContactGroup cG = new ContactGroup();
 		cG.setGroupName(groupName);
+		cG.setCreator(acc);
 		
 		Transaction tx = session.beginTransaction();
 		session.persist(cG);
@@ -83,18 +84,23 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 	}
 
 	@Override
-	public List<ContactGroup> findAll(long id) {
+	public List<ContactGroup> findAll(Account acc) {
 		Session session = getSessionFactory().getCurrentSession();
+
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		
-		Account acc = new Account();
-		acc.setId(id);
-				
+		Contact c= new Contact();
+		c.setCreator(acc);
 		@SuppressWarnings("unchecked")
-		List<ContactGroup> listContactGroup = session.createCriteria(ContactGroup.class)
-			    .add( Example.create(acc) )
-			    .list();
-		return listContactGroup;
+		List<ContactGroup> results = session.createQuery("select contactGroup from ContactGroup contactGroup").list();
+		List<ContactGroup> listContact = new ArrayList<>();
+		for(ContactGroup cg: results){
+			if(cg.getCreator().getId()==(acc.getId()))
+			listContact.add(cg);
+		}
+		
+		session.getTransaction().commit();
+		return listContact;
 	}
 }

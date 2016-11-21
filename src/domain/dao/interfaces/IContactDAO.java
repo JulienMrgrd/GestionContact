@@ -15,8 +15,6 @@ public interface IContactDAO {
 
 	void deleteContact(long id);
 
-	List<Contact> searchContact(String search);
-
 	Contact getContactById(long id);
 
 	List<Contact> getContactByCreator(Account acc);
@@ -24,5 +22,7 @@ public interface IContactDAO {
 	void deleteContactByCreator(Account acc);
 
 	void addPhonesInContact(long idContact, PhoneNumber pn);
+
+	List<Contact> searchContact(String search, Account acc);
 
 }

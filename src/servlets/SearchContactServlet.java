@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import domain.metier.Account;
 import domain.metier.Contact;
 import domain.services.interfaces.IContactService;
 
@@ -44,16 +45,22 @@ public class SearchContactServlet extends HttpServlet {
 		} else {
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			IContactService contactService = (IContactService) context.getBean("contactService");
-			
-			List<Contact> contacts = contactService.searchContact(search);
-			if(contacts==null || contacts.isEmpty()){
-				request.setAttribute("message", "No contacts found...");
+			Account acc = (Account) request.getSession().getAttribute("acc");
+			if(acc == null){
+				request.setAttribute("message", "Veuillez vous connecter");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+				dispatcher.forward(request, response);
 			} else {
-				request.setAttribute("message", "Results :");
-				request.setAttribute("contacts", contacts);
+				List<Contact> contacts = contactService.searchContact(search, acc);
+				if(contacts==null || contacts.isEmpty()){
+					request.setAttribute("message", "No contacts found...");
+				} else {
+					request.setAttribute("message", "Results :");
+					request.setAttribute("contacts", contacts);
+				}
+				RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
+				dispatcher.forward(request, response);
 			}
-			RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
-			dispatcher.forward(request, response);
 		}
 			
 	}

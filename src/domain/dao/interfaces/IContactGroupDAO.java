@@ -2,11 +2,10 @@ package domain.dao.interfaces;
 
 import java.util.List;
 
+import domain.metier.Account;
 import domain.metier.ContactGroup;
 
 public interface IContactGroupDAO {
-
-	ContactGroup createContactGroup(String groupName);
 
 	void updateContactGroup(long id, String groupName);
 
@@ -16,5 +15,7 @@ public interface IContactGroupDAO {
 
 	void deleteContactInGroup(long idGroup, long idContact);
 
-	List<ContactGroup> findAll(long id);
+	List<ContactGroup> findAll(Account acc);
+
+	ContactGroup createContactGroup(String groupName, Account acc);
 }

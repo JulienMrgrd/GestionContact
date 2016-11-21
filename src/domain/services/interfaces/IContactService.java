@@ -14,12 +14,12 @@ public interface IContactService {
 
 	void deleteContact(long id);
 
-	List<Contact> searchContact(String search);
-
 	Contact getContactById(long id);
 
 	List<Contact> getContactByCreator(Account acc);
 
 	void deleteContactByCreator(Account acc);
+
+	List<Contact> searchContact(String search, Account acc);
 
 }
