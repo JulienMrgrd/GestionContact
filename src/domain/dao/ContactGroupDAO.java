@@ -90,20 +90,11 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 		
 		Account acc = new Account();
 		acc.setId(id);
-		Contact contact= new Contact();
-		contact.setCreator(acc);
-		
+				
 		@SuppressWarnings("unchecked")
-		List<Contact> listContact = session.createCriteria(Contact.class)
-			    .add( Example.create(contact) )
+		List<ContactGroup> listContactGroup = session.createCriteria(ContactGroup.class)
+			    .add( Example.create(acc) )
 			    .list();
-		List<ContactGroup> listContactGroup = new ArrayList<>();
-		for(Contact c : listContact){
-			if(c.getBooks()!=null) listContactGroup.addAll(c.getBooks());
-		}
-		Set<ContactGroup> setContactGroup = new HashSet<ContactGroup>(listContactGroup);
-		listContactGroup.clear();
-		listContactGroup.addAll(setContactGroup);
 		return listContactGroup;
 	}
 }

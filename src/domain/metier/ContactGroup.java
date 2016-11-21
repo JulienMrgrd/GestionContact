@@ -9,6 +9,7 @@ public class ContactGroup {
 	private long id_group;
 	private String groupName;
 	private Set<Contact> contacts;
+	private Account creator;
 	private int version;
 	
 	public ContactGroup() { }
@@ -60,6 +61,22 @@ public class ContactGroup {
 		}
 	}
 	
+	public long getId_group() {
+		return id_group;
+	}
+
+	public void setId_group(long id_group) {
+		this.id_group = id_group;
+	}
+
+	public Account getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Account creator) {
+		this.creator = creator;
+	}
+
 	@Version
 	public long getVersion() {
 	    return version;

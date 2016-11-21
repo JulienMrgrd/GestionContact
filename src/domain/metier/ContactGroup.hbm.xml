@@ -8,7 +8,7 @@
   	 <id name="id" type="long" column="ID_GROUP" >
    		<generator class="increment"/>
   	 </id>
-<version name="version" access="field" column="version"/>
+	<version name="version" access="field" column="version"/>
 	 <property name="groupName">
   	 	<column name="GROUPNAME"/>
   	 </property>
@@ -17,6 +17,8 @@
 		<key column="ID_GROUP"/>
 		<many-to-many class="Contact" column="ID_CONTACT"/>
 	</set>
+	
+	<many-to-one name="creator" class="Account"/>
 		
   </class>
 </hibernate-mapping>
