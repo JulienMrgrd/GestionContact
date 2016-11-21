@@ -1,4 +1,5 @@
 <%@page import="domain.metier.Contact"%>
+<%@page import="domain.metier.PhoneNumber" %>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Enumeration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -25,39 +26,43 @@
 		
 		@SuppressWarnings("unchecked")
 		List<Contact> contacts = ((List<Contact>) request.getAttribute("contacts"));
-		
 		if(contacts != null && !contacts.isEmpty()){
-	%>
-			<table cellpadding="10" cellspacing="2" border="1">
-				<tr>
-					<th>First name</th>
-					<th>Last name</th>
-					<th>Email</th>
-				</tr>
-	<%
-				for (Contact c : contacts) {
-					out.print("<tr>");
-					out.print("<td>" + c.getFirstName() + "</td>");
-					out.print("<td>" + c.getLastName() + "</td>");
-					out.print("<td>" + c.getEmail() + "</td>");
-					out.print("</tr>");
-				}
-	%>
-			</table><br><br>  <!-- obligatoire car il y a une balise <table> au dessus -->
-			<hr><br><b>New search :</b><br><br>
-	<%
-		}
-	%>
-
-	<form method=get action="SearchContact">
-		First Name : <input type="text" name="firstname"><br>
-		And/or Last Name : <input type="text" name="lastname"><br>
-		And/or Email : <input type="text" name="email"><br>
+			long id = 0;
+			String firstName = "";
+			String lastName = "";
+			String ref="";
+			for (Contact c : contacts) {
+				id = c.getId();
+				firstName = c.getFirstName();
+				lastName = c.getLastName();
+				ref="UpdateContactServlet?id="+id;
+				%>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<a class="panel-title" data-toggle="collapse" data-parent="#panel-results" 
+							href="#panel-element-<%=id %>"><%=firstName+" - "+lastName%></a>
+							<div style="float: right;">
+								<a id="<%=id%>" class="btn btn-success btn-outline btn-sm good"
+									href=<%=ref %>>Update !</a>
+							</div>
+					</div>
+				<%
+					String allNumber = "";
+					for(PhoneNumber pn: c.getPhones()){
+						allNumber+= pn.getPhoneKind()+" : "+pn.getPhoneNumber()+"\n";
+					}
+				%>
+					<div id="panel-element-<%=id%>" class="panel-collapse collapse">
+						<div class="panel-body">
+							<pre><%=allNumber %></pre>
+						</div>
+					</div>
+				</div>
+<%				}
 	
-		<br/>
-		
-		<input class="button" type="submit" value="Search">
-		<input class="button" type="reset" value="Reset">
+		}
+		%>
+	<form method=get action="SearchContactServlet">
 		
 	</form>
 	

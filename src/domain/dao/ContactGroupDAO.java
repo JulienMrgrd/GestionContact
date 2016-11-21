@@ -1,10 +1,18 @@
 package domain.dao;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Example;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IContactGroupDAO;
+import domain.metier.Account;
+import domain.metier.Contact;
 import domain.metier.ContactGroup;
 
 public class ContactGroupDAO extends HibernateDaoSupport implements IContactGroupDAO {
@@ -72,5 +80,30 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 		session.delete(contactGroup);
 		tx.commit();
 		System.out.println("deletePhoneNumber réussi");
+	}
+
+	@Override
+	public List<ContactGroup> findAll(long id) {
+		Session session = getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		
+		Account acc = new Account();
+		acc.setId(id);
+		Contact contact= new Contact();
+		contact.setCreator(acc);
+		
+		@SuppressWarnings("unchecked")
+		List<Contact> listContact = session.createCriteria(Contact.class)
+			    .add( Example.create(contact) )
+			    .list();
+		List<ContactGroup> listContactGroup = new ArrayList<>();
+		for(Contact c : listContact){
+			if(c.getBooks()!=null) listContactGroup.addAll(c.getBooks());
+		}
+		Set<ContactGroup> setContactGroup = new HashSet<ContactGroup>(listContactGroup);
+		listContactGroup.clear();
+		listContactGroup.addAll(setContactGroup);
+		return listContactGroup;
 	}
 }

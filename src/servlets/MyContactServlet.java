@@ -13,39 +13,43 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import domain.metier.Account;
 import domain.metier.Contact;
 import domain.services.interfaces.IContactService;
 
 /**
- * Servlet implementation class NewContact
+ * Servlet implementation class MyContactServlet
  */
-public class SearchContactServlet extends HttpServlet {
+public class MyContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchContactServlet() {
+    public MyContactServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("SearchContact doGet");
 		
-		String search = request.getParameter("search");
 		HttpSession session = request.getSession();
 		System.out.println(session.getAttributeNames().toString());
-		boolean okSearch = search!=null && !search.isEmpty();
+		Account acc = (Account) request.getSession().getAttribute("acc");
 		
-		if(!okSearch){
-			request.setAttribute("message", "Please enter at least");
+		if(acc == null){
+			request.setAttribute("message", "Veuillez vous connecter");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);
 		} else {
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			IContactService contactService = (IContactService) context.getBean("contactService");
 			
-			List<Contact> contacts = contactService.searchContact(search);
+			List<Contact> contacts = contactService.getContactByCreator(acc);
 			if(contacts==null || contacts.isEmpty()){
 				request.setAttribute("message", "No contacts found...");
 			} else {
@@ -55,7 +59,6 @@ public class SearchContactServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
 			dispatcher.forward(request, response);
 		}
-			
 	}
 
 	/**

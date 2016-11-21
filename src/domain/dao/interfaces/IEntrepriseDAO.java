@@ -12,4 +12,6 @@ public interface IEntrepriseDAO {
 
 	Entreprise createEntreprise(String firstName, String lastName, String email, long numSiret, Account creator);
 
+	Entreprise getEntreprise(long id);
+
 }

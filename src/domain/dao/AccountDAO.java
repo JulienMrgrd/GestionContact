@@ -100,16 +100,4 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 		System.out.println("findAccountIdByLogin réussi");
 		return acc==null ? GestionContactUtils.BAD_ID : acc.getId();
 	}
-	
-	public static void main(String[] args){
-		IAccountDAO iaccount = new AccountDAO();
-		
-		Account acc = iaccount.createAccount("login", "password");
-		IContactDAO c = new ContactDAO();
-		c.createContact("firstname", "lastname", "emailC", new Address(), acc);
-		c.createContact("firstname2", "lastname1", "emailC2", new Address(), acc);
-		iaccount.deleteAccount(acc.getId());
-		//System.out.println(iaccount.checkConnection("login", "pasord"));
-	}
-
 }

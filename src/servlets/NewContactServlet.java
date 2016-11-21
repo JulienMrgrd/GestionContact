@@ -45,7 +45,7 @@ public class NewContactServlet extends HttpServlet {
 		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		IAddressService addressService = (IAddressService) context.getBean("addressService");
 		Address add= addressService.createAddress(street, city, zip, country);
-		
+		System.out.println(add.getCity());
 		/*TODO: vérification confirmité des champs*/
 		boolean okFirstName = firstName!=null && firstName.length()>0; //&& not exists in DB
 		boolean okLastName = lastName!=null && lastName.length()>0; //&& not exists in DB

@@ -116,4 +116,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="country"><value>United States of America</value></property>
 	</bean>
 	
+	<bean id="fakePhoneNumber1" class="domain.metier.PhoneNumber" scope="prototype">
+		<property name="phoneKind"><value>546 Obama Street</value></property>
+		<property name="phoneNumber"><value>Austin</value></property>
+		<property name="contact"><ref bean="fakeContact1"/></property>
+	</bean>
 </beans>

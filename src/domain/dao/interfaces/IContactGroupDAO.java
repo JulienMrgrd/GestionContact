@@ -1,5 +1,7 @@
 package domain.dao.interfaces;
 
+import java.util.List;
+
 import domain.metier.ContactGroup;
 
 public interface IContactGroupDAO {
@@ -14,4 +16,5 @@ public interface IContactGroupDAO {
 
 	void deleteContactInGroup(long idGroup, long idContact);
 
+	List<ContactGroup> findAll(long id);
 }

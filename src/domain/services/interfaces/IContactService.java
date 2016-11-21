@@ -14,7 +14,7 @@ public interface IContactService {
 
 	void deleteContact(long id);
 
-	List<Contact> searchContact(String firstname, String lastname, String emailC);
+	List<Contact> searchContact(String search);
 
 	Contact getContactById(long id);
 

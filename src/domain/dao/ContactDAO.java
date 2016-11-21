@@ -1,18 +1,16 @@
 package domain.dao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-import domain.dao.interfaces.IAccountDAO;
 import domain.dao.interfaces.IContactDAO;
-import domain.dao.interfaces.IEntrepriseDAO;
 import domain.dao.interfaces.IPhoneNumberDAO;
 import domain.metier.Account;
 import domain.metier.Address;
@@ -88,20 +86,27 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		tx.commit();
 		System.out.println("deleteContact réussi");
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Contact> searchContact(String firstname, String lastname, String emailC) {
+	public List<Contact> searchContact(String search) {
 		// Recherche avec tous les paramètres renseignés
 		System.out.println("searchContact réussi");
 		Session session = getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<Contact> listContact= session.createCriteria(Contact.class).add(Restrictions.like("firstName", "%"+firstname+"%"))
-																		.add(Restrictions.like("lastName", "%"+lastname+"%"))
-																		.add(Restrictions.like("email", "%"+emailC+"%")).list();
+		System.out.println(search);
 		
+		
+		
+		List<Contact> listContact = session.createCriteria(Contact.class).add(Restrictions.like("firstName", "%"+search+"%")).list();
+		listContact.addAll(session.createCriteria(Contact.class).add(Restrictions.like("lastName", "%"+search+"%")).list());
+		listContact.addAll(session.createCriteria(Contact.class).add(Restrictions.like("email", "%"+search+"%")).list());
+		Set<Contact> setContact = new HashSet<>();
+		setContact.addAll(listContact);
+		listContact.clear();
+		listContact.addAll(setContact);
 		session.getTransaction().commit();
 		return listContact;
 	}
@@ -138,12 +143,12 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		
+		Contact c= new Contact();
+		c.setCreator(acc);
 		@SuppressWarnings("unchecked")
-		List<Contact> listContactBis= session.createCriteria(Contact.class).list();
-		List<Contact> listContact = new ArrayList<>();
-		for(Contact c : listContactBis){
-			if(c.getCreator().getId() == acc.getId()) listContact.add(c);
-		}
+		List<Contact> listContact = session.createCriteria(Contact.class)
+			    .add( Example.create(c) )
+			    .list();
 		
 		session.getTransaction().commit();
 		return listContact;
@@ -155,40 +160,14 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		
+		Contact contact= new Contact();
+		contact.setCreator(acc);
 		@SuppressWarnings("unchecked")
-		List<Contact> listContact= session.createCriteria(Contact.class).list();
+		List<Contact> listContact = session.createCriteria(Contact.class)
+			    .add( Example.create(contact) )
+			    .list();
 		for(Contact c : listContact){
-			if(c.getCreator().getId() == acc.getId()) deleteContact(c.getId());
+			deleteContact(c.getId());
 		}
 	}
-	
-	public static void main(String[] args){
-		IContactDAO c = new ContactDAO();
-		IAccountDAO a = new AccountDAO();
-		IEntrepriseDAO e = new EntrepriseDAO();
-		Account acc = a.createAccount("login", "password");Account acc2 = a.createAccount("login2", "password");
-		Address add = new Address();Address add1 = new Address();Address add2 = new Address();
-		
-		add.setStreet("street");
-		add.setCity("city");
-		add.setCountry("country");
-		add.setZip("zip");
-		
-		IPhoneNumberDAO pnDAO = new PhoneNumberDAO();
-		Contact contact = c.createContact("Dupont", "duton", "llll", add, acc);
-		pnDAO.createPhoneNumber("0605040808", "047892463", contact);
-		c.createContact("D", "duron", "llll", add1, acc2);
-		c.createContact("Dup", "dumon", "llll", add2, acc);
-		c.updateContact(2, "firstName", "lastName", "emailC", add1);
-		e.createEntreprise("D", "duron", "llll", 15555, acc);
-		//c.deleteContact(2);
-		c.getContactByCreator(acc);
-		List<Contact> listContact = c.searchContact("up", "du", "");
-		for(Contact cont : listContact){
-			System.out.println(cont.getFirstName());
-		}
-		//c.deleteContactByCreator(acc);
-		//a.deleteAccount(acc.getId());
-	}
-	
 }

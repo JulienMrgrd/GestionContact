@@ -30,6 +30,7 @@
 	%>
 
 	<div class="container">
+		
 		<h1>Auto-Hiding Bootstrap Navbar Demo</h1>
 
 		<p class="demo-long">Long content...</p>

@@ -4,24 +4,21 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>/WEB-INF/applicationContext.xml</param-value>
   </context-param>
   <listener>
-	<listener-class>
+    <listener-class>
 		org.springframework.web.context.request.RequestContextListener
 	</listener-class>
   </listener>
   <listener>
-	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  
   <session-config>
     <session-timeout>50</session-timeout>
   </session-config>
-  
   <servlet>
     <description></description>
     <display-name>WelcomeServlet</display-name>
@@ -32,7 +29,6 @@
     <servlet-name>WelcomeServlet</servlet-name>
     <url-pattern>/WelcomeServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>SignServlet</display-name>
@@ -43,7 +39,6 @@
     <servlet-name>SignServlet</servlet-name>
     <url-pattern>/SignServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>DisconnectServlet</display-name>
@@ -54,7 +49,6 @@
     <servlet-name>DisconnectServlet</servlet-name>
     <url-pattern>/DisconnectServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>NewContactServlet</display-name>
@@ -65,7 +59,6 @@
     <servlet-name>NewContactServlet</servlet-name>
     <url-pattern>/NewContactServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>SearchContactServlet</display-name>
@@ -76,7 +69,6 @@
     <servlet-name>SearchContactServlet</servlet-name>
     <url-pattern>/SearchContactServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>DeleteContactServlet</display-name>
@@ -87,7 +79,6 @@
     <servlet-name>DeleteContactServlet</servlet-name>
     <url-pattern>/DeleteContactServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>UpdateContactServlet</display-name>
@@ -98,7 +89,6 @@
     <servlet-name>UpdateContactServlet</servlet-name>
     <url-pattern>/UpdateContactServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>PeuplerDatabaseServlet</display-name>
@@ -109,5 +99,14 @@
     <servlet-name>PeuplerDatabaseServlet</servlet-name>
     <url-pattern>/PeuplerDatabaseServlet</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <description></description>
+    <display-name>MyContactServlet</display-name>
+    <servlet-name>MyContactServlet</servlet-name>
+    <servlet-class>servlets.MyContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyContactServlet</servlet-name>
+    <url-pattern>/MyContactServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

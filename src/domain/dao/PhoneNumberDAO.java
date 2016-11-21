@@ -10,6 +10,8 @@ import domain.metier.PhoneNumber;
 
 public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberDAO {
 
+	public PhoneNumberDAO(){ }
+	
 	@Override
 	public PhoneNumber createPhoneNumber(String phoneKind, String phoneNumber, Contact contact) {
 		Session session = getSessionFactory().getCurrentSession();

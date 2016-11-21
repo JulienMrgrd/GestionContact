@@ -37,7 +37,7 @@
 		
 		<many-to-one name="creator" class="Account"/>
 
-		<joined-subclass name="Entreprise" table="Entreprise_Table">
+		<joined-subclass name="Entreprise" table="Entreprise_Table" lazy="true">
 			<key column="CONTACT_ID" />
 			<property name="numSiret" column="numSiret" />
 		</joined-subclass>

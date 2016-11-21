@@ -32,8 +32,8 @@ public class ContactService implements IContactService {
 	}
 	
 	@Override
-	public List<Contact> searchContact(String firstname, String lastname, String emailC){
-		return dao.searchContact(firstname, lastname, emailC);
+	public List<Contact> searchContact(String search){
+		return dao.searchContact(search);
 	}
 
 	@Override
