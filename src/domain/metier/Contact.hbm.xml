@@ -25,19 +25,19 @@
 		<many-to-one class="Address" name="add" column="ID_ADDRESS" 
 			unique="true" />
 
-		<set name="books" table="GROUPE">
+		<set name="books" table="GROUPE" lazy="false">
 			<key column="ID_CONTACT" />
 			<many-to-many class="ContactGroup" column="ID_GROUP" />
 		</set>
 	
-		<set name="phones" inverse="true">
+		<set name="phones" inverse="true" lazy="false">
 			<key column="ID_CONT" />
 			<one-to-many class="PhoneNumber" />
 		</set>
 		
 		<many-to-one name="creator" class="Account"/>
 
-		<joined-subclass name="Entreprise" table="Entreprise_Table" lazy="true">
+		<joined-subclass name="Entreprise" table="Entreprise_Table">
 			<key column="CONTACT_ID" />
 			<property name="numSiret" column="numSiret" />
 		</joined-subclass>

@@ -19,7 +19,7 @@ public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberD
 		phoneNum.setPhoneKind(phoneKind);
 		phoneNum.setPhoneNumber(phoneNumber);
 		phoneNum.setContact(contact);
-		
+		System.out.println("on passe ici");
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		session.save(phoneNum);

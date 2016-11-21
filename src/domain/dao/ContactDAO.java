@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
@@ -116,6 +117,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
+		System.out.println(id);
 		Contact contact = (Contact) session.load(Contact.class, id);
 		return contact;
 	}
@@ -130,7 +132,6 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		Contact contact = (Contact) session.load(Contact.class, idContact);
 		Set<PhoneNumber> phoneNumbers = contact.getPhones();
 		phoneNumbers.add(pn);
-		
 		tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		tx.commit();
@@ -169,5 +170,11 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		for(Contact c : listContact){
 			deleteContact(c.getId());
 		}
+	}
+	
+	public void addContactInGroup(long id_cont, long id_group){
+		
+		
+		
 	}
 }

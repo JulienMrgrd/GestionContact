@@ -48,8 +48,10 @@
 					</div>
 				<%
 					String allNumber = "";
-					for(PhoneNumber pn: c.getPhones()){
-						allNumber+= pn.getPhoneKind()+" : "+pn.getPhoneNumber()+"\n";
+					if(c.getPhones()!=null && c.getPhones().size()>0){
+						for(PhoneNumber pn: c.getPhones()){
+							allNumber+= pn.getPhoneKind()+" : "+pn.getPhoneNumber()+"\n";
+						}
 					}
 				%>
 					<div id="panel-element-<%=id%>" class="panel-collapse collapse">
