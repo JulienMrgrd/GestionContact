@@ -6,7 +6,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IContactGroupDAO;
 import domain.metier.ContactGroup;
-import util.HibernateUtil;
 
 public class ContactGroupDAO extends HibernateDaoSupport implements IContactGroupDAO {
 
@@ -40,7 +39,7 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 
 	@Override
 	public ContactGroup getContactGroupById(long id){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		ContactGroup contact = (ContactGroup) session.load(ContactGroup.class, id);
@@ -49,7 +48,7 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 
 	@Override
 	public void deleteContactGroup(long id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 
@@ -63,7 +62,7 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 
 	@Override
 	public void deleteContactInGroup(long idGroup, long idContact) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 

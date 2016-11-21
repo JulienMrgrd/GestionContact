@@ -7,9 +7,8 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IAccountDAO;
 import domain.dao.interfaces.IContactDAO;
@@ -20,7 +19,6 @@ import domain.metier.Address;
 import domain.metier.Contact;
 import domain.metier.ContactGroup;
 import domain.metier.PhoneNumber;
-import util.HibernateUtil;
 
 public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
@@ -28,7 +26,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
 	@Override
 	public Contact createContact(String firstname, String lastname, String emailC, Address add, Account creator){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		
 		Contact contact = new Contact();
 		contact.setEmail(emailC);
@@ -52,7 +50,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
 	@Override
 	public boolean updateContact(long id, String firstName, String lastName, String emailC, Address add){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
 		Contact contact = (Contact) session.load(Contact.class, id);
@@ -69,7 +67,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
 	@Override
 	public void deleteContact(long id){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		
@@ -78,13 +76,13 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		for(PhoneNumber phone: contact.getPhones()) phoneNumberDAO.deletePhoneNumber(phone.getId());
 		
 		//On réouvre la session car delete deletePhoneNumber
-		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session = getSessionFactory().getCurrentSession();
 		tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		session.delete(contact);
 		
 		//On réouvre la session car delete adresse la ferme
-		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session = getSessionFactory().getCurrentSession();
 		tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		tx.commit();
@@ -95,7 +93,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	public List<Contact> searchContact(String firstname, String lastname, String emailC) {
 		// Recherche avec tous les paramètres renseignés
 		System.out.println("searchContact réussi");
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
@@ -110,7 +108,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
 	@Override
 	public Contact getContactById(long id){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		Contact contact = (Contact) session.load(Contact.class, id);
@@ -119,7 +117,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 
 	@Override
 	public void addPhonesInContact(long idContact, PhoneNumber pn){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
@@ -135,7 +133,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
 	@Override
 	public List<Contact> getContactByCreator(Account acc){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
@@ -153,7 +151,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 
 	@Override
 	public void deleteContactByCreator(Account acc){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		

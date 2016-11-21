@@ -18,18 +18,22 @@ import domain.metier.Address;
 public class Test {
 
 	@Autowired  
-    private AccountDAO accountDAO;  
+    AccountDAO accountDAO;  
 	@Autowired  
-    private ContactDAO contactDAO;  
+    ContactDAO contactDAO;  
 	@Autowired  
-    private AddressDAO addressDAO;  
+    AddressDAO addressDAO;  
 	
 	@org.junit.Test
-	public void test() {
+	public void testIntegrationHibernateEtSpring() {
 		Account a = accountDAO.createAccount("test", "test");
+		System.out.println("============> create acc");
 		Address add = addressDAO.createAddress("street", "city", "zip", "country");
+		System.out.println("============> create add");
 		contactDAO.createContact("firstname", "lastname", "emailC", add, a);
+		System.out.println("============> create contact");
 		System.out.println(accountDAO.checkConnection("test", "test"));
+		System.out.println("============> check connection");
 	}
 
 }

@@ -7,13 +7,12 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import domain.dao.interfaces.IPhoneNumberDAO;
 import domain.metier.Contact;
 import domain.metier.PhoneNumber;
-import util.HibernateUtil;
 
 public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberDAO {
 
 	@Override
 	public PhoneNumber createPhoneNumber(String phoneKind, String phoneNumber, Contact contact) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		PhoneNumber phoneNum = new PhoneNumber();
 		phoneNum.setPhoneKind(phoneKind);
 		phoneNum.setPhoneNumber(phoneNumber);
@@ -29,7 +28,7 @@ public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberD
 
 	@Override
 	public PhoneNumber getPhoneNumberById(long id){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		PhoneNumber phoneNumber = (PhoneNumber) session.load(PhoneNumber.class, id);
@@ -49,7 +48,7 @@ public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberD
 
 	@Override
 	public void deletePhoneNumber(long id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 

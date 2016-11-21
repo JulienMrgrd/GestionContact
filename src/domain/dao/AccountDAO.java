@@ -1,18 +1,15 @@
 package domain.dao;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
-import org.springframework.test.context.ContextConfiguration;
 
 import domain.dao.interfaces.IAccountDAO;
 import domain.dao.interfaces.IContactDAO;
 import domain.metier.Account;
 import domain.metier.Address;
 import util.GestionContactUtils;
-import util.HibernateUtil;
 
 public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
@@ -20,9 +17,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	
 	@Override
 	public Account createAccount(String login, String password) {
-		/*SessionFactory fact = getSessionFactory();
-		fact = getHibernateTemplate().getSessionFactory();*/
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Account acc = new Account();
 		acc.setLogin(login);
 		acc.setPwd(password);
@@ -38,7 +33,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 	
 	@Override
 	public void deleteAccount(long id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 
@@ -47,7 +42,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 		contactDAO.deleteContactByCreator(acc);
 		
 		//On relance la session car deleteContactByCreator l'a fermé 
-		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session = getSessionFactory().getCurrentSession();
 		tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		session.delete(acc);
@@ -57,7 +52,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public void updateContact(long id, String pwd) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		Account acc = (Account) session.load(Account.class, id);
@@ -68,7 +63,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public boolean containsLogin(String login) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		Account acc = (Account) session.createCriteria(Account.class)
@@ -80,7 +75,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public Account checkConnection(String login, String password) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		
@@ -94,7 +89,7 @@ public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
 
 	@Override
 	public long findAccountIdByLogin(String login) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();

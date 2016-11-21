@@ -8,13 +8,12 @@ import domain.dao.interfaces.IEntrepriseDAO;
 import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Entreprise;
-import util.HibernateUtil;
 
 public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO {
 
 	@Override
 	public Entreprise createEntreprise(String firstName, String lastName, String email, long numSiret, Account creator) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Entreprise entre = new Entreprise();
 		entre.setFirstName(firstName);
 		entre.setLastName(lastName);
@@ -33,7 +32,7 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 
 	@Override
 	public void updateEntreprise(long id, String firstName, String lastName, String emailC, Address add, long numSiret) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		
 		Entreprise entre = (Entreprise) session.load(Entreprise.class, id);
@@ -50,7 +49,7 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 
 	@Override
 	public void deleteEntreprise(long id) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 
