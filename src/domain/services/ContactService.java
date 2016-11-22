@@ -1,5 +1,6 @@
 package domain.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import domain.dao.interfaces.IContactDAO;
@@ -44,7 +45,18 @@ public class ContactService implements IContactService {
 
 	@Override
 	public List<Contact> getContactByCreator(Account acc) {
-		return dao.getContactByCreator(acc);
+		List<Contact> list = new ArrayList<>();
+		List<Contact> l = dao.getContactByCreator(acc);
+		if(l!=null){
+			for(Contact c : l){
+				if(acc!=null){
+					if(c.getCreator().getId()==(acc.getId())){
+						list.add(c);
+					}
+				}
+			}
+		}
+		return list;
 	}
 
 	@Override
