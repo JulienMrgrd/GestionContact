@@ -9,7 +9,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IContactGroupDAO;
 import domain.metier.Account;
-import domain.metier.Contact;
 import domain.metier.ContactGroup;
 
 public class ContactGroupDAO extends HibernateDaoSupport implements IContactGroupDAO {
@@ -87,16 +86,15 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 		Transaction tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		
-		Contact c= new Contact();
-		c.setCreator(acc);
 		@SuppressWarnings("unchecked")
 		List<ContactGroup> results = session.createQuery("select contactGroup from ContactGroup contactGroup").list();
 		List<ContactGroup> listContact = new ArrayList<>();
-		for(ContactGroup cg: results){
-			if(cg.getCreator().getId()==(acc.getId()))
-			listContact.add(cg);
+		if(results!=null){
+			for(ContactGroup cg: results){
+				if(cg.getCreator().getId()==(acc.getId()))
+				listContact.add(cg);
+			}
 		}
-		
 		session.getTransaction().commit();
 		return listContact;
 	}

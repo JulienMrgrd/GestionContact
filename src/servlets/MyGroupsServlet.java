@@ -14,44 +14,42 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import domain.metier.Account;
-import domain.metier.Contact;
-import domain.services.interfaces.IContactService;
+import domain.metier.ContactGroup;
+import domain.services.interfaces.IContactGroupService;
 
 /**
  * Servlet implementation class MyContactServlet
  */
-public class MyContactServlet extends HttpServlet {
+public class MyGroupsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public MyContactServlet() {
+    public MyGroupsServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("SearchContact doGet");
+		System.out.println("MyGroupsServlet doGet");
 		
 		HttpSession session = request.getSession();
 		System.out.println(session.getAttributeNames().toString());
 		Account acc = (Account) request.getSession().getAttribute("acc");
 		
 		if(acc == null){
-			request.setAttribute("message", "Please login...");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
-			dispatcher.forward(request, response);
+			request.setAttribute("message", "Please login");
+		
 		} else {
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-			IContactService contactService = (IContactService) context.getBean("contactService");
+			IContactGroupService groupService = (IContactGroupService) context.getBean("contactGroupService");
 			
-			List<Contact> contacts = contactService.getContactByCreator(acc);
-			if(contacts==null || contacts.isEmpty()){
-				request.setAttribute("message", "No contacts found...");
+			List<ContactGroup> contactsGrp = groupService.findAll(acc);
+			if(contactsGrp==null || contactsGrp.isEmpty()){
+				request.setAttribute("message", "No contact groups found...");
 			} else {
-				request.setAttribute("message", "Results :");
-				request.setAttribute("contacts", contacts);
+				request.setAttribute("contactsGrp", contactsGrp);
 			}
-			RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
-			dispatcher.forward(request, response);
 		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher("listContactGrp.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

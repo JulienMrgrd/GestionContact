@@ -106,6 +106,27 @@
     <servlet-name>MyContactServlet</servlet-name>
     <url-pattern>/MyContactServlet</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>MyGroupsServlet</display-name>
+    <servlet-name>MyGroupsServlet</servlet-name>
+    <servlet-class>servlets.MyGroupsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyGroupsServlet</servlet-name>
+    <url-pattern>/MyGroupsServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>NewContactGroupServlet</display-name>
+    <servlet-name>NewContactGroupServlet</servlet-name>
+    <servlet-class>servlets.NewContactGroupServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewContactGroupServlet</servlet-name>
+    <url-pattern>/NewContactGroupServlet</url-pattern>
+  </servlet-mapping>
   
   <!--Configuration de l'action servlet
 	<servlet>

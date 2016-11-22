@@ -34,7 +34,7 @@
 				id = c.getId();
 				firstName = c.getFirstName();
 				lastName = c.getLastName();
-				ref="UpdateContactServlet?id="+id;
+				ref="updateContact.jsp?id="+id;
 				%>
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -42,7 +42,7 @@
 							href="#panel-element-<%=id %>"><%=firstName+" - "+lastName%></a>
 							<div style="float: right;">
 								<a id="<%=id%>" class="btn btn-success btn-outline btn-sm good"
-									href=<%=ref %>>Update !</a>
+									href=<%=ref %>>Update</a>
 							</div>
 					</div>
 				<%

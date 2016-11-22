@@ -43,11 +43,9 @@
 			return;
 		}
 		
-		System.out.println("\n\n\n\n===================>test\n\n\n\n");
-	
 		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		IContactGroupService service = (IContactGroupService) context.getBean("contactGroupService");
-		List<ContactGroup> allGrp = service.findAll(acc.getId());
+		List<ContactGroup> allGrp = service.findAll(acc);
 		
 		String message = ((String)request.getAttribute("message"));
 		if(message != null){
@@ -133,8 +131,8 @@
    				} else {
    					for(ContactGroup grp : allGrp){ %>
    						<div class="form-group">
-						<div class="checkbox"><label> <input type="checkbox" name="grp<%=grp.getId()%>" 
-							id="<%=grp.getId()%>" value="<%=grp.getId()%>"><%=grp.getGroupName() %></label></div>
+						<div class="checkbox"><label> <input type="checkbox" name="grp<%=grp.getId_group()%>" 
+							id="<%=grp.getId_group()%>" value="<%=grp.getId_group()%>"><%=grp.getGroupName() %></label></div>
 						</div>
 			<%
 					}

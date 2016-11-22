@@ -23,9 +23,6 @@ import domain.services.interfaces.IContactService;
 public class SearchContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public SearchContactServlet() {
         super();
     }
@@ -39,7 +36,7 @@ public class SearchContactServlet extends HttpServlet {
 		boolean okSearch = search!=null && !search.isEmpty();
 		
 		if(!okSearch){
-			request.setAttribute("message", "Please enter at least");
+			request.setAttribute("message", "Please enter at least one word");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 			dispatcher.forward(request, response);
 		} else {
@@ -47,7 +44,7 @@ public class SearchContactServlet extends HttpServlet {
 			IContactService contactService = (IContactService) context.getBean("contactService");
 			Account acc = (Account) request.getSession().getAttribute("acc");
 			if(acc == null){
-				request.setAttribute("message", "Veuillez vous connecter");
+				request.setAttribute("message", "Please login");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 				dispatcher.forward(request, response);
 			} else {
@@ -55,7 +52,6 @@ public class SearchContactServlet extends HttpServlet {
 				if(contacts==null || contacts.isEmpty()){
 					request.setAttribute("message", "No contacts found...");
 				} else {
-					request.setAttribute("message", "Results :");
 					request.setAttribute("contacts", contacts);
 				}
 				RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
@@ -63,14 +59,6 @@ public class SearchContactServlet extends HttpServlet {
 			}
 		}
 			
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
