@@ -6,9 +6,9 @@ public interface IAccountDAO {
 
 	Account createAccount(String login, String password);
 
-	void deleteAccount(long id);
-
 	void updateContact(long id, String pwd);
+	
+	void deleteAccount(long id);
 
 	boolean containsLogin(String login);
 

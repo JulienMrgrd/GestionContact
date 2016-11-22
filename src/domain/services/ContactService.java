@@ -6,6 +6,7 @@ import domain.dao.interfaces.IContactDAO;
 import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Contact;
+import domain.metier.PhoneNumber;
 import domain.services.interfaces.IContactService;
 
 public class ContactService implements IContactService {
@@ -49,6 +50,16 @@ public class ContactService implements IContactService {
 	@Override
 	public void deleteContactByCreator(Account acc) {
 		dao.deleteContactByCreator(acc);
+	}
+
+	@Override
+	public void addPhonesInContact(long idContact, PhoneNumber pn) {
+		dao.addPhonesInContact(idContact, pn);
+	}
+
+	@Override
+	public void addContactInGroup(long id_cont, long id_group) {
+		dao.addContactInGroup(id_cont, id_group);
 	}
 
 }

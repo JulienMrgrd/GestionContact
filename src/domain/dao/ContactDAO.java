@@ -154,7 +154,9 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 			    .add( Example.create(c) )
 			    .list();
 		
-		session.getTransaction().commit();
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		tx.commit();
 		return listContact;
 	}
 
@@ -175,9 +177,18 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		}
 	}
 	
+	@Override
 	public void addContactInGroup(long id_cont, long id_group){
-		
-		
-		
+		Session session = getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		Contact contact = (Contact) session.load(Contact.class, id_cont);
+		ContactGroup cg = (ContactGroup) session.load(ContactGroup.class, id_group);
+		Set<ContactGroup> set = contact.getBooks();
+		set.add(cg);
+		contact.setBooks(set);
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		tx.commit();
 	}
 }

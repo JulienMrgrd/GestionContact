@@ -5,6 +5,7 @@ import java.util.List;
 import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Contact;
+import domain.metier.PhoneNumber;
 
 public interface IContactService {
 
@@ -20,6 +21,9 @@ public interface IContactService {
 
 	void deleteContactByCreator(Account acc);
 
+	void addPhonesInContact(long idContact, PhoneNumber pn);
+	
 	List<Contact> searchContact(String search, Account acc);
 
+	void addContactInGroup(long id_cont, long id_group);
 }

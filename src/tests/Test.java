@@ -18,7 +18,8 @@ import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Contact;
 import domain.metier.ContactGroup;
-import domain.metier.Entreprise;  
+import domain.metier.Entreprise;
+import domain.metier.PhoneNumber;  
 
 @RunWith(SpringJUnit4ClassRunner.class)  
 @ContextConfiguration(locations="classpath:applicationContext.xml")  
@@ -34,7 +35,8 @@ public class Test {
 	@Autowired  
 	EntrepriseDAO entrepriseDAO;  
 	@Autowired  
-	ContactGroupDAO contactGroupDAO;  
+	ContactGroupDAO contactGroupDAO; 
+	PhoneNumberDAO phoneNumberDAO;  
 	
 	@org.junit.Test
 	public void testIntegrationHibernateEtSpring() {
@@ -67,7 +69,14 @@ public class Test {
 //		System.out.println(contactDAO.getContactByCreator(a2).size());
 //		System.out.println(contactGroupDAO.findAll(a2).size());
 //		
-		System.out.println(contactDAO.searchContact("st", a).size());
+		Contact c =contactDAO.getContactById(2);
+		PhoneNumberDAO pnd = new PhoneNumberDAO();
+		PhoneNumber pn = pnd.createPhoneNumber("fixe", "06885563", c);
+		
+		ContactGroup cg = contactGroupDAO.getContactGroupById(2);
+		System.out.println(cg.getContacts().size());
+		contactDAO.addContactInGroup(2, 2);
+		//System.out.println(contactDAO.searchContact("st", a).size());
 		//System.out.println(accountDAO.checkConnection("test", "test"));
 		/*System.out.println("============> check connection");
 		contactDAO.updateContact(c.getId(), "NewFirstName", "lastName", "emailC", add);
