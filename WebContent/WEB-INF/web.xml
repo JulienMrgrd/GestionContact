@@ -21,6 +21,7 @@
     <display-name>WelcomeServlet</display-name>
     <servlet-name>WelcomeServlet</servlet-name>
     <servlet-class>servlets.WelcomeServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>WelcomeServlet</servlet-name>

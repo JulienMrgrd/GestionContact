@@ -20,62 +20,96 @@ public class ContactService implements IContactService {
 	
 	@Override
 	public Contact createContact(String firstname, String lastname, String emailC, Address add, Account creator){
-		return dao.createContact(firstname, lastname, emailC, add, creator);
+		try{
+			return dao.createContact(firstname, lastname, emailC, add, creator);
+		} catch (Exception e){
+			return null;
+		}
 	}
 	
 	@Override
 	public boolean updateContact(long id, String firstname, String lastname, String emailC, Address add){
-		return dao.updateContact(id, firstname, lastname, emailC, add);
+		try{
+			return dao.updateContact(id, firstname, lastname, emailC, add);
+		} catch (Exception e){
+			return false;
+		}
 	}
 	
 	@Override
 	public boolean deleteContact(long id){
-		return dao.deleteContact(id);
+		try{
+			return dao.deleteContact(id);
+		} catch (Exception e){
+			return false;
+		}
 	}
 	
 	@Override
 	public List<Contact> searchContact(String search, Account acc){
-		return dao.searchContact(search, acc);
+		try{
+			return dao.searchContact(search, acc);
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	@Override
 	public Contact getContactById(long id) {
-		return dao.getContactById(id);
+		try{
+			return dao.getContactById(id);
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	@Override
 	public List<Contact> getContactByCreator(Account acc) {
-		List<Contact> list = new ArrayList<>();
-		List<Contact> l = dao.getContactByCreator(acc);
-		if(l!=null){
-			for(Contact c : l){
-				if(acc!=null){
-					if(c.getCreator().getId()==(acc.getId())){
-						list.add(c);
+		try{
+			List<Contact> list = new ArrayList<>();
+			List<Contact> l = dao.getContactByCreator(acc);
+			if(l!=null){
+				for(Contact c : l){
+					if(acc!=null){
+						if(c.getCreator().getId()==(acc.getId())){
+							list.add(c);
+						}
 					}
 				}
 			}
+			return list;
+		} catch (Exception e){
+			return null;
 		}
-		return list;
 	}
 
 	@Override
 	public void deleteContactByCreator(Account acc) {
-		dao.deleteContactByCreator(acc);
+		try{
+			dao.deleteContactByCreator(acc);
+		} catch (Exception e){}
 	}
 
 	@Override
 	public void addPhonesInContact(long idContact, PhoneNumber pn) {
-		dao.addPhonesInContact(idContact, pn);
+		try{
+			dao.addPhonesInContact(idContact, pn);
+		} catch (Exception e){}
 	}
 
 	@Override
 	public void addContactInGroup(long id_cont, long id_group) {
-		dao.addContactInGroup(id_cont, id_group);
+		try{
+			dao.addContactInGroup(id_cont, id_group);
+		} catch (Exception e){}
 	}
 
 	@Override
 	public Address getAddress(long id){
-		return dao.getAddress(id);
+		try{
+			return dao.getAddress(id);
+		} catch (Exception e){
+			return null;
+		}
 	}
 }

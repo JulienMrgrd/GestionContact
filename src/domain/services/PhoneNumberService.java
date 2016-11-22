@@ -15,17 +15,25 @@ private IPhoneNumberDAO dao;
 	
 	@Override
 	public PhoneNumber createPhoneNumber(String phoneKind, String phoneNumber, Contact contact){
-		return dao.createPhoneNumber(phoneKind, phoneNumber, contact);
+		try{
+			return dao.createPhoneNumber(phoneKind, phoneNumber, contact);
+		} catch (Exception e){ 
+			return null;
+		}
 	}
 	
 	@Override
 	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber, Contact contact){
-		dao.updatePhoneNumber(id, phoneKind, phoneNumber, contact);
+		try{
+			dao.updatePhoneNumber(id, phoneKind, phoneNumber, contact);
+		} catch (Exception e){ }
 	}
 	
 	@Override
 	public void deletePhoneNumber(long id){
-		dao.deletePhoneNumber(id);
+		try{
+			dao.deletePhoneNumber(id);
+		} catch (Exception e){ }
 	}
 
 }

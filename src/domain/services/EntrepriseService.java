@@ -17,24 +17,40 @@ public class EntrepriseService implements IEntrepriseService {
 	}
 	
 	public void deleteEntreprise(long id){
-		dao.deleteEntreprise(id);
+		try{
+			dao.deleteEntreprise(id);
+		} catch (Exception e){}
 	}
 
 	public void updateEntreprise(long id, String firstName, String lastName, String emailC, Address add, long numSiret){
-		dao.updateEntreprise(id, firstName, lastName, emailC, add, numSiret);
+		try{
+			dao.updateEntreprise(id, firstName, lastName, emailC, add, numSiret);
+		} catch (Exception e){ }
 	}
 
 	public Entreprise createEntreprise(String firstName, String lastName, String email, Address add, long numSiret, Account creator){
-		return dao.createEntreprise(firstName, lastName, email, add, numSiret, creator);
+		try{
+			return dao.createEntreprise(firstName, lastName, email, add, numSiret, creator);
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	public Entreprise getEntreprise(long id){
-		return dao.getEntreprise(id);
+		try{
+			return dao.getEntreprise(id);
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	@Override
 	public List<Entreprise> getEntrepriseByCreator(Account acc) {
-		return dao.getEntrepriseByCreator(acc);
+		try{
+			return dao.getEntrepriseByCreator(acc);
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 }

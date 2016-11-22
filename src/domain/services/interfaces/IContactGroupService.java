@@ -13,4 +13,6 @@ public interface IContactGroupService {
 
 	List<ContactGroup> findAll(Account a);
 
+	void deleteContactGroup(long id);
+
 }

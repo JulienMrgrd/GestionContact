@@ -14,32 +14,52 @@ public class AccountService implements IAccountService {
 	
 	@Override
 	public Account createAccount(String login, String pwd){
-		return dao.createAccount(login, pwd);
+		try{
+			return dao.createAccount(login, pwd);
+		} catch (Exception e){
+			return null;
+		}
 	}
 	
 	@Override
 	public void updateAccount(long id, String pwd){
-		dao.updateContact(id, pwd);
+		try{
+			dao.updateContact(id, pwd);
+		} catch (Exception e){	}
 	}
 	
 	@Override
 	public void deleteAccount(long id){
-		dao.deleteAccount(id);
+		try{
+			dao.deleteAccount(id);
+		} catch (Exception e){}
 	}
 
 	@Override
 	public boolean containsLogin(String login) {
-		return dao.containsLogin(login);
+		try{
+			return dao.containsLogin(login);
+		} catch (Exception e){
+			return false;
+		}
 	}
 
 	@Override
 	public Account checkConnection(String login, String password) {
-		return dao.checkConnection(login, password);
+		try{
+			return dao.checkConnection(login, password);
+		} catch (Exception e){
+			return null;
+		}
 	}
 
 	@Override
 	public long getAccountId(String login) {
-		return dao.findAccountIdByLogin(login);
+		try{
+			return dao.findAccountIdByLogin(login);
+		} catch (Exception e){
+			return 0;
+		}
 	}
 	
 }

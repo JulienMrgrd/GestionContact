@@ -58,13 +58,13 @@ public class NewContactServlet extends HttpServlet {
 		
 		boolean okFirstName = firstName!=null && firstName.length()>0;
 		boolean okLastName = lastName!=null && lastName.length()>0;
-		boolean okEmail = email!=null && email.length()>0;
+		boolean okEmail = email!=null && email.length()>5 && email.contains("@") && email.contains(".");
 		
 		boolean okStreet = street!=null && street.length()>0;
 		boolean okZip = zip!=null && zip.length()>0;
 		boolean okCity = city!=null && city.length()>0;
 		boolean okCountry = country!=null && country.length()>0;
-
+		
 		if(okFirstName && okLastName && okEmail && okStreet && okZip && okCity && okCountry){
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			

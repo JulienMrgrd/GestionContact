@@ -21,7 +21,8 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 		cG.setGroupName(groupName);
 		cG.setCreator(acc);
 		
-		Transaction tx = session.beginTransaction();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		session.persist(cG);
 		tx.commit();
 		
@@ -35,7 +36,8 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 		try {
 			Session session = getSessionFactory().getCurrentSession();
 	
-			Transaction tx = session.beginTransaction();
+			Transaction tx = session.getTransaction();
+			if(!tx.isActive()) tx = session.beginTransaction();
 			ContactGroup cG = (ContactGroup) session.load(ContactGroup.class, id);
 			if(groupName!=null && !groupName.isEmpty()) cG.setGroupName(groupName);
 			tx.commit();

@@ -10,7 +10,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import domain.dao.interfaces.IEntrepriseDAO;
 import domain.metier.Account;
 import domain.metier.Address;
-import domain.metier.Contact;
 import domain.metier.Entreprise;
 
 public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO {

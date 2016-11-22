@@ -25,6 +25,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		        <prop key="hbm2ddl.auto">create</prop>
 		        <prop key="hibernate.show_sql">true</prop>
 		        <prop key="hibernate.format_sql">true</prop>
+		        <prop key="hibernate.generate_statistics">true</prop>
+		        
 	        </props>
 		</property>
 	</bean>
@@ -38,6 +40,28 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
+	
+	<bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter">
+    <property name="beans">
+        <map>
+            <entry key="Hibernate:application=Statistics" value-ref="hibernateStatisticsBean"/>
+        </map>
+    </property>
+</bean>
+
+<bean id="hibernateStatisticsBean" class="org.hibernate.jmx.StatisticsService">
+    <property name="statisticsEnabled" value="true"/>
+    <property name="sessionFactory">
+    	<!-- Uncomment the following when using Hibernate directly -->
+        <!-- ref local="sessionFactory"/ -->
+
+        <!-- Uncomment the following when using Hibernate via JPA
+             (Assuming the managed EMF is named 'entityManagerFactory'.
+              Namespace is: xmlns:util="http://www.springframework.org/schema/util")
+        -->
+        <!-- util:property-path path="entityManagerFactory.sessionFactory" /-->
+    </property>
+</bean>
 	
 	
 	<!-- ===== DAO & Services & Demo ===== -->

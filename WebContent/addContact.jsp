@@ -98,7 +98,7 @@
 			</div>
 			<div class="from-group">
 				<label for="siret">Siret number</label>
-				<input type="text" class="form-control" name="siret" value="<%=siret %>"
+				<input type="number" class="form-control" name="siret" value="<%=siret %>"
 					placeholder="(optionnal) Siret number">
 			</div>
 			

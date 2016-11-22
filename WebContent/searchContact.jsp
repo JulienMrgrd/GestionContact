@@ -77,7 +77,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<a class="panel-title text-center" data-toggle="collapse" data-parent="#panel-results" 
-							href="#panel-element-<%=id %>"><%=firstName+" - "+lastName%></a>
+							href="#panel-element-<%=id %>"><%=firstName+" "+lastName%></a>
 							<div style="float: right;">
 								<a id="<%=id%>" class="btn btn-warning btn-outline btn-sm good"
 									href=<%=delete %>>Delete</a>

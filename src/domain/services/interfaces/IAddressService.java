@@ -10,4 +10,6 @@ public interface IAddressService {
 
 	void deleteAddress(long id);
 
+	Address getAddressById(long id);
+
 }
