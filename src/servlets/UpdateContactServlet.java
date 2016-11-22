@@ -68,10 +68,6 @@ public class UpdateContactServlet extends HttpServlet {
 				request.setAttribute("success", false);
 				request.setAttribute("message", "Contact not updated (not up-to-date).");
 			
-			} else if (email!= null && !email.contains("@") && !email.contains(".")){
-				request.setAttribute("success", false);
-				request.setAttribute("message", "Mail not really good...");
-				
 			} else {
 			
 				IAddressService addressService = (IAddressService) context.getBean("addressService");

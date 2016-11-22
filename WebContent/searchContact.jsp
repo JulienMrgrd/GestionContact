@@ -112,11 +112,11 @@
 							<pre class="text-center"><%=rue +" \n"+zip+" "+ville+" \n"+pays%></pre>
 						</fieldset>
 						<fieldset>
-							<legend class="text-center">PhoneNumber:</legend>
+							<legend class="text-center">Phone number:</legend>
 							<pre class="text-center"><%=allNumber %></pre>
 						</fieldset>
 						<fieldset>
-							<legend class="text-center">ContactGroup:</legend>
+							<legend class="text-center">Contact group:</legend>
 							<pre class="text-center"><%=allGroup %></pre>
 						</fieldset>
 						</div>
