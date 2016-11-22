@@ -23,14 +23,14 @@
 		</property>
 
 		<many-to-one class="Address" name="add" column="ID_ADDRESS" 
-			unique="true" />
+			unique="true" lazy="false" cascade="delete-orphan"/>
 
 		<set name="books" table="GROUPE" lazy="false">
 			<key column="ID_CONTACT" />
 			<many-to-many class="ContactGroup" column="ID_GROUP" />
 		</set>
 	
-		<set name="phones" inverse="true" lazy="false">
+		<set name="phones" inverse="true" lazy="false"  cascade="delete-orphan">
 			<key column="ID_CONT" />
 			<one-to-many class="PhoneNumber" />
 		</set>

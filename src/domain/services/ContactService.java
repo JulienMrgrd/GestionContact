@@ -62,4 +62,8 @@ public class ContactService implements IContactService {
 		dao.addContactInGroup(id_cont, id_group);
 	}
 
+	@Override
+	public Address getAddress(long id){
+		return dao.getAddress(id);
+	}
 }

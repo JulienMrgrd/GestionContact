@@ -1,4 +1,6 @@
+<%@page import="domain.metier.Address"%>
 <%@page import="domain.metier.Contact"%>
+<%@page import="domain.metier.ContactGroup"%>
 <%@page import="domain.metier.PhoneNumber" %>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Enumeration"%>
@@ -16,7 +18,9 @@
 
 <body>
 	<div id="header"></div>
+	
 
+<div class="col-md-5">
 	<%
 		String message = ((String)request.getAttribute("message"));
 		if(message != null){
@@ -29,43 +33,91 @@
 			long id = 0;
 			String firstName = "";
 			String lastName = "";
-			String ref="";
+			String update="";
+			String delete="";
+			Address add;
+			String rue,ville, pays, zip;
 			for (Contact c : contacts) {
+				rue="";
+				ville="";
+				pays="";
+				zip="";
 				id = c.getId();
 				firstName = c.getFirstName();
 				lastName = c.getLastName();
-				ref="updateContact.jsp?id="+id;
+				if(c.getAdd() != null){
+					add=c.getAdd();
+					rue = add.getStreet();
+					ville = add.getCity();
+					zip = add.getZip();
+					pays = add.getCountry();
+				}
+				add=c.getAdd();
+				update="updateContact.jsp?id="+id;
+				delete="DeleteContactServlet?id="+id;
 				%>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a class="panel-title" data-toggle="collapse" data-parent="#panel-results" 
+						<center><a class="panel-title" data-toggle="collapse" data-parent="#panel-results" 
 							href="#panel-element-<%=id %>"><%=firstName+" - "+lastName%></a>
 							<div style="float: right;">
+								<a id="<%=id%>" class="btn btn-warning btn-outline btn-sm good"
+									href=<%=delete %>>Delete</a>
 								<a id="<%=id%>" class="btn btn-success btn-outline btn-sm good"
-									href=<%=ref %>>Update</a>
+									href=<%=update %>>Update</a>
 							</div>
-					</div>
+					</div></center>
+				<fieldset>
 				<%
 					String allNumber = "";
 					if(c.getPhones()!=null && c.getPhones().size()>0){
 						for(PhoneNumber pn: c.getPhones()){
 							allNumber+= pn.getPhoneKind()+" : "+pn.getPhoneNumber()+"\n";
 						}
+					}else {
+						allNumber="No number";
+					}
+					String allGroup = "";
+					if(c.getBooks()!=null && c.getBooks().size()>0){
+						for(ContactGroup cg: c.getBooks()){
+							allGroup+= cg.getGroupName()+"\n";
+						}
+					}else {
+						allGroup="In no one group";
 					}
 				%>
+				
 					<div id="panel-element-<%=id%>" class="panel-collapse collapse">
 						<div class="panel-body">
-							<pre><%=allNumber %></pre>
+						<fieldset>
+							<center><legend>Address :</legend></center>
+							<center><pre><%=rue +" \n"+zip+" "+ville+" \n"+pays%></pre></center>
+						</fieldset>
+						<fieldset>
+							<center><legend>PhoneNumber:</legend></center>
+							<center><pre><%=allNumber %></pre></center>
+						</fieldset>
+						<fieldset>
+							<center><legend>ContactGroup:</legend></center>
+							<center><pre><%=allGroup %></pre></center>
+						</fieldset>
 						</div>
 					</div>
+				
+				
+					<fieldset>
+					<div id="panel-element-<%=id%>" class="panel-collapse collapse">
+						<div class="panel-body">
+							<center><pre><%=allGroup %></pre></center>
+						</div>
+					</div>
+				</fieldset>
 				</div>
 <%				}
 	
 		}
 		%>
-	<form method=get action="SearchContactServlet">
-		
-	</form>
+</div>
 	
 </body>
 <script src="utils/jquery.min.js"></script>

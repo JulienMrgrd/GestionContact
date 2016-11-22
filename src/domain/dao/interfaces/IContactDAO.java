@@ -26,4 +26,6 @@ public interface IContactDAO {
 	List<Contact> searchContact(String search, Account acc);
 
 	void addContactInGroup(long id_cont, long id_group);
+
+	Address getAddress(long id);
 }

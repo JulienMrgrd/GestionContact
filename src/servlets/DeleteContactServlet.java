@@ -26,10 +26,10 @@ public class DeleteContactServlet extends HttpServlet {
         super();
     }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("DeleteContact doPost");
 		
-		String id = request.getParameter("idContact");
+		String id = request.getParameter("id");
 		
 		/*TODO: vérification confirmité des champs*/
 		boolean okId = id!=null && id.length()>0;
@@ -45,11 +45,11 @@ public class DeleteContactServlet extends HttpServlet {
 			IContactService contactService = (IContactService) context.getBean("contactService");
 			contactService.deleteContact(idLong);
 			request.setAttribute("message", "Contact with id n°"+id+" has been correctly delete !");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("MyContactServlet");
 			dispatcher.forward(request, response);
 		} else {
 			request.setAttribute("message", "Error with the field...");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("deleteContact.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("MyContactServlet");
 			dispatcher.forward(request, response);
 		}
 	}

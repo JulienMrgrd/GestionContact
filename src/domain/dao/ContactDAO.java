@@ -12,7 +12,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IContactDAO;
-import domain.dao.interfaces.IPhoneNumberDAO;
 import domain.metier.Account;
 import domain.metier.Address;
 import domain.metier.Contact;
@@ -59,8 +58,6 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		if(add!= null) contact.setAdd(add);
 		
 		tx.commit();
-	
-		System.out.println("updateContact réussi");
 		return true;
 	}
 	
@@ -71,8 +68,6 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		if(!tx.isActive()) tx = session.beginTransaction();
 		
 		Contact contact = (Contact) session.load(Contact.class, id);
-		IPhoneNumberDAO phoneNumberDAO = new PhoneNumberDAO();
-		for(PhoneNumber phone: contact.getPhones()) phoneNumberDAO.deletePhoneNumber(phone.getId());
 		
 		//On réouvre la session car delete deletePhoneNumber
 		session = getSessionFactory().getCurrentSession();
@@ -80,10 +75,6 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		if(!tx.isActive()) tx = session.beginTransaction();
 		session.delete(contact);
 		
-		//On réouvre la session car delete adresse la ferme
-		session = getSessionFactory().getCurrentSession();
-		tx = session.getTransaction();
-		if(!tx.isActive()) tx = session.beginTransaction();
 		tx.commit();
 		System.out.println("deleteContact réussi");
 	}
@@ -155,6 +146,7 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		tx.commit();
+		
 		return listContact;
 	}
 
@@ -188,5 +180,13 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		tx.commit();
+	}
+
+	public Address getAddress(long id){
+		Session session = getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		Contact contact = (Contact) session.load(Contact.class, id);
+		return contact.getAdd();
 	}
 }

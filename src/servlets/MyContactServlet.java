@@ -46,7 +46,6 @@ public class MyContactServlet extends HttpServlet {
 			if(contacts==null || contacts.isEmpty()){
 				request.setAttribute("message", "No contacts found...");
 			} else {
-				request.setAttribute("message", "Results :");
 				request.setAttribute("contacts", contacts);
 			}
 			RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");

@@ -25,5 +25,7 @@ public interface IContactService {
 	
 	List<Contact> searchContact(String search, Account acc);
 
-	void addContactInGroup(long id_cont, long id_group);
+	void addContactInGroup(long id_cont, long id_group);	
+	
+	Address getAddress(long id);
 }
