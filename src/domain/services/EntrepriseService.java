@@ -1,5 +1,7 @@
 package domain.services;
 
+import java.util.List;
+
 import domain.dao.interfaces.IEntrepriseDAO;
 import domain.metier.Account;
 import domain.metier.Address;
@@ -28,6 +30,11 @@ public class EntrepriseService implements IEntrepriseService {
 
 	public Entreprise getEntreprise(long id){
 		return dao.getEntreprise(id);
+	}
+
+	@Override
+	public List<Entreprise> getEntrepriseByCreator(Account acc) {
+		return dao.getEntrepriseByCreator(acc);
 	}
 
 }

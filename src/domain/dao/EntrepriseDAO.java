@@ -1,12 +1,16 @@
 package domain.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Example;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IEntrepriseDAO;
 import domain.metier.Account;
 import domain.metier.Address;
+import domain.metier.Contact;
 import domain.metier.Entreprise;
 
 public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO {
@@ -67,5 +71,25 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 		Entreprise entreprise = (Entreprise) session.load(Entreprise.class, id);
 		tx.commit();
 		return entreprise;
+	}
+	
+	@Override
+	public List<Entreprise> getEntrepriseByCreator(Account acc){
+		Session session = getSessionFactory().getCurrentSession();
+
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		
+		Entreprise c= new Entreprise();
+		c.setCreator(acc);
+		@SuppressWarnings("unchecked")
+		List<Entreprise> listEntreprise = session.createCriteria(Entreprise.class)
+			    .add( Example.create(c) )
+			    .list();
+		
+		tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		tx.commit();
+		return listEntreprise;
 	}
 }

@@ -15,7 +15,9 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import domain.metier.Account;
 import domain.metier.Contact;
+import domain.metier.Entreprise;
 import domain.services.interfaces.IContactService;
+import domain.services.interfaces.IEntrepriseService;
 
 /**
  * Servlet implementation class MyContactServlet
@@ -42,11 +44,16 @@ public class MyContactServlet extends HttpServlet {
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			IContactService contactService = (IContactService) context.getBean("contactService");
 			
+			context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IEntrepriseService entrepriseService = (IEntrepriseService) context.getBean("entrepriseService");
+			List<Entreprise> enrtreprises = entrepriseService.getEntrepriseByCreator(acc);
+			
 			List<Contact> contacts = contactService.getContactByCreator(acc);
 			if(contacts==null || contacts.isEmpty()){
 				request.setAttribute("message", "You have no contacts.");
 			} else {
 				request.setAttribute("contacts", contacts);
+				request.setAttribute("enrtreprises", enrtreprises);
 			}
 			RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
 			dispatcher.forward(request, response);
