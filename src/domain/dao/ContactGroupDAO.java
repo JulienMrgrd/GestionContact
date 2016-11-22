@@ -31,15 +31,18 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 	}
 
 	@Override
-	public void updateContactGroup(long id,String groupName) {
-		Session session = getSessionFactory().getCurrentSession();
-
-		Transaction tx = session.beginTransaction();
-		ContactGroup cG = (ContactGroup) session.load(ContactGroup.class, id);
-		cG.setGroupName(groupName);
-		tx.commit();
-		
-		System.out.println("updateContactGroup réussi");
+	public boolean updateContactGroup(long id,String groupName) {
+		try {
+			Session session = getSessionFactory().getCurrentSession();
+	
+			Transaction tx = session.beginTransaction();
+			ContactGroup cG = (ContactGroup) session.load(ContactGroup.class, id);
+			if(groupName!=null && !groupName.isEmpty()) cG.setGroupName(groupName);
+			tx.commit();
+			return true;
+		} catch(Exception e){
+			return false;
+		}
 	}
 
 	@Override
@@ -52,17 +55,21 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 	}
 
 	@Override
-	public void deleteContactGroup(long id) {
-		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.getTransaction();
-		if(!tx.isActive()) tx = session.beginTransaction();
-
-		ContactGroup contactGroup = (ContactGroup) session.load(ContactGroup.class, id);
-		tx = session.getTransaction();
-		if(!tx.isActive()) tx = session.beginTransaction();
-		session.delete(contactGroup);
-		tx.commit();
-		System.out.println("deletePhoneNumber réussi");
+	public boolean deleteContactGroup(long id) {
+		try{
+			Session session = getSessionFactory().getCurrentSession();
+			Transaction tx = session.getTransaction();
+			if(!tx.isActive()) tx = session.beginTransaction();
+	
+			ContactGroup contactGroup = (ContactGroup) session.load(ContactGroup.class, id);
+			tx = session.getTransaction();
+			if(!tx.isActive()) tx = session.beginTransaction();
+			session.delete(contactGroup);
+			tx.commit();
+			return true;
+		} catch(Exception e){
+			return false;
+		}
 	}
 
 	@Override
@@ -95,7 +102,7 @@ public class ContactGroupDAO extends HibernateDaoSupport implements IContactGrou
 				listContact.add(cg);
 			}
 		}
-		session.getTransaction().commit();
+		tx.commit();
 		return listContact;
 	}
 }

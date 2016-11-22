@@ -45,6 +45,7 @@ public class SignServlet extends HttpServlet {
 					else {
 						request.getSession().setAttribute("acc", acc);
 						request.setAttribute("message", "Welcome "+login+" !");
+						request.setAttribute("success", true);
 						okForTask = true;
 					}
 				}
@@ -79,7 +80,7 @@ public class SignServlet extends HttpServlet {
 			request.setAttribute("message", "Neither a subscription nor connection. Strange...");
 		}
 		
-		if(okForTask) response.sendRedirect("task.jsp");
+		if(okForTask) response.sendRedirect("MyContactServlet");
 		else request.getRequestDispatcher("sign.jsp").forward(request, response);
 		
 	}

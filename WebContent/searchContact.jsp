@@ -13,35 +13,53 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="utils/bootstrap.min.css" rel="stylesheet">
+<link href="utils/general.css" rel="stylesheet">
 <title>Search contact</title>
 </head>
 
 <body>
 	<div id="header"></div>
 	
-
-<div class="col-md-5">
+    <div class="container">
+    <div class="col-md-5">
 	<%
 		String message = ((String)request.getAttribute("message"));
+		Boolean success = ((Boolean)request.getAttribute("success"));
 		if(message != null){
-			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
-		}
+			if(success==null || !success){ %>
+				<div class="alert alert-dismissable alert-danger">
+			<% } else { %>
+				<div class="alert alert-dismissable alert-success">
+			<% }%>
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h4><%=message %></h4> 
+			
+			<% if(success==null || !success){ %>
+				</div>
+			<% } else { %>
+				</div>
+			<% }%>
+		<%}
 		
 		@SuppressWarnings("unchecked")
 		List<Contact> contacts = ((List<Contact>) request.getAttribute("contacts"));
 		if(contacts != null && !contacts.isEmpty()){
 			long id = 0;
+			long version = 0;
 			String firstName = "";
 			String lastName = "";
 			String update="";
 			String delete="";
 			Address add;
 			String rue,ville, pays, zip;
+			
+			%> <div class="panel-group" id="panel-results">  <%
 			for (Contact c : contacts) {
 				rue="";
 				ville="";
 				pays="";
 				zip="";
+				version=c.getVersion();
 				id = c.getId();
 				firstName = c.getFirstName();
 				lastName = c.getLastName();
@@ -54,11 +72,11 @@
 				}
 				add=c.getAdd();
 				update="updateContact.jsp?id="+id;
-				delete="DeleteContactServlet?id="+id;
+				delete="DeleteContactServlet?id="+id+"&version="+version;
 				%>
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<center><a class="panel-title" data-toggle="collapse" data-parent="#panel-results" 
+						<a class="panel-title text-center" data-toggle="collapse" data-parent="#panel-results" 
 							href="#panel-element-<%=id %>"><%=firstName+" - "+lastName%></a>
 							<div style="float: right;">
 								<a id="<%=id%>" class="btn btn-warning btn-outline btn-sm good"
@@ -66,7 +84,7 @@
 								<a id="<%=id%>" class="btn btn-success btn-outline btn-sm good"
 									href=<%=update %>>Update</a>
 							</div>
-					</div></center>
+					</div>
 				<fieldset>
 				<%
 					String allNumber = "";
@@ -75,7 +93,7 @@
 							allNumber+= pn.getPhoneKind()+" : "+pn.getPhoneNumber()+"\n";
 						}
 					}else {
-						allNumber="No number";
+						allNumber="No phone number";
 					}
 					String allGroup = "";
 					if(c.getBooks()!=null && c.getBooks().size()>0){
@@ -83,40 +101,34 @@
 							allGroup+= cg.getGroupName()+"\n";
 						}
 					}else {
-						allGroup="In no one group";
+						allGroup="No group";
 					}
 				%>
 				
 					<div id="panel-element-<%=id%>" class="panel-collapse collapse">
 						<div class="panel-body">
 						<fieldset>
-							<center><legend>Address :</legend></center>
-							<center><pre><%=rue +" \n"+zip+" "+ville+" \n"+pays%></pre></center>
+							<legend class="text-center">Address :</legend>
+							<pre class="text-center"><%=rue +" \n"+zip+" "+ville+" \n"+pays%></pre>
 						</fieldset>
 						<fieldset>
-							<center><legend>PhoneNumber:</legend></center>
-							<center><pre><%=allNumber %></pre></center>
+							<legend class="text-center">PhoneNumber:</legend>
+							<pre class="text-center"><%=allNumber %></pre>
 						</fieldset>
 						<fieldset>
-							<center><legend>ContactGroup:</legend></center>
-							<center><pre><%=allGroup %></pre></center>
+							<legend class="text-center">ContactGroup:</legend>
+							<pre class="text-center"><%=allGroup %></pre>
 						</fieldset>
 						</div>
 					</div>
 				
 				
-					<fieldset>
-					<div id="panel-element-<%=id%>" class="panel-collapse collapse">
-						<div class="panel-body">
-							<center><pre><%=allGroup %></pre></center>
-						</div>
-					</div>
 				</fieldset>
 				</div>
 <%				}
-	
-		}
-		%>
+			%></div>
+		<% } %>
+</div>
 </div>
 	
 </body>

@@ -1,0 +1,42 @@
+.dropdown:hover .dropdown-menu {
+	display: block;
+}
+
+.navbar-default {
+	margin: 0 auto;
+	padding-right: 10%;
+	padding-left: 10%;
+	opacity: 0.95;
+}
+
+.navbar-form .form-control{
+	border-color: #222222;
+	width: 300px !important;
+	color: #3c3c3c;
+}
+.navbar-form .form-control::-moz-placeholder{
+	color: #616161;
+}
+.navbar-brand img{
+	max-width: 120px; 
+	margin-top: -7px;
+}
+
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-brand{
+	color: #7a35a4!important;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-brand:hover{
+	color: #b984d9!important;
+}
+
+@media {
+	.container {
+		max-width: 82%;
+		margin-top: 30px;
+	}
+	
+	.container .row {
+		margin-top: 45px;
+	}
+}

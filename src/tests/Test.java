@@ -1,7 +1,5 @@
 package tests;
 
-import java.util.List;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,13 +11,7 @@ import domain.dao.AddressDAO;
 import domain.dao.ContactDAO;
 import domain.dao.ContactGroupDAO;
 import domain.dao.EntrepriseDAO;
-import domain.dao.PhoneNumberDAO;
-import domain.metier.Account;
-import domain.metier.Address;
-import domain.metier.Contact;
-import domain.metier.ContactGroup;
-import domain.metier.Entreprise;
-import domain.metier.PhoneNumber;  
+import domain.dao.PhoneNumberDAO;  
 
 @RunWith(SpringJUnit4ClassRunner.class)  
 @ContextConfiguration(locations="classpath:applicationContext.xml")  

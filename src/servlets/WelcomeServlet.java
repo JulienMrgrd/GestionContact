@@ -25,7 +25,7 @@ public class WelcomeServlet extends HttpServlet {
 		} else if (signInButton==null && signUpButton!=null){
 			request.setAttribute("SignInOrUp", "up");
 		} else {
-			request.setAttribute("message", "Aucun bouton n'a été cliqué...");
+			request.setAttribute("message", "No button has been clicked...");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
 			dispatcher.forward(request, response);
 			return;

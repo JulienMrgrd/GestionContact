@@ -48,42 +48,51 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	
 	@Override
 	public boolean updateContact(long id, String firstName, String lastName, String emailC, Address add){
-		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		
-		Contact contact = (Contact) session.load(Contact.class, id);
-		if(firstName!= null && !firstName.isEmpty()) contact.setFirstName(firstName);
-		if(lastName!= null && !lastName.isEmpty()) contact.setLastName(lastName);
-		if(emailC!= null && !emailC.isEmpty()) contact.setEmail(emailC);
-		if(add!= null) contact.setAdd(add);
-		
-		tx.commit();
-		return true;
+		try{
+			Session session = getSessionFactory().getCurrentSession();
+			Transaction tx = session.getTransaction();
+			if(!tx.isActive()) tx = session.beginTransaction();
+			
+			Contact contact = (Contact) session.load(Contact.class, id);
+			if(firstName!= null && !firstName.isEmpty()) contact.setFirstName(firstName);
+			if(lastName!= null && !lastName.isEmpty()) contact.setLastName(lastName);
+			if(emailC!= null && !emailC.isEmpty()) contact.setEmail(emailC);
+			if(add!= null) contact.setAdd(add);
+			
+			tx.commit();
+			return true;
+		} catch(Exception e){
+			return false;
+		}
 	}
 	
 	@Override
-	public void deleteContact(long id){
-		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.getTransaction();
-		if(!tx.isActive()) tx = session.beginTransaction();
-		
-		Contact contact = (Contact) session.load(Contact.class, id);
-		
-		//On réouvre la session car delete deletePhoneNumber
-		session = getSessionFactory().getCurrentSession();
-		tx = session.getTransaction();
-		if(!tx.isActive()) tx = session.beginTransaction();
-		session.delete(contact);
-		
-		tx.commit();
-		System.out.println("deleteContact réussi");
+	public boolean deleteContact(long id){
+		try{
+			Session session = getSessionFactory().getCurrentSession();
+			Transaction tx = session.getTransaction();
+			if(!tx.isActive()) tx = session.beginTransaction();
+			
+			Contact contact = (Contact) session.load(Contact.class, id);
+			
+			//On réouvre la session car delete deletePhoneNumber
+			session = getSessionFactory().getCurrentSession();
+			tx = session.getTransaction();
+			if(!tx.isActive()) tx = session.beginTransaction();
+			session.delete(contact);
+			
+			tx.commit();
+			return true;
+		} catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Contact> searchContact(String search, Account acc) {
 		// Recherche avec tous les paramètres renseignés
-		System.out.println("searchContact réussi");
 		Session session = getSessionFactory().getCurrentSession();
 
 		Transaction tx = session.getTransaction();
@@ -146,7 +155,6 @@ public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 		tx = session.getTransaction();
 		if(!tx.isActive()) tx = session.beginTransaction();
 		tx.commit();
-		
 		return listContact;
 	}
 

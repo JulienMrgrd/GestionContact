@@ -24,7 +24,7 @@ public class PeuplerDatabaseServlet extends HttpServlet {
 		Account acc = (Account) request.getSession().getAttribute("acc");
 		
 		if(acc == null){
-			request.setAttribute("message", "Veuillez d'abord vous connecter ou vous inscrire...");
+			request.setAttribute("message", "Please login...");
 		} else {
 		
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
@@ -46,7 +46,8 @@ public class PeuplerDatabaseServlet extends HttpServlet {
 			System.out.println("c3 inséré");
 		}
 		
-		request.setAttribute("message", "Insertion de 3 contacts effectué");
+		request.setAttribute("success", true);
+		request.setAttribute("message", "Insert of 3 fakes contacts ok !");
 		request.getRequestDispatcher("demo.jsp").forward(request, response);
 	}
 

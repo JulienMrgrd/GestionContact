@@ -12,7 +12,7 @@ import domain.metier.Entreprise;
 public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO {
 
 	@Override
-	public Entreprise createEntreprise(String firstName, String lastName, String email, long numSiret, Account creator) {
+	public Entreprise createEntreprise(String firstName, String lastName, String email, Address add, long numSiret, Account creator) {
 		Session session = getSessionFactory().getCurrentSession();
 		Entreprise entre = new Entreprise();
 		entre.setFirstName(firstName);
@@ -20,12 +20,13 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 		entre.setEmail(email);
 		entre.setNumSiret(numSiret);
 		entre.setCreator(creator);
+		entre.setAdd(add);
 		
-		Transaction tx = session.beginTransaction();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		session.persist(entre);
 		tx.commit();
 		
-		System.out.println("createContactGroup réussi");
 		return entre;
 		
 	}
@@ -33,7 +34,8 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 	@Override
 	public void updateEntreprise(long id, String firstName, String lastName, String emailC, Address add, long numSiret) {
 		Session session = getSessionFactory().getCurrentSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
 		
 		Entreprise entre = (Entreprise) session.load(Entreprise.class, id);
 		if(firstName!= null && !firstName.isEmpty()) entre.setFirstName(firstName);
@@ -43,8 +45,6 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 		entre.setNumSiret(numSiret);
 		
 		tx.commit();
-	
-		System.out.println("updateEntreprise réussi");
 	}
 
 	@Override
@@ -54,11 +54,8 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 		if(!tx.isActive()) tx = session.beginTransaction();
 
 		Entreprise entreprise = (Entreprise) session.load(Entreprise.class, id);
-		tx = session.getTransaction();
-		if(!tx.isActive()) tx = session.beginTransaction();
 		session.delete(entreprise);
 		tx.commit();
-		System.out.println("deleteEntreprise réussi");
 	}
 
 	@Override
@@ -68,10 +65,7 @@ public class EntrepriseDAO extends HibernateDaoSupport implements IEntrepriseDAO
 		if(!tx.isActive()) tx = session.beginTransaction();
 
 		Entreprise entreprise = (Entreprise) session.load(Entreprise.class, id);
-		tx = session.getTransaction();
-		if(!tx.isActive()) tx = session.beginTransaction();
 		tx.commit();
-		System.out.println("getEntreprise réussi");
 		return entreprise;
 	}
 }

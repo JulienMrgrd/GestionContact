@@ -36,14 +36,24 @@ public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberD
 	}
 	
 	@Override
-	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber) {
-		PhoneNumber phoneNum = this.getHibernateTemplate().load(PhoneNumber.class, id);
-		phoneNum.setPhoneKind(phoneKind);
-		phoneNum.setPhoneNumber(phoneNumber);
+	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber, Contact contact) {
+		Session session = getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		PhoneNumber phoneNum = (PhoneNumber) session.load(PhoneNumber.class, id);
 		
-		this.getHibernateTemplate().save(phoneNum);
+		try {
+			if(phoneKind!=null && !phoneKind.isEmpty()) phoneNum.setPhoneKind(phoneKind);
+			if(phoneNumber!=null && !phoneNumber.isEmpty()) phoneNum.setPhoneNumber(phoneNumber);
+		} catch (Exception e){
+			phoneNum = new PhoneNumber();
+			phoneNum.setContact(contact);
+			phoneNum.setPhoneKind(phoneKind);
+			phoneNum.setPhoneNumber(phoneNumber);
+		}
 		
-		System.out.println("updatePhoneNumber réussi");
+		session.saveOrUpdate(phoneNum);
+		tx.commit();
 	}
 
 	@Override
@@ -57,7 +67,6 @@ public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberD
 		if(!tx.isActive()) tx = session.beginTransaction();
 		session.delete(phoneNum);
 		tx.commit();
-		System.out.println("deletePhoneNumber réussi");
 	}
 
 }

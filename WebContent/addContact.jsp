@@ -28,18 +28,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="utils/bootstrap.min.css" rel="stylesheet">
+<link href="utils/general.css" rel="stylesheet">
 <title>Ajouter un contact</title>
 </head>
 
 <body>
 	<div id="header"></div>
 
+	<div class="container">
 	<%
 	
 		Account acc = (Account) request.getSession().getAttribute("acc");
 		if(acc==null){
-			request.setAttribute("message", "Please login or signup...");
-			request.getRequestDispatcher("task.jsp").forward(request, response);
+			request.setAttribute("message", "Please login...");
+			request.getRequestDispatcher("WelcomeServlet?SignInOrUp=in").forward(request, response);
 			return;
 		}
 		
@@ -48,14 +50,28 @@
 		List<ContactGroup> allGrp = service.findAll(acc);
 		
 		String message = ((String)request.getAttribute("message"));
+		Boolean success = ((Boolean)request.getAttribute("success"));
 		if(message != null){
-			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
-		}
+			if(success==null || !success){ %>
+				<div class="alert alert-dismissable alert-danger">
+			<% } else { %>
+				<div class="alert alert-dismissable alert-success">
+			<% }%>
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h4><%=message %></h4> 
+				
+			<% if(success==null || !success){ %>
+				</div>
+			<% } else { %>
+				</div>
+			<% }%>
+		<%}
 		
 		// récupération des éléments déjà renseignés (cas d'erreur)
 		String firstname = request.getParameter("firstname")==null ? "" : request.getParameter("firstname");
 		String lastname = request.getParameter("lastname")==null ? "" : request.getParameter("lastname");
 		String email = request.getParameter("email")==null ? "" : request.getParameter("email");
+		String siret = request.getParameter("siret")==null ? "" : request.getParameter("siret");
 		
 		String street = request.getParameter("street")==null ? "" : request.getParameter("street");
 		String city = request.getParameter("city")==null ? "" : request.getParameter("city");
@@ -79,6 +95,11 @@
 				<label for="email">Email address</label>
 				<input type="email" class="form-control" name="email" value="<%=email %>"
 					placeholder="Email">
+			</div>
+			<div class="from-group">
+				<label for="siret">Siret number</label>
+				<input type="text" class="form-control" name="siret" value="<%=siret %>"
+					placeholder="(optionnal) Siret number">
 			</div>
 			
 			<fieldset style="margin-top: 5%; margin-bottom: -2%;">
@@ -146,6 +167,7 @@
 			
 	</form>
 	</div>	
+	</div>
 
 </body>
 

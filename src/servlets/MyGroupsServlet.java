@@ -35,7 +35,7 @@ public class MyGroupsServlet extends HttpServlet {
 		Account acc = (Account) request.getSession().getAttribute("acc");
 		
 		if(acc == null){
-			request.setAttribute("message", "Please login");
+			request.setAttribute("message", "Please login...");
 		
 		} else {
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());

@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import domain.metier.Account;
+import domain.metier.ContactGroup;
 import domain.services.interfaces.IContactGroupService;
 
 /**
@@ -24,7 +25,7 @@ public class NewContactGroupServlet extends HttpServlet {
         super();
     }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("NewContactGroupServlet doPost");
 		
 		String name = request.getParameter("grp");
@@ -36,13 +37,20 @@ public class NewContactGroupServlet extends HttpServlet {
 		} else if(name!=null && !name.isEmpty()){
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			IContactGroupService contactGroupService = (IContactGroupService) context.getBean("contactGroupService");
-			contactGroupService.createContactGroup(name, acc);
+			ContactGroup grp = contactGroupService.createContactGroup(name, acc);
 			
-			request.setAttribute("message", "Group "+name+" has been correctly added !");
+			if(grp!=null){
+				request.setAttribute("message", "Group "+name+" has been added !");
+				request.setAttribute("success", true);
+			} else {
+				request.setAttribute("message", "Group "+name+" not added !");
+				request.setAttribute("success", false);
+			}
 			
 			request.setAttribute("contactsGrp", contactGroupService.findAll(acc));
 		} else {
 			request.setAttribute("message", "Error with the field...");
+			request.setAttribute("success", false);
 			
 		}
 		

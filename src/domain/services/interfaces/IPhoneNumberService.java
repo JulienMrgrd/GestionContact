@@ -7,7 +7,7 @@ public interface IPhoneNumberService {
 
 	PhoneNumber createPhoneNumber(String phoneKind, String phoneNumber, Contact contact);
 
-	void updatePhoneNumber(long id, String phoneKind, String phoneNumber);
+	void updatePhoneNumber(long id, String phoneKind, String phoneNumber, Contact contact);
 
 	void deletePhoneNumber(long id);
 

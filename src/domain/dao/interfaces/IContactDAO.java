@@ -13,7 +13,7 @@ public interface IContactDAO {
 
 	boolean updateContact(long id, String firstName, String lastName, String emailC, Address add);
 
-	void deleteContact(long id);
+	boolean deleteContact(long id);
 
 	Contact getContactById(long id);
 

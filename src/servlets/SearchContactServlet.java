@@ -44,7 +44,7 @@ public class SearchContactServlet extends HttpServlet {
 			IContactService contactService = (IContactService) context.getBean("contactService");
 			Account acc = (Account) request.getSession().getAttribute("acc");
 			if(acc == null){
-				request.setAttribute("message", "Please login");
+				request.setAttribute("message", "Please login...");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 				dispatcher.forward(request, response);
 			} else {

@@ -20,6 +20,7 @@ import domain.metier.Contact;
 import domain.metier.PhoneNumber;
 import domain.services.interfaces.IAddressService;
 import domain.services.interfaces.IContactService;
+import domain.services.interfaces.IEntrepriseService;
 import domain.services.interfaces.IPhoneNumberService;
 
 /**
@@ -38,6 +39,7 @@ public class NewContactServlet extends HttpServlet {
 		String firstName = request.getParameter("firstname");
 		String lastName = request.getParameter("lastname");
 		String email = request.getParameter("email");
+		String siret = request.getParameter("siret");
 		
 		String street = request.getParameter("street");
 		String city = request.getParameter("city");
@@ -54,7 +56,6 @@ public class NewContactServlet extends HttpServlet {
 		
 		Account acc = (Account) request.getSession().getAttribute("acc");
 		
-		/*TODO: vérification confirmité des champs*/
 		boolean okFirstName = firstName!=null && firstName.length()>0;
 		boolean okLastName = lastName!=null && lastName.length()>0;
 		boolean okEmail = email!=null && email.length()>0;
@@ -71,7 +72,13 @@ public class NewContactServlet extends HttpServlet {
 			Address add = addressService.createAddress(street, city, zip, country);
 			
 			IContactService contactService = (IContactService) context.getBean("contactService");
-			Contact c = contactService.createContact(firstName, lastName, email, add, acc);
+			Contact c;
+			if(siret!=null && !siret.isEmpty()){
+				IEntrepriseService entrepriseService = (IEntrepriseService) context.getBean("entrepriseService");
+				c = entrepriseService.createEntreprise(firstName, lastName, email, add, Long.parseLong(siret), acc);
+			} else {
+				c = contactService.createContact(firstName, lastName, email, add, acc);
+			}
 			
 			IPhoneNumberService phoneService = (IPhoneNumberService) context.getBean("phoneNumberService");
 			List<PhoneNumber> phonesNumber = new ArrayList<>(phones.size());
@@ -80,9 +87,13 @@ public class NewContactServlet extends HttpServlet {
 				if(p!=null) phonesNumber.add(p);
 			}
 			
+			for(String id : selectedGrp){
+				contactService.addContactInGroup(c.getId(), Long.parseLong(id));
+			}
+			
 			request.setAttribute("success", true);
-			request.setAttribute("message", "Contact crée !");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
+			request.setAttribute("message", "Contact created !");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("MyContactServlet");
 			dispatcher.forward(request, response);
 		} else {
 			request.setAttribute("success", false);

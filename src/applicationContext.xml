@@ -54,7 +54,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="contactGroupService" class="domain.services.ContactGroupService" scope="singleton">
 		<constructor-arg><ref bean="contactGroupDAO"/></constructor-arg>
 	</bean>
-	<bean id="EntrepriseService" class="domain.services.EntrepriseService" scope="singleton">
+	<bean id="entrepriseService" class="domain.services.EntrepriseService" scope="singleton">
 		<constructor-arg><ref bean="entrepriseDAO"/></constructor-arg>
 	</bean>
 	<bean id="phoneNumberService" class="domain.services.PhoneNumberService" scope="singleton">

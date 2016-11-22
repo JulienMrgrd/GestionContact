@@ -44,13 +44,18 @@ public class MyContactServlet extends HttpServlet {
 			
 			List<Contact> contacts = contactService.getContactByCreator(acc);
 			if(contacts==null || contacts.isEmpty()){
-				request.setAttribute("message", "No contacts found...");
+				request.setAttribute("message", "You have no contacts.");
 			} else {
 				request.setAttribute("contacts", contacts);
 			}
 			RequestDispatcher dispatcher = request.getRequestDispatcher("searchContact.jsp");
 			dispatcher.forward(request, response);
 		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 
 }

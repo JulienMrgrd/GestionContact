@@ -21,8 +21,8 @@ public class ContactGroupService implements IContactGroupService {
 	}
 	
 	@Override
-	public void updateContactGroup(long id, String nameGroupe){
-		dao.updateContactGroup(id, nameGroupe);
+	public boolean updateContactGroup(long id, String nameGroupe){
+		return dao.updateContactGroup(id, nameGroupe);
 	}
 	
 	@Override

@@ -31,18 +31,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="utils/bootstrap.min.css" rel="stylesheet">
+<link href="utils/general.css" rel="stylesheet">
 <title>Update contact</title>
 </head>
 
 <body>
 	<div id="header"></div>
-
+	
+	<div class="container">
 	<%
 		boolean noContent = false;
 		String message = ((String)request.getAttribute("message"));
+		Boolean success = ((Boolean)request.getAttribute("success"));
 		if(message != null){
-			out.print("<b><font color=\"red\">"+message+"</font></b><br><br>");
-		}
+			if(success==null || !success){ %>
+				<div class="alert alert-dismissable alert-danger">
+			<% } else { %>
+				<div class="alert alert-dismissable alert-success">
+			<% }%>
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+				<h4><%=message %></h4> 
+			
+			<% if(success==null || !success){ %>
+				</div>
+			<% } else { %>
+				</div>
+			<% }%>
+		<%}
 		
 		if(request.getParameter("id")==null){
 			out.print("<b><font color=\"red\">Unknown id...</font></b><br><br>");
@@ -65,6 +80,8 @@
 
 	<div class="container col-xs-7">
 		<form method=post action="UpdateContactServlet">
+			<input type="hidden" name="idContact" value="<%=cont.getId()%>">
+			<input type="hidden" name="version" value="<%=cont.getVersion()%>">
 			<div class="from-group">
 				<label for="firstname">First name</label> 
 				<input type="text" class="form-control" name="firstname" placeholder="<%=cont.getFirstName()%>">
@@ -117,7 +134,7 @@
    						<div class="form-inline" style="margin-bottom:3px;">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="tel" class="form-control phone" name="tel'+<%=cpt%>+'" id="tel'+<%=cpt%>+'" 
+									<input type="tel" class="form-control phone" name="<%="tel"+cpt%>" id="<%="tel"+cpt%>" 
 										maxlength="10" style="border-radius: 4px;" placeholder="<%=phone.getPhoneNumber()%>">
 								</div>
 							</div>
@@ -140,8 +157,8 @@
    				} else {
    					for(ContactGroup grp : cont.getBooks()){ %>
    						<div class="form-group">
-						<div class="checkbox"><label> <input type="checkbox" checked="checked" name="grp<%=grp.getId_group()%>" 
-							id="<%=grp.getId_group()%>" placeholder="<%=grp.getId_group()%>"><%=grp.getGroupName() %></label></div>
+							<input type="checkbox" checked="checked" name="grp<%=grp.getId_group()%>" 
+								id="<%=grp.getId_group()%>" value="<%=grp.getGroupName()%>"><%=grp.getGroupName()%>
 						</div>
 			<%
 					}
@@ -156,6 +173,7 @@
 	</form>
 	</div>	
 	<%} %>
+	</div>
 
 </body>
 

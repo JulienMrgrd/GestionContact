@@ -9,7 +9,7 @@ public interface IContactGroupService {
 
 	ContactGroup createContactGroup(String nameGroupe, Account a);
 
-	void updateContactGroup(long id, String nameGroupe);
+	boolean updateContactGroup(long id, String nameGroupe);
 
 	List<ContactGroup> findAll(Account a);
 

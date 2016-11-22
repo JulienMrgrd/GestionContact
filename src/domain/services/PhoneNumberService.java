@@ -19,8 +19,8 @@ private IPhoneNumberDAO dao;
 	}
 	
 	@Override
-	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber){
-		dao.updatePhoneNumber(id, phoneKind, phoneNumber);
+	public void updatePhoneNumber(long id, String phoneKind, String phoneNumber, Contact contact){
+		dao.updatePhoneNumber(id, phoneKind, phoneNumber, contact);
 	}
 	
 	@Override

@@ -1,8 +1,8 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -15,10 +15,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import domain.metier.Account;
-import domain.metier.Address;
 import domain.metier.Contact;
-import domain.metier.PhoneNumber;
 import domain.services.interfaces.IAddressService;
+import domain.services.interfaces.IContactGroupService;
 import domain.services.interfaces.IContactService;
 import domain.services.interfaces.IPhoneNumberService;
 
@@ -33,8 +32,8 @@ public class UpdateContactServlet extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("NewContact doPost");
-	
+		String idContact = request.getParameter("idContact");
+		String version = request.getParameter("version");
 		String firstName = request.getParameter("firstname");
 		String lastName = request.getParameter("lastname");
 		String email = request.getParameter("email");
@@ -45,36 +44,62 @@ public class UpdateContactServlet extends HttpServlet {
 		String zip = request.getParameter("zip");
 		String country = request.getParameter("country");
 		
-		List<String> selectedGrp = new ArrayList<>();
-		List<String> phones = new ArrayList<>();
+		Map<String, String>  selectedGrp = new HashMap<>();
+		Map<String, String> phones = new HashMap<>();
 		Set<String> names = request.getParameterMap().keySet();
 		for(String name : names){
-			if(name.startsWith("tel")) phones.add(request.getParameter(name));
-			else if(name.startsWith("grp")) selectedGrp.add(request.getParameter(name));
+			if(name.startsWith("tel")) phones.put(name.replace("tel", ""), request.getParameter(name));
+			else if(name.startsWith("grp")) selectedGrp.put(name.replace("grp", ""), request.getParameter(name));
 		}
 		
 		Account acc = (Account) request.getSession().getAttribute("acc");
 		
-		if(!request.getParameterMap().isEmpty()){
+		if(acc==null){
+			request.setAttribute("message", "Please login...");
+			request.setAttribute("success", false);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("addContact.jsp");
+			dispatcher.forward(request, response);
+			
+		} else if(!request.getParameterMap().isEmpty()){
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactService contactService = (IContactService) context.getBean("contactService");
+			Contact c = contactService.getContactById(Long.parseLong(idContact));
+			if(c.getVersion()!=Long.parseLong(version)){
+				request.setAttribute("success", false);
+				request.setAttribute("message", "Contact not updated (not up-to-date).");
+			} else {
 			
-			IAddressService addressService = (IAddressService) context.getBean("addressService");
-			boolean res = addressService.updateAddress(Long.parseLong(idAddress), street, city, zip, country);
+				IAddressService addressService = (IAddressService) context.getBean("addressService");
+				boolean add = addressService.updateAddress(Long.parseLong(idAddress), street, city, zip, country);
+				boolean res = contactService.updateContact(Long.parseLong(idContact), firstName, lastName, email, null);
+				
+				IPhoneNumberService phoneService = (IPhoneNumberService) context.getBean("phoneNumberService");
+				for(String id : phones.keySet()){
+					phoneService.updatePhoneNumber(Long.parseLong(id), "mobile", phones.get(id), 
+							contactService.getContactById(Long.parseLong(idContact)));
+				}
+				
+				IContactGroupService grpService = (IContactGroupService) context.getBean("contactGroupService");
+				for(String id : selectedGrp.keySet()){
+					grpService.updateContactGroup(Long.parseLong(id), selectedGrp.get(id));
+				}
+				
+				if(res && add){
+					request.setAttribute("success", true);
+					request.setAttribute("message", "Contact updated !");
+				} else if(!add && !res){
+					request.setAttribute("success", false);
+					request.setAttribute("message", "Contact not updated...");
+				} else if(!add && res){
+					request.setAttribute("success", false);
+					request.setAttribute("message", "Contact updated but not his address...");
+				} else if(add && !res){
+					request.setAttribute("success", false);
+					request.setAttribute("message", "Address updated but not the other values of this contact...");
+				}
+			}
 			
-			//TODO
-//			IContactService contactService = (IContactService) context.getBean("contactService");
-//			Contact c = contactService.createContact(firstName, lastName, email, add, acc);
-//			
-//			IPhoneNumberService phoneService = (IPhoneNumberService) context.getBean("phoneNumberService");
-//			List<PhoneNumber> phonesNumber = new ArrayList<>(phones.size());
-//			for(String val : phones){
-//				PhoneNumber p = phoneService.createPhoneNumber("mobile", val, c);
-//				if(p!=null) phonesNumber.add(p);
-//			}
-			
-			request.setAttribute("success", true);
-			request.setAttribute("message", "Updated contact !");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("task.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("MyContactServlet");
 			dispatcher.forward(request, response);
 		} else {
 			request.setAttribute("success", false);

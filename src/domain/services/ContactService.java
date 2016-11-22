@@ -28,8 +28,8 @@ public class ContactService implements IContactService {
 	}
 	
 	@Override
-	public void deleteContact(long id){
-		dao.deleteContact(id);
+	public boolean deleteContact(long id){
+		return dao.deleteContact(id);
 	}
 	
 	@Override

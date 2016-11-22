@@ -7,11 +7,11 @@ import domain.metier.ContactGroup;
 
 public interface IContactGroupDAO {
 
-	void updateContactGroup(long id, String groupName);
+	boolean updateContactGroup(long id, String groupName);
 
 	ContactGroup getContactGroupById(long id);
 
-	void deleteContactGroup(long id);
+	boolean deleteContactGroup(long id);
 
 	void deleteContactInGroup(long idGroup, long idContact);
 
