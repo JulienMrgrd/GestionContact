@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
@@ -19,7 +18,6 @@ import domain.metier.Address;
 import domain.metier.Contact;
 import domain.metier.ContactGroup;
 import domain.metier.PhoneNumber;
-import util.HibernateUtil;
 
 public class ContactDAO extends HibernateDaoSupport implements IContactDAO{
 	

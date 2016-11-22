@@ -7,7 +7,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import domain.dao.interfaces.IPhoneNumberDAO;
 import domain.metier.Contact;
 import domain.metier.PhoneNumber;
-import util.HibernateUtil;
 
 public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberDAO {
 
@@ -15,7 +14,7 @@ public class PhoneNumberDAO extends HibernateDaoSupport implements IPhoneNumberD
 	
 	@Override
 	public PhoneNumber createPhoneNumber(String phoneKind, String phoneNumber, Contact contact) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 		PhoneNumber phoneNum = new PhoneNumber();
 		phoneNum.setPhoneKind(phoneKind);
 		phoneNum.setPhoneNumber(phoneNumber);

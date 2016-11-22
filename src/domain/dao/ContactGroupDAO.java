@@ -1,13 +1,10 @@
 package domain.dao;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Example;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import domain.dao.interfaces.IContactGroupDAO;
