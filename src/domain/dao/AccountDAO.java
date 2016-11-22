@@ -8,7 +8,6 @@ import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import domain.dao.interfaces.IAccountDAO;
 import domain.dao.interfaces.IContactDAO;
 import domain.metier.Account;
-import domain.metier.Address;
 import util.GestionContactUtils;
 
 public class AccountDAO extends HibernateDaoSupport implements IAccountDAO {
