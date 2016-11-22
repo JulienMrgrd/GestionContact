@@ -67,4 +67,14 @@ public class AddressDAO extends HibernateDaoSupport implements IAddressDAO{
 		session.delete(address);
 		tx.commit();		
 	}
+
+	@Override
+	public Address getAddressById(long id){
+		Session session = getSessionFactory().getCurrentSession();
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		Address address = (Address) session.load(Address.class, id);
+		tx.commit();
+		return address;
+	}
 }
